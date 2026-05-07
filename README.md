@@ -124,6 +124,7 @@ This project is hosted using **GitHub Pages**.
 
 ```js
 window.dispatchEvent(new CustomEvent('languageChanged'))
+```js
 
 ---
 
