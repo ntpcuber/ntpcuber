@@ -34,7 +34,7 @@ class MyNavbar extends HTMLElement {
                 
                 <nav class="hidden md:flex gap-8 text-sm font-medium">
                     <a href="${this.rootPath}index.html" class="nav-link text-neutral-400 hover:text-indigo-400 transition-colors" data-en="Home" data-th="หน้าแรก">Home</a>
-                    <a href="${this.rootPath}courses.html" class="nav-link text-neutral-400 hover:text-indigo-400 transition-colors" data-en="Courses (Coming Soon)" data-th="คอร์สเรียน (เร็ว ๆ นี้)">Courses (Coming Soon)</a>
+                    <a href="${this.rootPath}404.html" class="nav-link text-neutral-400 hover:text-indigo-400 transition-colors" data-en="Courses (Coming Soon)" data-th="คอร์สเรียน (เร็ว ๆ นี้)">Courses (Coming Soon)</a>
                     <a href="${this.rootPath}coaching.html" class="nav-link text-neutral-400 hover:text-indigo-400 transition-colors" data-en="Coaching" data-th="เรียนตัวต่อตัว">Coaching</a>
                     
                     <!-- Resources Dropdown Container -->
@@ -117,7 +117,7 @@ class MyNavbar extends HTMLElement {
             <div id="mobile-menu" class="hidden md:hidden bg-neutral-900 border-b border-neutral-800 max-h-[80vh] overflow-y-auto">
                 <nav class="flex flex-col px-6 py-4 gap-2 text-sm font-medium">
                     <a href="${this.rootPath}index.html" class="nav-link text-neutral-400 py-2 border-b border-neutral-800/50" data-en="Home" data-th="หน้าแรก">Home</a>
-                    <a href="${this.rootPath}courses.html" class="nav-link text-neutral-400 py-2 border-b border-neutral-800/50" data-en="Courses (Coming Soon)" data-th="คอร์สเรียน (เร็ว ๆ นี้)">Courses (Coming Soon)</a>
+                    <a href="${this.rootPath}404.html" class="nav-link text-neutral-400 py-2 border-b border-neutral-800/50" data-en="Courses (Coming Soon)" data-th="คอร์สเรียน (เร็ว ๆ นี้)">Courses (Coming Soon)</a>
                     <a href="${this.rootPath}coaching.html" class="nav-link text-neutral-400 py-2 border-b border-neutral-800/50" data-en="Coaching" data-th="เรียนตัวต่อตัว">Coaching</a>
                     
                     <!-- Resources Section with Mobile Toggle -->
