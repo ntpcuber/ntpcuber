@@ -35,7 +35,6 @@ const translations = {
         subtitle: "Master advanced methods like EO to ZB, X-cross, and Domino Reduction.",
         pricingTitle: "Coaching Options",
         bookTitle: "Reserve Your Session",
-        formGoal: "Your Goal / Focus for this session",
         formName: "Full Name",
         formEmail: "Email Address",
         formService: "Select Service",
@@ -80,7 +79,6 @@ const translations = {
         bookTitle: "จองเวลาเรียนของคุณ",
         formName: "ชื่อ-นามสกุล",
         formEmail: "อีเมล",
-        formGoal: "เป้าหมายหรือสิ่งที่ต้องการเน้นในเซสชันนี้",
         formService: "เลือกบริการ",
         formButton: "ยืนยันการจอง",
         paymentInstruction: "สแกน QR เพื่อชำระเงิน",
@@ -152,7 +150,6 @@ async function handleSubmit(event) {
             name: document.getElementById('input-name').value,
             email: document.getElementById('input-email').value,
             service: document.getElementById('service-select').value,
-            goal: document.getElementById('input-goal').value, // Add this
             availableDate: selectedDays,
             preferredTime: document.getElementById('preferred-time').value,
             secondaryTime: document.getElementById('secondary-time').value,
@@ -214,36 +211,6 @@ function scrollToBooking(serviceName) {
     }
 }
 
-function nextStep(step) {
-    const serviceValue = document.getElementById('service-select').value.toLowerCase();
-    const isCritique = serviceValue.includes('critique');
-
-    // Skip Step 2 (Logistics) if it's a Critique service
-    if (step === 2 && isCritique) {
-        step = 3;
-    }
-    
-    // Logic for going back from Step 3 to Step 1 for Critique
-    if (step === 2 && event.target.id === 'back-to-2' && isCritique) {
-        step = 1;
-    }
-
-    // Toggle visibility
-    document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
-    document.getElementById(`step-${step}`).classList.remove('hidden');
-    
-    // Update the "Back" button on Step 3 dynamically
-    const backBtn = document.getElementById('back-to-2');
-    if (backBtn) backBtn.onclick = () => nextStep(isCritique ? 1 : 2);
-
-    // for progress bar
-    function updateProgressBar(step) {
-        const bar = document.getElementById('progress-bar');
-        const width = (step / 3) * 100;
-        bar.style.width = `${width}%`;
-    }
-}
-
 function render() {
     const c = cnt[window.currentLang];
     const trans = translations[window.currentLang];
@@ -252,7 +219,6 @@ function render() {
     // document.querySelectorAll('[data-nav]').forEach((el, i) => el.textContent = c.nav[i]);
     document.getElementById('main-title').innerText = trans.title;
     document.getElementById('main-subtitle').innerText = trans.subtitle;
-    document.getElementById('label-goal').innerText = trans.formGoal;
 
     // Why Me Section
     document.getElementById('why-me-title').innerHTML = `${c.whyMeTitle} <span class="text-blue-500">?</span>`;
@@ -323,7 +289,6 @@ function setupServiceLogic() {
     const qrImage = document.getElementById('qr-code-display');  // for dynamic qr display
     const groups = {
         video: document.getElementById('video-group'),
-        goal: document.getElementById('goal-group'), // New group
         availability: document.getElementById('availability-group'),
         time: document.getElementById('time-group'),
         wca: document.getElementById('wca-group'),
@@ -344,10 +309,8 @@ function setupServiceLogic() {
 
         if (selected.includes('analysis')) {
             groups.video.classList.remove('hidden');
-            groups.goal.classList.add('hidden'); // Hide goal for critique
             groups.video.querySelector('input').required = true;
         } else {
-            groups.goal.classList.remove('hidden'); // Hide goal for critique
             groups.availability.classList.remove('hidden');
             groups.time.classList.remove('hidden');
             groups.wca.classList.remove('hidden');

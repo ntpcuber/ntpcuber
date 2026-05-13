@@ -35,6 +35,7 @@ const translations = {
         subtitle: "Master advanced methods like EO to ZB, X-cross, and Domino Reduction.",
         pricingTitle: "Coaching Options",
         bookTitle: "Reserve Your Session",
+        formGoal: "Your Goal / Focus for this session",
         formName: "Full Name",
         formEmail: "Email Address",
         formService: "Select Service",
@@ -79,6 +80,7 @@ const translations = {
         bookTitle: "จองเวลาเรียนของคุณ",
         formName: "ชื่อ-นามสกุล",
         formEmail: "อีเมล",
+        formGoal: "เป้าหมายหรือสิ่งที่ต้องการเน้นในเซสชันนี้",
         formService: "เลือกบริการ",
         formButton: "ยืนยันการจอง",
         paymentInstruction: "สแกน QR เพื่อชำระเงิน",
@@ -150,6 +152,7 @@ async function handleSubmit(event) {
             name: document.getElementById('input-name').value,
             email: document.getElementById('input-email').value,
             service: document.getElementById('service-select').value,
+            goal: document.getElementById('input-goal').value, // Add this
             availableDate: selectedDays,
             preferredTime: document.getElementById('preferred-time').value,
             secondaryTime: document.getElementById('secondary-time').value,
@@ -176,6 +179,7 @@ async function handleSubmit(event) {
         
         alert(content.success);
         event.target.reset();
+        showStep(1);                      // Return UI to Step 1
         toggleSubmitButton();
         document.getElementById('service-select').dispatchEvent(new Event('change'));
     } catch (error) {
@@ -211,6 +215,63 @@ function scrollToBooking(serviceName) {
     }
 }
 
+function showStep(stepNumber) {
+    // 1. Hide all steps
+    document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
+    
+    // 2. Show the target step
+    document.getElementById(`step-${stepNumber}`).classList.remove('hidden');
+    
+    // 3. Update the progress bar
+    updateProgressBar(stepNumber);
+}
+
+function nextStep(step) {
+    // Determine which step we are currently on
+    const currentStep = step > 1 ? (step === 3 && document.getElementById('service-select').value.toLowerCase().includes('critique') ? 1 : step - 1) : 1;
+    const currentContainer = document.getElementById(`step-${currentStep}`);
+
+    // Check validity of all required inputs in the CURRENT step only
+    const inputs = currentContainer.querySelectorAll('input[required], select[required], textarea[required]');
+    const allValid = Array.from(inputs).every(input => {
+        const isValid = input.checkValidity();
+        if (!isValid) input.reportValidity(); // Shows the browser's default tooltip
+        return isValid;
+    });
+
+    if (!allValid && step > currentStep) return; // Block forward movement if invalid
+    
+    const serviceValue = document.getElementById('service-select').value.toLowerCase();
+    const isCritique = serviceValue.includes('critique');
+
+    // Skip Step 2 (Logistics) if it's a Critique service
+    if (step === 2 && isCritique) {
+        step = 3;
+    }
+    
+    // Logic for going back from Step 3 to Step 1 for Critique
+    if (step === 2 && event.target.id === 'back-to-2' && isCritique) {
+        step = 1;
+    }
+
+    // Toggle visibility
+    document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
+    document.getElementById(`step-${step}`).classList.remove('hidden');
+    
+    // Update the "Back" button on Step 3 dynamically
+    const backBtn = document.getElementById('back-to-2');
+    if (backBtn) backBtn.onclick = () => nextStep(isCritique ? 1 : 2);
+
+    // for progress bar
+    function updateProgressBar(step) {
+        const bar = document.getElementById('progress-bar');
+        const width = (step / 3) * 100;
+        bar.style.width = `${width}%`;
+    }
+
+    updateProgressBar(step); // Update the bar visual
+}
+
 function render() {
     const c = cnt[window.currentLang];
     const trans = translations[window.currentLang];
@@ -219,6 +280,7 @@ function render() {
     // document.querySelectorAll('[data-nav]').forEach((el, i) => el.textContent = c.nav[i]);
     document.getElementById('main-title').innerText = trans.title;
     document.getElementById('main-subtitle').innerText = trans.subtitle;
+    document.getElementById('label-goal').innerText = trans.formGoal;
 
     // Why Me Section
     document.getElementById('why-me-title').innerHTML = `${c.whyMeTitle} <span class="text-blue-500">?</span>`;
@@ -289,6 +351,7 @@ function setupServiceLogic() {
     const qrImage = document.getElementById('qr-code-display');  // for dynamic qr display
     const groups = {
         video: document.getElementById('video-group'),
+        goal: document.getElementById('goal-group'), // New group
         availability: document.getElementById('availability-group'),
         time: document.getElementById('time-group'),
         wca: document.getElementById('wca-group'),
@@ -296,6 +359,19 @@ function setupServiceLogic() {
     };
 
     serviceSelect.addEventListener('change', () => {
+        // 1. Reset logic: Clear values of hidden groups to prevent stale data
+        const fieldsToClear = [
+            'video-link', 'input-goal', 'wca-event', 
+            'preferred-time', 'secondary-time'
+        ];
+        fieldsToClear.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+
+        // Uncheck all days
+        document.querySelectorAll('#available-date input').forEach(cb => cb.checked = false);
+        
         const selected = serviceSelect.value.toLowerCase();
         Object.values(groups).forEach(g => {
             g.classList.add('hidden');
@@ -309,8 +385,10 @@ function setupServiceLogic() {
 
         if (selected.includes('analysis')) {
             groups.video.classList.remove('hidden');
+            groups.goal.classList.add('hidden'); // Hide goal for critique
             groups.video.querySelector('input').required = true;
         } else {
+            groups.goal.classList.remove('hidden'); // Hide goal for critique
             groups.availability.classList.remove('hidden');
             groups.time.classList.remove('hidden');
             groups.wca.classList.remove('hidden');
