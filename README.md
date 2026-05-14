@@ -1,9 +1,9 @@
-# 🌐 NTP Cuber 2
+# 🌐 NTP Cuber
 
-**NTP Cuber 2** is a modern, responsive web application designed to help speedcubers improve their skills through structured courses, algorithm resources, and personalized coaching.
+**NTP Cuber** is a modern, responsive web application designed to help speedcubers improve their skills through structured courses, algorithm resources, and personalized coaching.
 
 🔗 **Live Demo:**  
-https://jashan337.github.io/ntpcuber2/index.html
+https://ntpcuber.github.io/ntpcuber/
 
 ---
 
