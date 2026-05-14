@@ -8,7 +8,7 @@ class MyNavbar extends HTMLElement {
 
         if (isGitHub) {
             // Change 'your-repo-name' to your actual GitHub repository name
-            this.rootPath = '/'; 
+            this.rootPath = 'ntpcuber/'; 
         } else if (isLocalServer) {
             // Live Server treats the project folder as root
             this.rootPath = '/'; 
