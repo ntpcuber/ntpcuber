@@ -242,7 +242,7 @@ function renderProgressBlocks(mode) {
 }
 
 function updateProgressBlocks(stepNumber) {
-    const blocks = document.querySelectorAll('.progress-block');
+    const blocks = document.querySelectorAll('progress-block');
 
     blocks.forEach(block => {
         const stepForThisBlock = Number(block.dataset.step);
