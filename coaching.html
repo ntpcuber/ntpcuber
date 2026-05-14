@@ -74,8 +74,13 @@
             <h2 id="booking-title" class="text-3xl font-bold mb-12 text-center"></h2>
             <form onsubmit="handleSubmit(event)" class="space-y-6" id="booking-wizard">
                 
-                <div class="w-full bg-neutral-800 h-2 rounded-full mb-12 overflow-hidden">
-                    <div id="progress-bar" class="bg-blue-600 h-full w-1/3 transition-all duration-500"></div>
+                
+                <!-- Progress blocks (dynamic) -->
+                <div class="mb-12">
+                  <div id="progress-blocks" class="grid gap-3"></div>
+                
+                  <!-- Optional step labels (dynamic) -->
+                  <div id="progress-labels" class="grid gap-3 mt-3 text-xs text-neutral-500"></div>
                 </div>
 
                 <div id="step-1" class="step-container space-y-6">
