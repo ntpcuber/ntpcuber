@@ -304,7 +304,7 @@ function showStep(stepNumber) {
 
 function nextStep(step) {
     // Determine which step we are currently on
-    const currentStep = step > 1 ? (step === 3 && document.getElementById('service-select').value.toLowerCase().includes('critique') ? 1 : step - 1) : 1;
+    const fromStep = step > 1 ? (step === 3 && document.getElementById('service-select').value.toLowerCase().includes('critique') ? 1 : step - 1) : 1;
     const currentContainer = document.getElementById(`step-${currentStep}`);
 
     // Check validity of all required inputs in the CURRENT step only
@@ -326,9 +326,9 @@ function nextStep(step) {
     }
     
     // Logic for going back from Step 3 to Step 1 for Critique
-    if (step === 2 && event.target.id === 'back-to-2' && isCritique) {
-        step = 1;
-    }
+    // if (step === 2 && event.target.id === 'back-to-2' && isCritique) {
+    //     step = 1;
+    // }
 
     // Toggle visibility
     document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
@@ -348,7 +348,7 @@ function nextStep(step) {
     // updateProgressBar(step); // Update the bar visual
 
     currentStep = step;
-    updateProgressBlocks(step);
+    updateProgressBlocks(currentStep);
 }
 
 function render() {
