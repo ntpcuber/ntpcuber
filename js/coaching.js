@@ -191,6 +191,80 @@ async function handleSubmit(event) {
 }
 function applyLang() {}
 
+
+let progressStepsMap = [1];  // default: only step 1 visible
+let currentStep = 1;         // track current wizard step
+
+function getProgressModeFromService() {
+    const select = document.getElementById('service-select');
+    const raw = (select?.value || '').toLowerCase();
+
+    if (!raw) return 1;                 // service not selected
+    if (raw.includes('analysis')) return 2;  // critique services
+    return 3;                           // other services
+}
+
+function renderProgressBlocks(mode) {
+    const blocksWrap = document.getElementById('progress-blocks');
+    const labelsWrap = document.getElementById('progress-labels');
+
+    // 1) Decide what steps are represented by blocks
+    // mode 1: [1]
+    // mode 2: [1,3] (critique skips step 2)
+    // mode 3: [1,2,3]
+    progressStepsMap = mode === 1 ? [1] : (mode === 2 ? [1, 3] : [1, 2, 3]);
+
+    // 2) Labels for each block (you can rename these)
+    const labels = mode === 1
+        ? ['Service']
+        : (mode === 2 ? ['Service', 'Payment'] : ['Service', 'Details', 'Payment']);
+
+    // 3) Set layout columns dynamically (grid-cols-1/2/3)
+    const colsClass = mode === 1 ? 'grid-cols-1' : (mode === 2 ? 'grid-cols-2' : 'grid-cols-3');
+    blocksWrap.className = `grid ${colsClass} gap-3`;
+    labelsWrap.className = `grid ${colsClass} gap-3 mt-3 text-xs text-neutral-500`;
+
+    // 4) Render blocks
+    blocksWrap.innerHTML = progressStepsMap.map((stepNum) => `
+        <div 
+          class="progress-block h-2 rounded-full bg-neutral-800 transition-colors duration-300"
+          data-step="${stepNum}"
+          aria-label="Step ${stepNum}"
+        ></div>
+    `).join('');
+
+    // 5) Render labels
+    labelsWrap.innerHTML = labels.map((t, i) => `
+        <div class="${i === 0 ? 'text-left' : (i === labels.length - 1 ? 'text-right' : 'text-center')}">
+          ${t}
+        </div>
+    `).join('');
+}
+
+function updateProgressBlocks(stepNumber) {
+    const blocks = document.querySelectorAll('.progress-block');
+
+    blocks.forEach(block => {
+        const stepForThisBlock = Number(block.dataset.step);
+
+        // Reset
+        block.classList.remove('bg-blue-600', 'bg-blue-500/60');
+        block.classList.add('bg-neutral-800');
+
+        // Completed blocks (mapped step < current step)
+        if (stepForThisBlock < stepNumber) {
+            block.classList.remove('bg-neutral-800');
+            block.classList.add('bg-blue-500/60');
+        }
+
+        // Current block
+        if (stepForThisBlock === stepNumber) {
+            block.classList.remove('bg-neutral-800');
+            block.classList.add('bg-blue-600');
+        }
+    });
+}
+
 function toggleSubmitButton() {
     const checkbox = document.getElementById('confirm-payment');
     const btn = document.getElementById('submit-btn');
@@ -216,6 +290,8 @@ function scrollToBooking(serviceName) {
 }
 
 function showStep(stepNumber) {
+    currentStep = stepNumber;
+    
     // 1. Hide all steps
     document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
     
@@ -269,7 +345,10 @@ function nextStep(step) {
         bar.style.width = `${width}%`;
     }
 
-    updateProgressBar(step); // Update the bar visual
+    // updateProgressBar(step); // Update the bar visual
+
+    currentStep = step;
+    updateProgressBlocks(step);
 }
 
 function render() {
@@ -412,6 +491,19 @@ function setupServiceLogic() {
             // Fallback to default QR if no service is selected
             qrImage.src = "image/qr_payment.jpeg";
         }
+
+        const mode = getProgressModeFromService();
+        renderProgressBlocks(mode);
+
+        //If service not selected, keep them on step 1
+        if (mode === 1) {
+            showStep(1);
+        }
+        else {
+            // Ensure block highlight matches whatever step is visible now
+            // If critique, step 2 shouldn't be shown; your nextStep() already handles skipping.
+            updateProgressBlocks(currentStep);
+        }
     });
 }
 
@@ -429,6 +521,11 @@ function generateTimeOptions(id) {
 document.addEventListener('DOMContentLoaded', () => {
     //toggleLang();
     render();
+    
+    // Default to 1 block until a service is selected
+    renderProgressBlocks(1);
+    updateProgressBlocks(1);
+
     generateTimeOptions('preferred-time');
     generateTimeOptions('secondary-time');
     setupServiceLogic();
