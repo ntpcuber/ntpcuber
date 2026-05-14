@@ -242,7 +242,7 @@ function renderProgressBlocks(mode) {
 }
 
 function updateProgressBlocks(stepNumber) {
-    const blocks = document.querySelectorAll('progress-block');
+    const blocks = document.querySelectorAll('.progress-block');
 
     blocks.forEach(block => {
         const stepForThisBlock = Number(block.dataset.step);
@@ -299,7 +299,7 @@ function showStep(stepNumber) {
     document.getElementById(`step-${stepNumber}`).classList.remove('hidden');
     
     // 3. Update the progress bar
-    updateProgressBar(stepNumber);
+    updateProgressBlocks(stepNumber);
 }
 
 function nextStep(step) {
@@ -494,6 +494,7 @@ function setupServiceLogic() {
 
         const mode = getProgressModeFromService();
         renderProgressBlocks(mode);
+        // updateProgressBlocks(currentStep);
 
         //If service not selected, keep them on step 1
         if (mode === 1) {
