@@ -47,30 +47,30 @@ const translations = {
         success: "Success! Check your email soon.",
         bookNow: "Book Now",
         services: [
-            { name: "Written Critique (Video Analysis)", price: "฿120", desc: ["Detailed breakdown of 5 recorded solves.",
+            { name: "Written Critique (Video Analysis)", price: "฿130", desc: ["Detailed breakdown of 5 recorded solves.",
                                                                                 "Identify strengths and inefficiencies",
                                                                                 "Lookahead and turning analysis",
                                                                                 "Personalized feedback and improvement guide"
                                                                                 ]},
-            { name: "Video Critique (Video Analysis)", price: "฿200", desc: ["Detailed breakdown of 5 recorded solves.",
+            { name: "Video Critique (Video Analysis)", price: "฿220", desc: ["Detailed breakdown of 5 recorded solves.",
                                                                                 "Identify strengths and inefficiencies",
                                                                                 "Lookahead and turning analysis",
                                                                                 "Ergonomics suggestions",
                                                                                 "Personalized feedback and improvement tips"
                                                                             ]},
-            { name: "Live 1-on-1 Session (30-Min)", price: "฿250", desc: ["Interactive coaching via video call.",
+            { name: "Live 1-on-1 Session (30-Min)", price: "฿240", desc: ["Interactive coaching via video call.",
                                                                             "Real-time solve analysis",
                                                                             "Personalized advice on targeted practice drills",
                                                                             ]},
-            { name: "Live 1-on-1 Session (1 Hour)", price: "฿400", desc: ["Interactive coaching via video call.",
+            { name: "Live 1-on-1 Session (1 Hour)", price: "฿420", desc: ["Interactive coaching via video call.",
                                                                             "Real-time solve breakdown",
                                                                             "Lookahead drills tailored to your speed",
                                                                             "Deep dive into effiency and ergonomics"
                                                                             ]},
-            { name: "Mastery Pack (4 Sessions)", price: "฿1,440", desc: ["Comprehensive progression with a structured 4-week training plan",
-                                                                            "Weekly check in to track your progress",
-                                                                            "Focus on all aspects; Algorithm, Ergonomics and Efficiencies."
-                                                                            ]}
+            { name: "Mastery Pack Live 1-on-1 (4 Sessions)", price: "฿1,550", saving: "Save ฿130", desc: ["Comprehensive progression with a structured 4-week training plan",
+                                                                                                            "Weekly check in to track your progress",
+                                                                                                            "Focus on all aspects; Algorithm, Ergonomics and Efficiencies."
+                                                                                                            ]}
         ]
     },
     th: {
@@ -90,29 +90,29 @@ const translations = {
         success: "สำเร็จ! โปรดรอการติดต่อกลับทางอีเมล",
         bookNow: "จองเลย",
         services: [
-            { name: "ตรวจการแก้แบบเขียน (Video Analysis)", price: "฿120", desc: ["วิเคราะห์การแก้ 5 รอบแบบละเอียด",
+            { name: "ตรวจการแก้แบบเขียน (Video Analysis)", price: "฿130", desc: ["วิเคราะห์การแก้ 5 รอบแบบละเอียด",
                                                                                 "ชี้ให้เห็นจุดแข็งและจุดที่่พัฒนาได้",
                                                                                 "วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน",
                                                                                 "ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง"
                                                                               ] },
-            { name: "ตรวจการแก้แบบวิดีโอ (Video Analysis)", price: "฿200", desc: ["วิเคราะห์การแก้ 5 รอบแบบละเอียด",
+            { name: "ตรวจการแก้แบบวิดีโอ (Video Analysis)", price: "฿220", desc: ["วิเคราะห์การแก้ 5 รอบแบบละเอียด",
                                                                                 "ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้",
                                                                                 "วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน",
                                                                                 "แนะนำวิธีการหมุนที่เสริมความคล่องตัวยิ่งขึ้น",
                                                                                 "ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง"
                                                                               ] },
-            { name: "สอนสดตัวต่อตัว (30 นาที)", price: "฿250", desc: ["เรียนสดผ่านวิดีโอคอล",
+            { name: "สอนสดตัวต่อตัว (30 นาที)", price: "฿240", desc: ["เรียนสดผ่านวิดีโอคอล",
                                                                     "วิเคราะห์การแก้โจทย์ทันที",
                                                                     "ให้คำแนะนำในการฝึกเฉพาะส่วนสำหรับคุณ"
             ] },
-            { name: "สอนสดตัวต่อตัว (1 ชั่วโมง)", price: "฿400", desc: ["เรียนสดเน้นเนื้อหาเจาะลึก",
+            { name: "สอนสดตัวต่อตัว (1 ชั่วโมง)", price: "฿420", desc: ["เรียนสดเน้นเนื้อหาเจาะลึก",
                                                                     "วิเคราะห์การแก้โจทย์ทันที",
                                                                     "ฝึกการมองล่วงหน้าตามระดับความเหมาะสม",
                                                                     "เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน"
             ] },
-            { name: "แพ็กเกจเชี่ยวชาญ (4 ครั้ง)", price: "฿1,440", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
-                                                                    "ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม",
-                                                                    "ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้",
+            { name: "แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)", price: "฿1,550", saving: "ประหยัด ฿130", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
+                                                                                                        "ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม",
+                                                                                                        "ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้",
             ] }
         ]
     }
@@ -257,6 +257,9 @@ function applyLang() {}
 
 let progressStepsMap = [1];  // default: only step 1 visible
 let currentStep = 1;         // track current wizard step
+
+let serviceLogicInitialized = false;
+let selectedServiceIndex = -1;
 
 function getProgressModeFromService() {
     const select = document.getElementById('service-select');
@@ -428,6 +431,13 @@ function nextStep(step) {
     showStep(currentStep);
 }
 
+function refreshFormState() {
+    const mode = getProgressModeFromService();
+    renderProgressBlocks(mode);
+    updateProgressBlocks(currentStep);
+    showStep(currentStep);
+}
+
 function render() {
     const c = cnt[window.currentLang];
     const trans = translations[window.currentLang];
@@ -463,10 +473,12 @@ function render() {
 
     const grid = document.getElementById('pricing-grid');
     grid.innerHTML = trans.services.map((s, index) => {
-        const isPopular = index === 1;
+        const isPopular = (index === 1 || index === 3);
+        const isMastery = index === 4;
         return `
-        <div class="relative bg-neutral-900 border ${isPopular ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]' : 'border-neutral-800'} p-8 rounded-2xl hover:border-blue-500 transition duration-300 flex flex-col justify-between h-full">
+        <div class="relative bg-neutral-900 border ${isPopular ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]' : isMastery ? 'border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.15)]' : 'border-neutral-800'} p-8 rounded-2xl hover:border-blue-500 transition duration-300 flex flex-col justify-between h-full">
             ${isPopular ? `<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg">Most Popular</div>` : ''}
+            ${isMastery && s.saving ? `<div class="absolute -top-4 right-4 bg-green-500 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg">${s.saving}</div>` : ''}
             <div class="flex flex-col h-full">
                 <div>
                     <h3 class="text-xl font-bold text-white mb-4 min-h-[64px]">${s.name}</h3>
@@ -477,7 +489,10 @@ function render() {
 
                 <!-- Add book now button -->
                 <div class="mt-auto">
-                    <div class="text-3xl font-bold text-blue-500 mb-6">${s.price}</div>
+                    <div class="mb-6">
+                        <div class="text-3xl font-bold text-blue-500">${s.price}</div>
+                        ${s.saving ? `<div class="text-sm text-green-400 font-semibold mt-1">${s.saving} vs individual sessions</div>` : ''}
+                    </div>
                     <button 
                     onclick="scrollToBooking('${s.name}')"
                     class="w-full py-3 bg-neutral-800 hover:bg-indigo-600 text-white font-bod py-3 round-xl transition-colors shadow-lg active:scale-95"
@@ -487,11 +502,16 @@ function render() {
         </div>`;
     }).join('');
 
+    // const select = document.getElementById('service-select');
+    // const prev = select.value;
+    // select.innerHTML = `<option value="" disabled selected>${trans.formService}</option>` + 
+    //     trans.services.map(s => `<option value="${s.name}">${s.name} - ${s.price}</option>`).join('');
+    // if(prev) select.value = prev;
+
     const select = document.getElementById('service-select');
-    const prev = select.value;
-    select.innerHTML = `<option value="" disabled selected>${trans.formService}</option>` + 
+    select.innerHTML = `<option value="" disabled selected>${trans.formService}</option>` +
         trans.services.map(s => `<option value="${s.name}">${s.name} - ${s.price}</option>`).join('');
-    if(prev) select.value = prev;
+    if (selectedServiceIndex > 0) select.selectedIndex = selectedServiceIndex;
 
     document.getElementById('input-name').placeholder = trans.formName;
     document.getElementById('input-email').placeholder = trans.formEmail;
@@ -499,13 +519,17 @@ function render() {
     //const navbar = document.querySelector('my-navbar');
     //if (navbar?.updateLanguageDisplay) navbar.updateLanguageDisplay();
 
-    document.getElementById('service-select').dispatchEvent(new Event('change'));
+    // document.getElementById('service-select').dispatchEvent(new Event('change'));
 
-    showStep(currentStep);
+    // showStep(currentStep);
     // setupServiceLogic();
+    refreshFormState();
 }
 
 function setupServiceLogic() {
+    if (serviceLogicInitialized) return;
+    serviceLogicInitialized = true;
+    
     const serviceSelect = document.getElementById('service-select');
     const qrImage = document.getElementById('qr-code-display');  // for dynamic qr display
     const groups = {
@@ -518,6 +542,9 @@ function setupServiceLogic() {
     };
 
     serviceSelect.addEventListener('change', () => {
+        // Save selected index so language switch can restore it
+        selectedServiceIndex = serviceSelect.selectedIndex;
+        
         // 1. Reset logic: Clear values of hidden groups to prevent stale data
         const fieldsToClear = [
             'video-link', 'input-goal', 'wca-event', 
@@ -585,18 +612,48 @@ function setupServiceLogic() {
             // If critique, step 2 shouldn't be shown; your nextStep() already handles skipping.
             updateProgressBlocks(currentStep);
         }
+
+        // Refresh time dropdowns whenever available days change
+        document.querySelectorAll('#available-date input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const startHour = getStartHourFromSelectedDays();
+                generateTimeOptions('preferred-time', startHour);
+                generateTimeOptions('secondary-time', startHour);
+            });
+        });
     });
 }
 
-function generateTimeOptions(id) {
+function generateTimeOptions(id, startHour = 0) {
+    // const s = document.getElementById(id);
+    // s.innerHTML = '<option value="" data-en="Select time" data-th="เลือกเวลา">Select time</option>';
+    // for (let h = 0; h <= 23; h++) {
+    //     for (let m of ['00', '30']) {
+    //         let v = `${String(h).padStart(2, '0')}:${m}`;
+    //         s.add(new Option(v, v));
+    //     }
+    // }
     const s = document.getElementById(id);
+    const prev = s.value; // preserve selection if already chosen
     s.innerHTML = '<option value="" data-en="Select time" data-th="เลือกเวลา">Select time</option>';
-    for (let h = 0; h <= 23; h++) {
+    for (let h = startHour; h <= 23; h++) {
         for (let m of ['00', '30']) {
             let v = `${String(h).padStart(2, '0')}:${m}`;
             s.add(new Option(v, v));
         }
     }
+    // Restore previous value only if it's still valid in the new range
+    if (prev && parseInt(prev.split(':')[0]) >= startHour) s.value = prev;
+}
+
+function getStartHourFromSelectedDays() {
+    const checked = Array.from(document.querySelectorAll('#available-date input:checked'))
+        .map(el => el.value);
+
+    if (checked.length === 0) return 19; // default to 7pm if nothing selected yet
+
+    const isWeekendOnly = checked.some(d => d === 'Sat' || d === 'Sun');
+    return isWeekendOnly ? 14 : 19; // 2pm if any weekend, 7pm if Mon/Fri only
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -607,8 +664,8 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProgressBlocks(1);
     updateProgressBlocks(1);
 
-    generateTimeOptions('preferred-time');
-    generateTimeOptions('secondary-time');
+    generateTimeOptions('preferred-time', 19);
+    generateTimeOptions('secondary-time', 19);
     setupServiceLogic();
     toggleSubmitButton();
     // Prevent same time selection
@@ -625,15 +682,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('languageChanged', () => {
         render();
         // 2. สั่งให้แสดงผล Step ล่าสุดที่ผู้ใช้เปิดค้างไว้ (แก้ปัญหาเมนูหาย)
-        document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
-        const activeStep = document.getElementById(`step-${currentStep}`);
-        if (activeStep) activeStep.classList.remove('hidden');
+        // document.querySelectorAll('.step-container').forEach(el => el.classList.add('hidden'));
+        // const activeStep = document.getElementById(`step-${currentStep}`);
+        // if (activeStep) activeStep.classList.remove('hidden');
         //document.getElementById(`step-${currentStep}`).classList.remove('hidden');
 
         // 3. อัปเดตแถบ Progress Bar ให้เป็นสีตาม Step ปัจจุบัน
-        updateProgressBlocks(currentStep);
+        // updateProgressBlocks(currentStep);
         
         // 4. ตรวจสอบว่าฟิลด์ Video Link ควรโชว์หรือซ่อน (สำหรับบริการ Critique)
-        setupServiceLogic();
+        // setupServiceLogic();
     })
 });
