@@ -67,7 +67,7 @@ const translations = {
                                                                             "Lookahead drills tailored to your speed",
                                                                             "Deep dive into effiency and ergonomics"
                                                                             ]},
-            { name: "Mastery Pack Live 1-on-1 (4 Sessions)", price: "฿1,550", saving: "Save ฿130", desc: ["Comprehensive progression with a structured 4-week training plan",
+            { name: "Mastery Pack Live 1-on-1 (4 Sessions)", price: "฿1,550", saving: "Save ฿130", saving_desc: "vs individual sessions", desc: ["Comprehensive progression with a structured 4-week training plan",
                                                                                                             "Weekly check in to track your progress",
                                                                                                             "Focus on all aspects; Algorithm, Ergonomics and Efficiencies."
                                                                                                             ]}
@@ -110,7 +110,7 @@ const translations = {
                                                                     "ฝึกการมองล่วงหน้าตามระดับความเหมาะสม",
                                                                     "เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน"
             ] },
-            { name: "แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)", price: "฿1,550", saving: "ประหยัด ฿130", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
+            { name: "แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)", price: "฿1,550", saving: "ประหยัด ฿130", saving_desc: "เมื่อเทียบกลับคลาสรายครั้ง", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
                                                                                                         "ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม",
                                                                                                         "ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้",
             ] }
@@ -416,7 +416,7 @@ function nextStep(step) {
     if (!allValid && step > currentStep) return; // Block forward movement if invalid
     
     const serviceValue = document.getElementById('service-select').value.toLowerCase();
-    const isCritique = serviceValue.includes('Analysis');
+    const isCritique = serviceValue.includes('analysis');
 
     // Skip Step 2 (Logistics) if it's a Critique service
     if (step === 2 && isCritique) {
@@ -511,7 +511,7 @@ function render() {
                 <div class="mt-auto">
                     <div class="mb-6">
                         <div class="text-3xl font-bold text-blue-500">${s.price}</div>
-                        ${s.saving ? `<div class="text-sm text-green-400 font-semibold mt-1">${s.saving} vs individual sessions</div>` : ''}
+                        ${s.saving ? `<div class="text-sm text-green-400 font-semibold mt-1">${s.saving} ${s.saving_desc}</div>` : ''}
                     </div>
                     <button 
                     onclick="scrollToBooking('${s.name}')"

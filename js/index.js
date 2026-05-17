@@ -62,7 +62,7 @@ const content = {
     // ... rest of content same as before
     introTitle: 'เกี่ยวกับผม',
     introText1: 'สวัสดีครับผมณัฐภัทร มาทานี ผมเป็นนักแข่งรูบิกที่มุ่งเน้นการช่วยให้ทุกคนทำลายสถิติส่วนตัวด้วยการฝึกฝนอย่างเป็นระบบและมีความสนุกไปกับการฝึก',
-    introText2: 'เว็บไซต์นี้เป็นแหล่งรวมทุกอย่างสำหรับผู้ที่สนใจพัฒนาความสามารถด้านรูบิก ตั้งแต่คอร์สพื้นฐานไปจนถึงเทคนิคขั้นสูงอย่างสำหรับรูบิกหลายประเภท พร้อมบริการโค้ขแบบตัวต่อตัวเพื่อพัฒนาทั้งทักษะและวิธีคิดของคุณ',
+    introText2: 'เว็บไซต์นี้เป็นแหล่งรวมทุกอย่างสำหรับผู้ที่สนใจพัฒนาความสามารถด้านรูบิก ตั้งแต่คอร์สพื้นฐานไปจนถึงเทคนิคขั้นสูงอย่างสำหรับรูบิกหลายประเภท พร้อมบริการโค้ชแบบตัวต่อตัวเพื่อพัฒนาทั้งทักษะและวิธีคิดของคุณ',
     courseCards: [
         { title: 'พื้นฐาน 3×3', price: '฿690', desc: 'เริ่มต้นแก้รูบิกส์ตั้งแต่ศูนย์' },
         { title: 'ระดับกลาง CFOP', price: '฿1,390', desc: 'พัฒนาเทคนิคและความเร็ว' },
@@ -86,7 +86,10 @@ const content = {
 };
 
 function applyLang() {
-    const c = content[window.currentLang];
+    const c = content[window.currentLang] || content['en'];
+    if (!c) return;
+    
+    // const c = content[window.currentLang];
     
     // Update basic text
     document.getElementById('heroSubtitle').textContent = c.heroSubtitle;

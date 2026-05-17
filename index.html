@@ -10,10 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Sarabun:wght@100..800&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src='js/index.js' defer></script>
+  <script src='js/langswitch.js' defer></script>
   <script src='js/navbar.js' defer></script>
   <script src='js/footer.js' defer></script>
-  <script src='js/langswitch.js' defer></script>
+  <script src='js/index.js' defer></script>
   
   <style>
     /* Ensure elements are visible if JS fails, but animated if it works */
@@ -34,7 +34,7 @@
   
   <my-navbar></my-navbar>
 
-  <section class="min-h-[90vh] flex items-center justify-center pt-16">
+  <section class="min-h-[90vh] flex items-center justify-center pt-24 md:pt-16">
     <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
       
       <!-- Larger Image Container -->
@@ -48,22 +48,22 @@
         />
       </div>
 
-      <p id="heroSubtitle" class="text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed"></p>
+      <p id="heroSubtitle" class="text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0"></p>
       
       <a href="#courses" class="mt-12 inline-block bg-indigo-600 hover:bg-indigo-500 transition rounded-full px-12 py-4 font-bold text-sm uppercase tracking-wider shadow-lg">View Courses</a>
     </div>
   </section>
 
   <!-- About Me / Introduction Section -->
-  <section id="about" class="py-24 relative overflow-hidden">
+  <section id="about" class="py-12 md:py-24 relative overflow-hidden">
     <!-- Subtle background glow -->
     <div class="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-indigo-600/10 blur-[120px] -z-10"></div>
 
     <div class="max-w-6xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
         
         <!-- Image Placeholder Container -->
-        <div class="relative aspect-square md:aspect-auto md:h-[500px] bg-neutral-900 rounded-3xl border border-neutral-800 overflow-hidden group">
+        <div class="relative aspect-[4/3] md:aspect-auto md:h-[500px] bg-neutral-900 rounded-3xl border border-neutral-800 overflow-hidden group">
           <!-- SVG Placeholder for when image is missing -->
           <div class="absolute inset-0 flex items-center justify-center bg-neutral-900 group-hover:scale-105 transition-transform duration-700">
             <!-- <span class="text-neutral-700 font-bold uppercase tracking-widest">Action Shot Placeholder</span> -->
@@ -87,7 +87,7 @@
           </div>
 
           <!-- Mini Stats/Links -->
-          <div class="grid grid-cols-2 gap-4 pt-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
               <!-- WCA Profile Link -->
               <a href="https://www.worldcubeassociation.org/persons/2011MAHT02" target="_blank" 
                 class="p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:border-indigo-500 hover:bg-neutral-800/50 transition-all group">
@@ -117,7 +117,7 @@
   </section>
 
   <!-- Journey Section (New) -->
-  <section id="journey" class="py-24 relative overflow-hidden">
+  <section id="journey" class="py-12 md:py-24 relative overflow-hidden">
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 id="journeyTitle" class="text-4xl md:text-5xl font-bold text-white mb-4"></h2>
@@ -136,7 +136,7 @@
   </section>
 
    <!-- Enhanced Courses & Pricing Section -->
-  <section id="courses" class="py-24 relative">
+  <section id="courses" class="py-12 md:py-24 relative">
     
     <div class="max-w-6xl mx-auto px-6">
       
@@ -154,14 +154,14 @@
       </div>
 
       <!-- Course Cards Grid -->
-      <div id="courseCards" class="grid md:grid-cols-3 gap-8"> 
+      <div id="courseCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"> 
         <!-- Cards are injected via JavaScript -->
       </div>
     </div>
   </section>
 
   <!-- Coaching Section with Sample Cards -->
-  <section id="coaching" class="py-24 bg-neutral-900/50 border-y border-neutral-800/50 relative overflow-hidden">
+  <section id="coaching" class="py-12 md:py-24 bg-neutral-900/50 border-y border-neutral-800/50 relative overflow-hidden">
     <div class="absolute -right-20 top-0 w-96 h-96 bg-indigo-600/5 blur-[120px] rounded-full"></div>
 
     <div class="max-w-6xl mx-auto px-6">
@@ -181,7 +181,7 @@
       <!-- Coaching Sample Cards -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Card 1: Standard Session -->
-        <div class="bg-neutral-950 p-8 rounded-3xl border border-neutral-800 hover:border-indigo-500/50 transition-all group relative overflow-hidden">
+        <div class="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-indigo-500/50 transition-all group relative overflow-hidden">
           <div class="absolute top-0 right-0 p-4">
             <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-400/10 px-3 py-1 rounded-full">Popular</span>
           </div>
@@ -199,11 +199,20 @@
               Personalized feedback and improvement tips
             </li>
           </ul>
+
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-xs uppercase tracking-widest text-neutral-500 font-bold" data-en="Starting from" data-th="เริ่มต้น">Starting from</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-3xl font-bold text-white" data-en="฿130" data-th="฿130">฿130</span>
+            <span class="text-neutral-500 text-sm" data-en="/ service" data-th="/ ครั้ง">/ service</span>
+          </div>
+
           <a href="coaching.html" class="block text-center bg-neutral-900 group-hover:bg-indigo-600 transition-colors py-3 rounded-xl font-bold text-sm">Learn More</a>
         </div>
 
         <!-- Card 2: Advanced Technical -->
-        <div class="bg-neutral-950 p-8 rounded-3xl border border-neutral-800 hover:border-purple-500/50 transition-all group relative overflow-hidden">
+        <div class="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-purple-500/50 transition-all group relative overflow-hidden">
           <h3 class="text-2xl font-bold mb-2 text-white" data-en="1-on-1 Coaching" data-th="โค้ชแบบตัวต่อตัว">1-on-1 Coaching</h3>
           <p class="text-neutral-400 mb-6 text-sm" data-en="A 30-minute or 60-minute deep dive into your current solving habits, efficiency leaks, and personalized hardware setup." 
                                                    data-th="คลาส 30 นาทีหรือ 1 ชั่วโมง ในการวิเคราะห์สไตล์การแก้โจทย์ของคุณ ชี้หาจุดเด่นและพัฒนาประสิทธิภาพการแก้ รวมไปถึงให้คำแนะนำด้านการปรับแต่งรูบิก"
@@ -218,6 +227,15 @@
               Personalized Drill Plan
             </li>
           </ul>
+
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-xs uppercase tracking-widest text-neutral-500 font-bold" data-en="Starting from" data-th="เริ่มต้น">Starting from</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-3xl font-bold text-white" data-en="฿240" data-th="฿240">฿240</span>
+            <span class="text-neutral-500 text-sm" data-en="/ session" data-th="/ ครั้ง">/ session</span>
+          </div>
+
           <a href="coaching.html" class="block text-center bg-neutral-900 group-hover:bg-purple-600 transition-colors py-3 rounded-xl font-bold text-sm">Learn More</a>
         </div>
       </div>
@@ -225,7 +243,7 @@
   </section>
 
   <!-- Free Resources Section -->
-  <section id="resources" class="py-24 relative overflow-hidden">
+  <section id="resources" class="py-12 md:py-24 relative overflow-hidden">
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div class="text-center md:text-left">
@@ -296,10 +314,10 @@
     </div>
   </section>
 
-  <section id="contact" class="py-24 bg-neutral-900/50">
+  <section id="contact" class="py-12 md:py-24 bg-neutral-900/50">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h2 id="contactTitle" class="text-3xl font-bold tracking-tight mb-4"></h2>
-      <p class="text-neutral-400 text-lg">We will contact you within 24 hours.</p>
+      <p class="text-neutral-400 text-lg" data-en="We will contact you within 24 hours" data-th="เราจะติดต่อกลับภายใน 24 ชั่วโมง">We will contact you within 24 hours.</p>
     </div>
   </section>
 
