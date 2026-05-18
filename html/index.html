@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NTP Cuber | Rubik's Cube Course & Coaching</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Sarabun:wght@100..800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src='js/langswitch.js' defer></script>
+  <script src='js/navbar.js' defer></script>
+  <script src='js/footer.js' defer></script>
+  <script src='js/index.js' defer></script>
+  
+  <style>
+    /* Ensure elements are visible if JS fails, but animated if it works */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.17, 0.55, 0.55, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 font-sans tracking-tight">
+
+  <div class="absolute inset-x-0 top-[-10rem] h-[30rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10"></div>
+  
+  <my-navbar></my-navbar>
+
+  <section class="min-h-[90vh] flex items-center justify-center pt-24 md:pt-16">
+    <div class="max-w-6xl mx-auto px-6 text-center flex flex-col items-center">
+      
+      <!-- Larger Image Container -->
+      <div class="relative group mb-12">
+        <!-- Expanded blur effect to match larger image -->
+        <div class="absolute inset-[-2rem] bg-indigo-500/20 rounded-full blur-[80px] group-hover:bg-purple-500/30 transition-all duration-700"></div>
+        <img 
+          src="image/web_profile.jpg" 
+          alt="NTP Cuber Profile" 
+          class="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-neutral-800 p-1 group-hover:border-indigo-500 transition-all duration-500 shadow-2xl"
+        />
+      </div>
+
+      <p id="heroSubtitle" class="text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0"></p>
+      
+      <a href="#courses" class="mt-12 inline-block bg-indigo-600 hover:bg-indigo-500 transition rounded-full px-12 py-4 font-bold text-sm uppercase tracking-wider shadow-lg">View Courses</a>
+    </div>
+  </section>
+
+  <!-- About Me / Introduction Section -->
+  <section id="about" class="py-12 md:py-24 relative overflow-hidden">
+    <!-- Subtle background glow -->
+    <div class="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-indigo-600/10 blur-[120px] -z-10"></div>
+
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        
+        <!-- Image Placeholder Container -->
+        <div class="relative aspect-[4/3] md:aspect-auto md:h-[500px] bg-neutral-900 rounded-3xl border border-neutral-800 overflow-hidden group">
+          <!-- SVG Placeholder for when image is missing -->
+          <div class="absolute inset-0 flex items-center justify-center bg-neutral-900 group-hover:scale-105 transition-transform duration-700">
+            <!-- <span class="text-neutral-700 font-bold uppercase tracking-widest">Action Shot Placeholder</span> -->
+            <!-- Replace the div above with an <img> tag when ready -->
+            <img src="image/action_profile1.JPG" class="w-full h-full object-cover" />
+          </div>
+          <!-- Decorative Border Overlay -->
+          <div class="absolute inset-0 border-2 border-indigo-500/20 rounded-3xl pointer-events-none"></div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="space-y-8">
+          <div>
+            <h2 id="introTitle" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6"></h2>
+            <div class="h-1.5 w-20 bg-indigo-600 rounded-full"></div>
+          </div>
+          
+          <div class="space-y-6 text-lg leading-relaxed text-neutral-300">
+            <p id="introText1"></p>
+            <p id="introText2"></p>
+          </div>
+
+          <!-- Mini Stats/Links -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <!-- WCA Profile Link -->
+              <a href="https://www.worldcubeassociation.org/persons/2011MAHT02" target="_blank" 
+                class="p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:border-indigo-500 hover:bg-neutral-800/50 transition-all group">
+                  <div class="flex items-center gap-3 mb-1">
+                      <!-- WCA Logo (SVG from Simple Icons) -->
+                      <img src="https://thailandcube.vercel.app/img/wca.svg" class="w-5 h-5" alt="WCA Logo">
+                      <span class="block text-indigo-400 font-bold text-xl group-hover:text-indigo-300">My WCA Profile</span>
+                  </div>
+                  <span class="text-xs text-neutral-500 uppercase tracking-wide" data-en="Official Results" data-th="ผลการแข่งขันทางการ">Official Profile</span>
+              </a>
+
+              <!-- YouTube Link -->
+              <a href="https://www.youtube.com/@NTPCuber" target="_blank" 
+                class="p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:border-red-500 hover:bg-neutral-800/50 transition-all group">
+                  <div class="flex items-center gap-3 mb-1">
+                      <!-- YouTube Logo -->
+                      <img src="https://cdn.simpleicons.org/youtube/ff0000" class="w-5 h-5" alt="YouTube Logo">
+                      <span class="block text-indigo-400 font-bold text-xl group-hover:text-red-400">My Channel</span>
+                  </div>
+                  <span class="text-xs text-neutral-500 uppercase tracking-wide" data-en="Cubing Videos" data-th="คลิปเกี่ยวกับรูบิก">Cubing Videos</span>
+              </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey Section (New) -->
+  <section id="journey" class="py-12 md:py-24 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 id="journeyTitle" class="text-4xl md:text-5xl font-bold text-white mb-4"></h2>
+        <div class="h-1.5 w-20 bg-indigo-600 rounded-full mx-auto"></div>
+      </div>
+
+      <div class="relative space-y-12">
+        <!-- Vertical Line -->
+        <div class="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-800 -translate-x-1/2"></div>
+        
+        <div id="journeyGrid" class="space-y-12">
+          <!-- Journey items injected by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+   <!-- Enhanced Courses & Pricing Section -->
+  <section id="courses" class="py-12 md:py-24 relative">
+    
+    <div class="max-w-6xl mx-auto px-6">
+      
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div class="text-center md:text-left">
+          <h2 id="coursesTitle" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">Available Courses</h2>
+          <p id="coursesSubtitle" class="text-neutral-400 max-w-xl text-lg">Structured learning paths designed to take you from your first solve to sub-10 speeds.</p>
+        </div>
+        <a href="404.html" class="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+          View All Courses 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Course Cards Grid -->
+      <div id="courseCards" class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"> 
+        <!-- Cards are injected via JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Coaching Section with Sample Cards -->
+  <section id="coaching" class="py-12 md:py-24 bg-neutral-900/50 border-y border-neutral-800/50 relative overflow-hidden">
+    <div class="absolute -right-20 top-0 w-96 h-96 bg-indigo-600/5 blur-[120px] rounded-full"></div>
+
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div class="text-center md:text-left">
+          <h2 id="coachingTitle" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"></h2>
+          <p id="coachingText" class="text-neutral-400 max-w-xl text-lg"></p>
+        </div>
+        <a href="coaching.html" class="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+          <span data-en="View All Services" data-th="เลือกชมบริการทั้งหมด">View All Services</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Coaching Sample Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Card 1: Standard Session -->
+        <div class="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-indigo-500/50 transition-all group relative overflow-hidden">
+          <div class="absolute top-0 right-0 p-4">
+            <span class="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-400/10 px-3 py-1 rounded-full">Popular</span>
+          </div>
+          <h3 class="text-2xl font-bold mb-2 text-white" data-en="Solve Critique" data-th="วิเคราะห์การแก้โจทย์">Solve Critique</h3>
+          <p class="text-neutral-400 mb-6 text-sm" data-en="A written or video feedback on your solving style, your strengths and what you need to be working on." 
+                                                   data-th="เอกสารหรือวิดีโออธิบายลักษณะและสไตล์การแก้โจทย์ จุดแข็ง และสิ่งที่คุณต้องไปพัฒนาเพิ่มเติม"
+          >A written or video feedback on your solving style, your strengths and what you need to be working on.</p>
+          <ul class="space-y-3 mb-8 text-sm text-neutral-300">
+            <li class="flex items-center gap-2" data-en="Detailed breakdown of your solving style" data-th="วิเคราะห์สไตล์การแก้โจทย์อย่างละเอียด">
+              <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+              Detailed breakdown of your solving style
+            </li>
+            <li class="flex items-center gap-2" data-en="Personalized feedback and improvement tips" data-th="ให้คำแนะนำที่เหมาะสมกับตัวคุณ">
+              <svg class="w-4 h-4 text-indigo-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+              Personalized feedback and improvement tips
+            </li>
+          </ul>
+
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-xs uppercase tracking-widest text-neutral-500 font-bold" data-en="Starting from" data-th="เริ่มต้น">Starting from</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-3xl font-bold text-white" data-en="฿200" data-th="฿200">฿200</span>
+            <span class="text-neutral-500 text-sm" data-en="/ service" data-th="/ ครั้ง">/ service</span>
+          </div>
+
+          <a href="coaching.html" class="block text-center bg-neutral-900 group-hover:bg-indigo-600 transition-colors py-3 rounded-xl font-bold text-sm">Learn More</a>
+        </div>
+
+        <!-- Card 2: Advanced Technical -->
+        <div class="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-purple-500/50 transition-all group relative overflow-hidden">
+          <h3 class="text-2xl font-bold mb-2 text-white" data-en="1-on-1 Coaching" data-th="โค้ชแบบตัวต่อตัว">1-on-1 Coaching</h3>
+          <p class="text-neutral-400 mb-6 text-sm" data-en="A 30-minute or 60-minute deep dive into your current solving habits, efficiency leaks, and personalized hardware setup." 
+                                                   data-th="คลาส 30 นาทีหรือ 1 ชั่วโมง ในการวิเคราะห์สไตล์การแก้โจทย์ของคุณ ชี้หาจุดเด่นและพัฒนาประสิทธิภาพการแก้ รวมไปถึงให้คำแนะนำด้านการปรับแต่งรูบิก"
+          >A 30-minute or 60-minute deep dive into your current solving habits, efficiency leaks, and personalized hardware setup.</p>
+          <ul class="space-y-3 mb-8 text-sm text-neutral-300">
+            <li class="flex items-center gap-2" data-en="Live Solve Critiques" data-th="วิเคราะห์การแก้โจทย์สด ๆ ในคลาส">
+              <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+              Live Solve Critiques
+            </li>
+            <li class="flex items-center gap-2" data-en="Personalized Drill Plan" data-th="จัดแผนการฝึกทักษะเฉพาะคุณ">
+              <svg class="w-4 h-4 text-purple-500" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>
+              Personalized Drill Plan
+            </li>
+          </ul>
+
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="text-xs uppercase tracking-widest text-neutral-500 font-bold" data-en="Starting from" data-th="เริ่มต้น">Starting from</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-4">
+            <span class="text-3xl font-bold text-white" data-en="฿240" data-th="฿240">฿240</span>
+            <span class="text-neutral-500 text-sm" data-en="/ session" data-th="/ ครั้ง">/ session</span>
+          </div>
+
+          <a href="coaching.html" class="block text-center bg-neutral-900 group-hover:bg-purple-600 transition-colors py-3 rounded-xl font-bold text-sm">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Free Resources Section -->
+  <section id="resources" class="py-12 md:py-24 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div class="text-center md:text-left">
+          <h2 id="resourcesTitle" class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4"></h2>
+          <p id="resourcesText" class="text-neutral-400 max-w-xl text-lg"></p>
+        </div>
+        <a href="resources.html" class="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+          <span data-en="Explore All Resources" data-th="ชมแหล่งเรียนรู้ทั้งหมด">Explore All Resources</span> 
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- Resource Feature Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1: Algorithms -->
+        <a href="resources.html">
+          <div class="bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl hover:bg-neutral-900/60 transition-all group">
+            <div class="w-12 h-12 bg-indigo-600/20 rounded-lg flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-3" data-en="Algorithm Sheets" data-th="ชีทสูตร">Algorithm Sheets</h3>
+            <p class="text-neutral-500 text-sm leading-relaxed" data-en="My personal algorithm sets for multiple WCA events." data-th="แหล่งรวมสูตรสำหรับรูบิกหลากหลายประเภทตาม WCA"
+            >My personal algorithm sets for multiple WCA events.</p>
+          </div>
+        </a>
+
+        <div class="relative bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
+          <div class="absolute top-4 right-4">
+            <span class="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-purple-500/30" 
+                  data-en="Coming Soon" data-th="เร็วๆ นี้">
+              Coming Soon
+            </span>
+          </div>
+
+          <div class="w-12 h-12 bg-purple-600/10 rounded-lg flex items-center justify-center text-purple-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          
+          <h3 class="text-xl font-bold mb-3 text-neutral-300">Training Plans</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed">Structured schedules to improve your TPS, look-ahead, and cross efficiency.</p>
+        </div>
+
+        <div class="relative bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
+          <div class="absolute top-4 right-4">
+            <span class="px-2 py-1 bg-cyan-600/20 text-cyan-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-cyan-500/30"
+                  data-en="Coming Soon" data-th="เร็วๆ นี้">
+              Coming Soon
+            </span>
+          </div>
+
+          <div class="w-12 h-12 bg-cyan-600/10 rounded-lg flex items-center justify-center text-cyan-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          
+          <h3 class="text-xl font-bold mb-3 text-neutral-300">Solving Tips</h3>
+          <p class="text-neutral-500 text-sm leading-relaxed">Quick video breakdowns of finger tricks and advanced logic-based solves.</p>
+        </div>
+      
+    </div>
+  </section>
+
+  <section id="contact" class="py-12 md:py-24 bg-neutral-900/50">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 id="contactTitle" class="text-3xl font-bold tracking-tight mb-4"></h2>
+      <p class="text-neutral-400 text-lg" data-en="We will contact you within 24 hours" data-th="เราจะติดต่อกลับภายใน 24 ชั่วโมง">We will contact you within 24 hours.</p>
+    </div>
+  </section>
+
+  <my-footer></my-footer>
+
+</body>
+</html>

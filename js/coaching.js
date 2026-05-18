@@ -65,7 +65,7 @@ const translations = {
             { name: "Live 1-on-1 Session (1 Hour)", price: "฿420", desc: ["Interactive coaching via video call.",
                                                                             "Real-time solve breakdown",
                                                                             "Lookahead drills tailored to your speed",
-                                                                            "Deep dive into effiency and ergonomics"
+                                                                            "Deep dive into efficiency and ergonomics"
                                                                             ]},
             { name: "Mastery Pack Live 1-on-1 (4 Sessions)", price: "฿1,550", saving: "Save ฿130", saving_desc: "vs individual sessions", desc: ["Comprehensive progression with a structured 4-week training plan",
                                                                                                             "Weekly check in to track your progress",
@@ -91,7 +91,7 @@ const translations = {
         bookNow: "จองเลย",
         services: [
             { name: "ตรวจการแก้แบบเขียน (Video Analysis)", price: "฿200", desc: ["วิเคราะห์การแก้ 5 รอบแบบละเอียด",
-                                                                                "ชี้ให้เห็นจุดแข็งและจุดที่่พัฒนาได้",
+                                                                                "ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้",
                                                                                 "วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน",
                                                                                 "ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง"
                                                                               ] },
@@ -110,7 +110,7 @@ const translations = {
                                                                     "ฝึกการมองล่วงหน้าตามระดับความเหมาะสม",
                                                                     "เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน"
             ] },
-            { name: "แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)", price: "฿1,550", saving: "ประหยัด ฿130", saving_desc: "เมื่อเทียบกลับคลาสรายครั้ง", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
+            { name: "แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)", price: "฿1,550", saving: "ประหยัด ฿130", saving_desc: "เมื่อเทียบกับคลาสรายครั้ง", desc: ["แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล",
                                                                                                         "ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม",
                                                                                                         "ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้",
             ] }
@@ -515,7 +515,7 @@ function render() {
                     </div>
                     <button 
                     onclick="scrollToBooking('${s.name}')"
-                    class="w-full py-3 bg-neutral-800 hover:bg-indigo-600 text-white font-bod py-3 round-xl transition-colors shadow-lg active:scale-95"
+                    class="w-full py-3 bg-neutral-800 hover:bg-indigo-600 text-white font-bold rounded-xl transition-colors shadow-lg active:scale-95"
                     >${trans.bookNow}</button>
                 </div>
             </div>

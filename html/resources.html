@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NTP Cuber | Rubik's Cube Course & Coaching</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- import script -->
+  <script src='js/resources.js' defer></script>
+  <script src='js/langswitch.js' defer></script>
+  <script src='js/navbar.js' defer></script>
+  <script src='js/footer.js' defer></script>
+
+
+</head>
+<body class="bg-neutral-950 text-neutral-100 font-sans">
+
+  <!-- Gradient Accent -->
+  <div class="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10"></div>
+
+  <!-- Navbar -->
+  <my-navbar></my-navbar>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 id="hero-title" class="text-4xl md:text-6xl font-bold mb-6">My Cubing Resources</h1>
+      <p id="hero-desc" class="text-neutral-400 max-w-2xl text-lg">Algorithm sets I use, organized by event and difficulty, designed for efficient practice.</p>
+    </div>
+  </section>
+
+  <!-- 2x2 Section -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 id="2x2-title" class="text-3xl font-semibold mb-10">2×2 Cube: EG Method</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <a href="algorithms/2x2/cll.html">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">CLL</h3>
+            <p class="text-neutral-400">Last layer algorithm with solved first layer.</p>
+            <img src="image/face-cll.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+        <a href="algorithms/2x2/eg1.html">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">EG-1</h3>
+            <p class="text-neutral-400">Last layer algorithm with adjacently swapped solved face.</p>
+            <img src="image/face-eg1.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+        <a href="algorithms/2x2/eg2.html">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">EG-2/Anti-CLL</h3>
+            <p class="text-neutral-400">Last layer algorithm with diagonally swapped solved face.</p>
+            <img src="image/face-eg2.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3x3 Section -->
+  <section class="py-20 bg-neutral-900">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 id="3x3-title" class="text-3xl font-semibold mb-10">3×3 Cube (Coming Soon)</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+          <h3 class="text-xl font-semibold mb-2">OLL</h3>
+          <p class="text-neutral-400">Orient the last layer in one step.</p>
+        </div>
+        <div class="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+          <h3 class="text-xl font-semibold mb-2">PLL</h3>
+          <p class="text-neutral-400">Permute the last layer.</p>
+        </div>
+        <div class="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+          <h3 class="text-xl font-semibold mb-2">ZBLL</h3>
+          <p class="text-neutral-400">Full last layer algorithms for advanced speedcubing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Megaminx Section -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 id="mega-title" class="text-3xl font-semibold mb-10">Megaminx: 4 Look Last Layer</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <a href="algorithms/megaminx/4lll.html#eo">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">EO</h3>
+            <p class="text-neutral-400">Edge Orientation</p>
+            <img src="image/megaminx-eo.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+        <a href="algorithms/megaminx/4lll.html#co">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">CO</h3>
+            <p class="text-neutral-400">Corner Orientation</p>
+            <img src="image/megaminx-co.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+        <a href="algorithms/megaminx/4lll.html#ep">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">EP</h3>
+            <p class="text-neutral-400">Edge Permutation</p>
+            <img src="image/megaminx-ep.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+        <a href="algorithms/megaminx/4lll.html#cp">
+          <div class="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+            <h3 class="text-xl font-semibold mb-2">CP</h3>
+            <p class="text-neutral-400">Corner Permutation</p>
+            <img src="image/megaminx-cp.png" alt="" class="w-full max-w-[120px] md:max-w-[180px] h-auto object-contain mx-auto mt-4" />
+        </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <my-footer></my-footer>
+
+</body>
+</html>
