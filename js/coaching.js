@@ -370,6 +370,7 @@ function scrollToBooking(serviceName) {
         select.value = serviceName;
         // 2. Trigger the 'change' event to show/hide the correct form groups
         select.dispatchEvent(new Event('change'));
+        showStep(1);                        // prevent user stucking on blank page form
     }
 
     // 3. Smoothly scroll to the booking section
@@ -389,10 +390,14 @@ function showStep(stepNumber) {
     // const target = document.getElementById(`stepNumber-${stepNumber}`);
     // if (target) target.classList.remove('hidden');
 
-    const service = document.getElementById('service-select').value;
-    const isCritique = service && service.toLowerCase().includes('analysis');
+    // const service = document.getElementById('service-select').value;
+    // const isCritique = service && service.toLowerCase().includes('analysis');
     
-    renderProgressBlocks(isCritique ? 2 : 3);
+    // renderProgressBlocks(isCritique ? 2 : 3);
+
+    // ✅ FIX: Use your existing helper function to determine the correct progress mode (1, 2, or 3)
+    const mode = getProgressModeFromService();
+    renderProgressBlocks(mode);
     
     // 3. Update the progress bar
     updateProgressBlocks(stepNumber);
