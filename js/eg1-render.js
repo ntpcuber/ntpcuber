@@ -153,7 +153,6 @@ function sectionHTML(set) {
               aria-label="Anchor link"
               title="Anchor link"
             >
-              #anchor
             </a>
           </div>
         </div>
