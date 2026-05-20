@@ -16,9 +16,13 @@
   <script src='js/langswitch.js' defer></script>
   <script src='js/navbar.js' defer></script>
   <script src='js/footer.js' defer></script>
-
-
+  <script>
+  if (location.pathname.endsWith('.html')) {
+    location.replace(location.pathname.replace('.html', ''));
+  }
+  </script>
 </head>
+
 <body class="bg-neutral-950 text-neutral-100 font-sans">
 
   <!-- Gradient Accent -->
