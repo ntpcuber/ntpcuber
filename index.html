@@ -14,6 +14,11 @@
   <script src='js/navbar.js' defer></script>
   <script src='js/footer.js' defer></script>
   <script src='js/index.js' defer></script>
+  <script>
+  if (location.pathname.endsWith('.html')) {
+    location.replace(location.pathname.replace('index.html', ''));
+  }
+  </script>
   
   <style>
     /* Ensure elements are visible if JS fails, but animated if it works */
