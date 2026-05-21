@@ -53,18 +53,24 @@ https://ntpcuber.github.io/ntpcuber/
 
 ## 📁 Project Structure
 ```bash
-ntpcuber2/
+ntpcuber/
 ├── algorithms/
 │   ├── 2x2/
+│   │   ├── cll-data.json
 │   │   ├── cll.html
+│   │   ├── eg1-data.json
 │   │   ├── eg1.html
+│   │   ├── eg2-data.json
 │   │   └── eg2.html
 │   └── megaminx/
 │       └── 4lll.html
 │
 ├── js/
 │   ├── alg.js
+│   ├── cll-render.js
 │   ├── coaching.js
+│   ├── eg1-render.js
+│   ├── eg2-render.js
 │   ├── footer.js
 │   ├── index.js
 │   ├── langswitch.js
