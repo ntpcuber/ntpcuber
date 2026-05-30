@@ -185,12 +185,27 @@
       setLoading('login-btn', true);
       clearMessages();
       try {
-        await _NTPAuth.signIn(
+        // FIX: Changed { data } to just data
+        const data = await _NTPAuth.signIn(
           document.getElementById('login-email').value.trim(),
           document.getElementById('login-password').value
         );
+
+        const user = data.user;
+        const isAdmin = user?.app_metadata?.is_admin === true;
+        
         const params = new URLSearchParams(location.search);
-        location.href = params.get('next') || '/dashboard.html';
+        const nextPath = params.get('next');
+
+        // Redirect logic
+        if (nextPath) {
+          location.href = nextPath;
+        } else if (isAdmin) {
+          location.href = '/admin.html';
+        } else {
+          location.href = '/dashboard.html';
+        }
+
       } catch(err) {
         showError(err.message);
       } finally {
