@@ -118,7 +118,7 @@ const fourLLLData: MegaSection[] = [
           { img: '/image/mega-ep-01.png', alg: "R U R' F' R U R' U' R' F R2 U' R'" },
           { img: '/image/mega-ep-02.png', alg: "L U' R' U L' U2' R U' R' U2 R",    alt: "alt: [U2] R U R' F' R U R' U' R' F R2 U' R'" },
           { img: '/image/mega-ep-03.png', alg: "R2 U2' R2' U' R2 U2' R2'" },
-          { img: '/image/mega-ep-04.png', alg: "R2' U2 R2 U R2' U2 R2" },
+          { img: '/image/mega-ep-04.png', alg: "R2' U2 R2 U R2' U2 R2",            alt: "alt: [U'] R2 U2' R2' U' R2 U2' R2'" },
         ],
       },
       {
