@@ -263,43 +263,11 @@ export default function CoachingPage() {
   // Step navigation (mirrors nextStep() logic)
   function goToStep(target: number) {
     // Going backwards — always allow
-    if (target < currentStep) {
-      setCurrentStep(target)
-      return
-    }
+    // if (target < currentStep) {
+    //   setCurrentStep(target)
+    //   return
+    // }
 
-    // Validate step 1
-    if (currentStep === 1) {
-      if (!selectedService) {
-        alert(lang === 'en' ? 'Please select a service.' : 'กรุณาเลือกบริการ')
-        return
-      }
-      if (isCritique && !videoLink.trim()) {
-        alert(lang === 'en' ? 'Please provide a video link.' : 'กรุณาใส่ลิงก์วิดีโอ')
-        return
-      }
-    }
-
-    // Validate step 2 (live sessions only)
-    if (currentStep === 2) {
-      if (!wcaEvent) {
-        alert(lang === 'en' ? 'Please select a WCA event.' : 'กรุณาเลือกประเภท')
-        return
-      }
-      if (selectedDays.length === 0) {
-        alert(lang === 'en' ? 'Please select at least one available day.' : 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน')
-        return
-      }
-      if (!preferredTime) {
-        alert(lang === 'en' ? 'Please select a preferred time.' : 'กรุณาเลือกเวลาที่สะดวก')
-        return
-      }
-      if (!secondaryTime) {
-        alert(lang === 'en' ? 'Please select a secondary time.' : 'กรุณาเลือกเวลาสำรอง')
-        return
-      }
-    }
-    
     let step = target
     if (step === 2 && isCritique) step = 3
     setCurrentStep(step)
@@ -554,7 +522,12 @@ export default function CoachingPage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">{trans.bookTitle}</h2>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={(e) => {
+            e.preventDefault()
+            if (currentStep === 1) { goToStep(2); return }
+            if (currentStep === 2) { goToStep(3); return }
+            handleSubmit(e)
+          }}>
 
             {/* Progress blocks */}
             <ProgressBar mode={progressMode} currentStep={currentStep} />
@@ -596,8 +569,8 @@ export default function CoachingPage() {
                 )}
 
                 <button
-                  type="button"
-                  onClick={() => goToStep(2)}
+                  type="submit"
+                  // onClick={() => goToStep(2)}
                   disabled={!selectedService}
                   className="w-full bg-blue-600 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
                 >
@@ -698,7 +671,7 @@ export default function CoachingPage() {
 
                 <div className="flex gap-4">
                   <button type="button" onClick={() => setCurrentStep(1)} className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition">Back</button>
-                  <button type="button" onClick={() => goToStep(3)} className="w-2/3 bg-blue-600 font-bold py-4 rounded-xl hover:bg-blue-700 transition">Next</button>
+                  <button type="submit" className="w-2/3 bg-blue-600 font-bold py-4 rounded-xl hover:bg-blue-700 transition">Next</button>
                 </div>
               </div>
             )}
