@@ -25,12 +25,12 @@ export default function CoursesPage() {
             </div>
             <div className="p-6">
               <div className="flex gap-2 mb-3">
-                <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">Advanced</span>
-                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">12 Lessons</span>
+                <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">Beginner</span>
+                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">9 Lessons</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Mastering ZBLL: The Full Guide</h3>
+              <h3 className="text-xl font-bold mb-2">Stepping into Cubing: The Beginner's Method</h3>
               <p className="text-neutral-400 text-sm mb-6">
-                Learn 492 algorithms through pattern recognition and efficient fingertricks.
+                Learn the easiest way to solve a Rubik's cube, with minimum algorithms.
               </p>
               <Link
                 href="/courses/zbll-mastery"
