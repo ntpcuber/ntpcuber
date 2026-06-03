@@ -36,7 +36,8 @@ export default function CoursesPage() {
                 href="/courses/zbll-mastery"
                 className="block text-center bg-neutral-800 hover:bg-blue-600 py-3 rounded-xl font-bold transition"
               >
-                Start Learning
+                {/* Start Learning */}
+                Coming Soon
               </Link>
             </div>
           </div>
