@@ -39,7 +39,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Brand */}
         <Link href="/" className="font-bold text-xl tracking-tighter text-white">
-          NTP Cuber <span className="text-indigo-500">Academy</span>
+          NTP Cuber <span className="text-blue-500">Academy</span>
         </Link>
 
         {/* Desktop nav */}
@@ -104,6 +104,20 @@ export default function Navbar() {
           <div className="hidden md:block">
             {!user ? (
               <Link href="/login" className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 transition text-xs font-bold text-white">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="w-3.5 h-3.5" /* Sizes the icon */
+                >
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" x2="3" y1="12" y2="12" />
+                </svg>
                 Login
               </Link>
             ) : (
