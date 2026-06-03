@@ -217,8 +217,10 @@ export default function CoachingPage() {
   const isCritique = selectedService.toLowerCase().includes('analysis')
   const progressMode: ProgressMode = !selectedService ? 1 : isCritique ? 2 : 3
 
-  // Time options — start at 14:00 if any weekend selected, else 19:00
-  const timeStartHour = selectedDays.some(d => d === 'Sat' || d === 'Sun') ? 14 : 19
+  // Time options — start at 14:00 if only weekend selected, else 19:00
+  const hasWeekend = selectedDays.some(d => d === 'Sat' || d === 'Sun')
+  const hasWeekday = selectedDays.some(d => d === 'Mon' || d === 'Fri')
+  const timeStartHour = hasWeekend && !hasWeekday ? 14 : 19
   const timeOptions = generateTimes(timeStartHour)
 
   // Pre-fill from auth
@@ -260,6 +262,44 @@ export default function CoachingPage() {
 
   // Step navigation (mirrors nextStep() logic)
   function goToStep(target: number) {
+    // Going backwards — always allow
+    if (target < currentStep) {
+      setCurrentStep(target)
+      return
+    }
+
+    // Validate step 1
+    if (currentStep === 1) {
+      if (!selectedService) {
+        alert(lang === 'en' ? 'Please select a service.' : 'กรุณาเลือกบริการ')
+        return
+      }
+      if (isCritique && !videoLink.trim()) {
+        alert(lang === 'en' ? 'Please provide a video link.' : 'กรุณาใส่ลิงก์วิดีโอ')
+        return
+      }
+    }
+
+    // Validate step 2 (live sessions only)
+    if (currentStep === 2) {
+      if (!wcaEvent) {
+        alert(lang === 'en' ? 'Please select a WCA event.' : 'กรุณาเลือกประเภท')
+        return
+      }
+      if (selectedDays.length === 0) {
+        alert(lang === 'en' ? 'Please select at least one available day.' : 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน')
+        return
+      }
+      if (!preferredTime) {
+        alert(lang === 'en' ? 'Please select a preferred time.' : 'กรุณาเลือกเวลาที่สะดวก')
+        return
+      }
+      if (!secondaryTime) {
+        alert(lang === 'en' ? 'Please select a secondary time.' : 'กรุณาเลือกเวลาสำรอง')
+        return
+      }
+    }
+    
     let step = target
     if (step === 2 && isCritique) step = 3
     setCurrentStep(step)
@@ -586,7 +626,7 @@ export default function CoachingPage() {
                 {/* Available days */}
                 <div>
                   <label className="block mb-3 text-neutral-400">
-                    {lang === 'th' ? '📅 วันที่สะดวก' : '📅 Available Day'}
+                    {lang === 'th' ? '📅 วันที่สะดวก (กรุณาเลือกอย่างน้อย 1 วัน)' : '📅 Available Day (select all that applies)'}
                   </label>
                   <div className="flex flex-wrap gap-3">
                     {DAYS.map(day => (
