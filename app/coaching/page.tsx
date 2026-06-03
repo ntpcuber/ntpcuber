@@ -6,7 +6,6 @@ import { supabase, getUser } from '@/lib/supabase'
 
 // ─── Data (exact copy of coaching.js) ────────────────────────────────────────
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwwqbpCMgiHXTgaCYfqt2z3WWfIdE6AEpUcf5pvsYHh5ZMF7a5lzWJYP8W0NFjsT4B0/exec'
 
 const WCA_EVENTS = ['3x3','2x2','4x4','5x5','6x6','7x7','OH (One-Handed)','Skewb','Pyraminx','Square-1','Megaminx']
 const DAYS = [
@@ -312,10 +311,17 @@ export default function CoachingPage() {
     }
 
     // Fire-and-forget to Google Apps Script (no-cors)
-    fetch(SCRIPT_URL, {
+    // fetch(SCRIPT_URL, {
+    //   method: 'POST',
+    //   mode: 'no-cors',
+    //   headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    //   body: JSON.stringify(payload),
+    // }).catch(err => console.error('Background send failed:', err))
+
+    // Custom API calling
+    fetch('/api/booking', {
       method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     }).catch(err => console.error('Background send failed:', err))
 
