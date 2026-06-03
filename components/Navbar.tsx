@@ -86,7 +86,7 @@ export default function Navbar() {
                   <div className="absolute left-full top-0 hidden group-hover/sub:block pl-1 min-w-[180px] z-50">
                     <div className="bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl py-2">
                       {['eo','co','ep','cp'].map(s => (
-                        <Link key={s} href={`/resources/megaminx#${s}`} className="block px-5 py-3 text-neutral-400 hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm uppercase">
+                        <Link key={s} href={`/resources/megaminx/4lll#${s}`} className="block px-5 py-3 text-neutral-400 hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm uppercase">
                           4LLL – {s.toUpperCase()}
                         </Link>
                       ))}
