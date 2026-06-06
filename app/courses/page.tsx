@@ -18,7 +18,7 @@ export default function CoursesPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500 transition group">
             <div className="aspect-video bg-neutral-800 relative">
-              <img src="/image/course_thumb_zbll.jpg" alt="ZBLL Course" className="w-full h-full object-cover" />
+              <img src="/image/course_thumb_3x3beginner.png" alt="3x3 Beginner Course" className="w-full h-full object-top object-cover" />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                 <span className="bg-blue-600 text-white px-4 py-2 rounded-full font-bold">Preview Course</span>
               </div>
@@ -27,13 +27,15 @@ export default function CoursesPage() {
               <div className="flex gap-2 mb-3">
                 <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">Beginner</span>
                 <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">9 Lessons</span>
+                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded uppercase font-bold">🇹🇭 Thai</span>
+                {/* <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded uppercase font-bold">🇬🇧 English</span> */}
               </div>
               <h3 className="text-xl font-bold mb-2">Stepping into Cubing: The Beginner's Method</h3>
               <p className="text-neutral-400 text-sm mb-6">
                 Learn the easiest way to solve a Rubik's cube, with minimum algorithms.
               </p>
               <Link
-                href="/courses/zbll-mastery"
+                href="/courses/3x3-beginner"
                 className="block text-center bg-neutral-800 hover:bg-blue-600 py-3 rounded-xl font-bold transition"
               >
                 {/* Start Learning */}

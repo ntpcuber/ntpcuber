@@ -333,7 +333,7 @@ export default function AdminPage() {
             <p className="text-[12px] text-[#4a5252] mb-5">Find user by email, then assign a course slug.</p>
             {([
               { label: 'User Email',            val: grantEmail,  setter: setGrantEmail,  placeholder: 'student@email.com', type: 'email'  },
-              { label: 'Course Slug',            val: grantSlug,   setter: setGrantSlug,   placeholder: 'zbll-mastery',      type: 'text'   },
+              { label: 'Course Slug',            val: grantSlug,   setter: setGrantSlug,   placeholder: '3x3-beginner',      type: 'text'   },
               { label: 'Amount (฿) — optional', val: grantAmount, setter: setGrantAmount, placeholder: '200',               type: 'number' },
             ] as { label: string; val: string; setter: (v: string) => void; placeholder: string; type: string }[]).map(({ label, val, setter, placeholder, type }) => (
               <div key={label} className="mb-4">
