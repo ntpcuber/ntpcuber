@@ -1,16 +1,42 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = { title: 'Courses | NTP Cuber' }
+import Link from 'next/link'
+import { useLang } from '@/context/LanguageContext'
+
+const content = {
+  en: {
+    heroTitle: 'Master Every Move',
+    heroDesc: 'Structured video curriculums designed to take you from hobbyist to podium contender.',
+    badgeBeginner: 'Beginner',
+    badgeLessons: '9 Lessons',
+    badgeThai: '🇹🇭 Thai',
+    courseTitle: "Stepping into Cubing: The Beginner's Method",
+    courseDesc: "Learn the easiest way to solve a Rubik's cube, with minimum algorithms.",
+    comingSoon: 'Coming Soon',
+  },
+  th: {
+    heroTitle: 'เชี่ยวชาญทุกการเคลื่อนไหว',
+    heroDesc: 'หลักสูตรวิดีโอที่มีโครงสร้างชัดเจน พาคุณจากมือใหม่สู่เวทีการแข่งขัน',
+    badgeBeginner: 'ระดับเริ่มต้น',
+    badgeLessons: '9 บทเรียน',
+    badgeThai: '🇹🇭 ภาษาไทย',
+    courseTitle: 'เริ่มต้นแก้รูบิก: วิธีสำหรับมือใหม่',
+    courseDesc: 'เรียนรู้วิธีที่ง่ายที่สุดในการแก้รูบิก ด้วยจำนวนสูตรน้อยที่สุด',
+    comingSoon: 'เร็วๆ นี้',
+  },
+}
 
 export default function CoursesPage() {
+  const { lang } = useLang()
+  const c = content[lang]
+
   return (
     <>
       <section className="relative pt-32 pb-16 px-6 text-center">
         <div className="absolute inset-x-0 top-0 h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10" />
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">Master Every Move</h1>
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">{c.heroTitle}</h1>
         <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
-          Structured video curriculums designed to take you from hobbyist to podium contender.
+          {c.heroDesc}
         </p>
       </section>
 
@@ -18,28 +44,36 @@ export default function CoursesPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500 transition group">
             <div className="aspect-video bg-neutral-800 relative">
-              <img src="/image/course_thumb_3x3beginner.png" alt="3x3 Beginner Course" className="w-full h-full object-top object-cover" />
+              <img
+                src="/image/course_thumb_3x3beginner.png"
+                alt="3x3 Beginner Course"
+                className="w-full h-full object-top object-cover"
+              />
               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                <span className="bg-blue-600 text-white px-4 py-2 rounded-full font-bold">Preview Course</span>
+                <span className="bg-blue-600 text-white px-4 py-2 rounded-full font-bold">
+                  {lang === 'th' ? 'ดูตัวอย่างคอร์ส' : 'Preview Course'}
+                </span>
               </div>
             </div>
             <div className="p-6">
-              <div className="flex gap-2 mb-3">
-                <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">Beginner</span>
-                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">9 Lessons</span>
-                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded uppercase font-bold">🇹🇭 Thai</span>
-                {/* <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded uppercase font-bold">🇬🇧 English</span> */}
+              <div className="flex gap-2 mb-3 flex-wrap">
+                <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">
+                  {c.badgeBeginner}
+                </span>
+                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">
+                  {c.badgeLessons}
+                </span>
+                <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded uppercase font-bold">
+                  {c.badgeThai}
+                </span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Stepping into Cubing: The Beginner's Method</h3>
-              <p className="text-neutral-400 text-sm mb-6">
-                Learn the easiest way to solve a Rubik's cube, with minimum algorithms.
-              </p>
+              <h3 className="text-xl font-bold mb-2">{c.courseTitle}</h3>
+              <p className="text-neutral-400 text-sm mb-6">{c.courseDesc}</p>
               <Link
                 href="/courses/3x3-beginner"
                 className="block text-center bg-neutral-800 hover:bg-blue-600 py-3 rounded-xl font-bold transition"
               >
-                {/* Start Learning */}
-                Coming Soon
+                {c.comingSoon}
               </Link>
             </div>
           </div>
