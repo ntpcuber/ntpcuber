@@ -32,9 +32,15 @@ export default function DashboardPage() {
   useEffect(() => {
     getUser().then(async u => {
       if (!u) { router.replace('/login?next=/dashboard'); return }
+      
+      // Add this — get the session to ensure auth headers are attached
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) { router.replace('/login?next=/dashboard'); return }
+
       const isAdmin = (u.app_metadata as Record<string, unknown>)?.is_admin === true
       if (isAdmin) { router.replace('/admin'); return }
       setUser(u)
+      
       const [{ data: p }, { data: b }] = await Promise.all([
         supabase.from('course_purchases').select('course_slug, purchased_at').eq('user_id', u.id).order('purchased_at', { ascending: false }),
         supabase.from('coaching_bookings').select('*').eq('user_id', u.id).order('booked_at', { ascending: false }),
