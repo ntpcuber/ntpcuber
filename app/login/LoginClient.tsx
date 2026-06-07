@@ -18,6 +18,16 @@ export default function LoginClient() {
 
   useEffect(() => {
     getUser().then(user => { if (user) router.replace(next) })
+    
+    // ✅ THE FIX: Listen for OAuth callback completing
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        const isAdmin = (session.user?.app_metadata as Record<string, unknown>)?.is_admin === true
+        router.replace(searchParams.get('next') || (isAdmin ? '/admin' : '/dashboard'))
+      }
+    })
+
+    return () => subscription.unsubscribe()
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
