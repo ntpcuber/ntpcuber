@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/context/LanguageContext'
 import { supabase, getUser } from '@/lib/supabase'
+import Link from 'next/link'
 
-// ─── Data (exact copy of coaching.js) ────────────────────────────────────────
-
+// ─── Data ────────────────────────────────────────────────────────────────────
 
 const WCA_EVENTS = ['3x3','2x2','4x4','5x5','6x6','7x7','OH (One-Handed)','Skewb','Pyraminx','Square-1','Megaminx']
 const DAYS = [
@@ -43,6 +43,7 @@ interface Service {
   desc: string[]
   saving?: string
   saving_desc?: string
+  returningOnly?: boolean
 }
 
 const translations: Record<string, {
@@ -51,6 +52,8 @@ const translations: Record<string, {
   formButton: string; paymentInstruction: string; receiptLabel: string
   confirmCheckbox: string; sending: string; success: string; bookNow: string
   services: Service[]
+  perksTitle: string; perksDesc: string; perksSignIn: string
+  returnLabel: string; returnTeaser: string; returnTeaserSub: string; returnSignIn: string
 }> = {
   en: {
     title: 'Elite Speedcubing Coaching',
@@ -68,12 +71,76 @@ const translations: Record<string, {
     sending: 'Sending...',
     success: 'Success! Check your email soon.',
     bookNow: 'Book Now',
+    perksTitle: 'Sign in for exclusive perks',
+    perksDesc: 'Your name & email auto-fill at checkout. Returning clients unlock a discounted ฿390 rate on 1-hr sessions.',
+    perksSignIn: 'Sign In',
+    returnLabel: 'Return Client',
+    returnTeaser: 'Return Client Rate — Unlocked',
+    returnTeaserSub: 'Available after completing a 1-hr session.',
+    returnSignIn: 'Sign in to check eligibility',
     services: [
-      { name: 'Written Critique (Video Analysis)', price: '฿200', amount: 200, desc: ['Detailed breakdown of 5 recorded solves.', 'Identify strengths and inefficiencies', 'Lookahead and turning analysis', 'Personalized feedback and improvement guide'] },
-      { name: 'Video Critique (Video Analysis)', price: '฿360', amount: 360, desc: ['Detailed breakdown of 5 recorded solves.', 'Identify strengths and inefficiencies', 'Lookahead and turning analysis', 'Ergonomics suggestions', 'Personalized feedback and improvement tips'] },
-      { name: 'Live 1-on-1 Session (30-Min)', price: '฿240', amount: 240, desc: ['Interactive coaching via video call.', 'Real-time solve analysis', 'Personalized advice on targeted practice drills'] },
-      { name: 'Live 1-on-1 Session (1 Hour)', price: '฿420', amount: 420, desc: ['Interactive coaching via video call.', 'Real-time solve breakdown', 'Lookahead drills tailored to your speed', 'Deep dive into efficiency and ergonomics'] },
-      { name: 'Mastery Pack Live 1-on-1 (4 Sessions)', price: '฿1,550', amount: 1550, saving: 'Save ฿130', saving_desc: 'vs individual sessions', desc: ['Comprehensive progression with a structured 4-week training plan', 'Weekly check in to track your progress', 'Focus on all aspects; Algorithm, Ergonomics and Efficiencies.'] },
+      {
+        name: 'Written Critique (Video Analysis)',
+        price: '฿200', amount: 200,
+        desc: [
+          'Detailed breakdown of 5 recorded solves.',
+          'Identify strengths and inefficiencies',
+          'Lookahead and turning analysis',
+          'Personalized feedback and improvement guide',
+        ],
+      },
+      {
+        name: 'Video Critique (Video Analysis)',
+        price: '฿360', amount: 360,
+        desc: [
+          'Detailed breakdown of 5 recorded solves.',
+          'Identify strengths and inefficiencies',
+          'Lookahead and turning analysis',
+          'Ergonomics suggestions',
+          'Personalized feedback and improvement tips',
+        ],
+      },
+      {
+        name: 'Live 1-on-1 Session (30-Min)',
+        price: '฿240', amount: 240,
+        desc: [
+          'Interactive coaching via video call.',
+          'Real-time solve analysis',
+          'Personalized advice on targeted practice drills',
+        ],
+      },
+      {
+        name: 'Live 1-on-1 Session (1 Hour)',
+        price: '฿420', amount: 420,
+        desc: [
+          'Interactive coaching via video call.',
+          'Real-time solve breakdown',
+          'Lookahead drills tailored to your speed',
+          'Deep dive into efficiency and ergonomics',
+        ],
+      },
+      {
+        name: 'Live 1-on-1 Session (1 Hour) — Return Client',
+        price: '฿390', amount: 390,
+        returningOnly: true,
+        desc: [
+          'Interactive coaching via video call.',
+          'Real-time solve breakdown',
+          'Lookahead drills tailored to your speed',
+          'Deep dive into efficiency and ergonomics',
+          'Exclusive discounted rate for returning clients',
+        ],
+      },
+      {
+        name: 'Mastery Pack Live 1-on-1 (4 Sessions)',
+        price: '฿1,550', amount: 1550,
+        saving: 'Save ฿130', saving_desc: 'vs individual sessions',
+        desc: [
+          'Comprehensive progression with a structured 4-week training plan',
+          'Weekly check in to track your progress',
+          'Focus on all aspects; Algorithm, Ergonomics and Efficiencies.',
+        ],
+      },
     ],
   },
   th: {
@@ -92,12 +159,76 @@ const translations: Record<string, {
     sending: 'กำลังส่ง...',
     success: 'สำเร็จ! โปรดรอการติดต่อกลับทางอีเมล',
     bookNow: 'จองเลย',
+    perksTitle: 'เข้าสู่ระบบเพื่อรับสิทธิพิเศษ',
+    perksDesc: 'ระบบจะกรอกชื่อและอีเมลของคุณอัตโนมัติ และลูกค้าที่เคยเรียนแล้วจะได้รับส่วนลดพิเศษ ฿390 สำหรับคลาส 1 ชั่วโมง',
+    perksSignIn: 'เข้าสู่ระบบ',
+    returnLabel: 'ลูกค้าเก่า',
+    returnTeaser: 'ราคาพิเศษสำหรับลูกค้าเก่า',
+    returnTeaserSub: 'ใช้ได้หลังจากเรียนคลาส 1 ชั่วโมงครบแล้ว',
+    returnSignIn: 'เข้าสู่ระบบเพื่อตรวจสอบสิทธิ์',
     services: [
-      { name: 'ตรวจการแก้แบบเขียน (Video Analysis)', price: '฿200', amount: 200, desc: ['วิเคราะห์การแก้ 5 รอบแบบละเอียด', 'ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้', 'วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน', 'ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง'] },
-      { name: 'ตรวจการแก้แบบวิดีโอ (Video Analysis)', price: '฿360', amount: 360, desc: ['วิเคราะห์การแก้ 5 รอบแบบละเอียด', 'ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้', 'วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน', 'แนะนำวิธีการหมุนที่เสริมความคล่องตัวยิ่งขึ้น', 'ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง'] },
-      { name: 'สอนสดตัวต่อตัว (30 นาที)', price: '฿240', amount: 240, desc: ['เรียนสดผ่านวิดีโอคอล', 'วิเคราะห์การแก้โจทย์ทันที', 'ให้คำแนะนำในการฝึกเฉพาะส่วนสำหรับคุณ'] },
-      { name: 'สอนสดตัวต่อตัว (1 ชั่วโมง)', price: '฿420', amount: 420, desc: ['เรียนสดเน้นเนื้อหาเจาะลึก', 'วิเคราะห์การแก้โจทย์ทันที', 'ฝึกการมองล่วงหน้าตามระดับความเหมาะสม', 'เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน'] },
-      { name: 'แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)', price: '฿1,550', amount: 1550, saving: 'ประหยัด ฿130', saving_desc: 'เมื่อเทียบกับคลาสรายครั้ง', desc: ['แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล', 'ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม', 'ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้'] },
+      {
+        name: 'ตรวจการแก้แบบเขียน (Video Analysis)',
+        price: '฿200', amount: 200,
+        desc: [
+          'วิเคราะห์การแก้ 5 รอบแบบละเอียด',
+          'ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้',
+          'วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน',
+          'ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง',
+        ],
+      },
+      {
+        name: 'ตรวจการแก้แบบวิดีโอ (Video Analysis)',
+        price: '฿360', amount: 360,
+        desc: [
+          'วิเคราะห์การแก้ 5 รอบแบบละเอียด',
+          'ชี้ให้เห็นจุดแข็งและจุดที่พัฒนาได้',
+          'วิเคราะห์ความสามารถในการมองล่วงหน้าและการหมุน',
+          'แนะนำวิธีการหมุนที่เสริมความคล่องตัวยิ่งขึ้น',
+          'ให้คำแนะนำและแนวทางการฝึกฝนที่เฉพาะเจาะจง',
+        ],
+      },
+      {
+        name: 'สอนสดตัวต่อตัว (30 นาที)',
+        price: '฿240', amount: 240,
+        desc: [
+          'เรียนสดผ่านวิดีโอคอล',
+          'วิเคราะห์การแก้โจทย์ทันที',
+          'ให้คำแนะนำในการฝึกเฉพาะส่วนสำหรับคุณ',
+        ],
+      },
+      {
+        name: 'สอนสดตัวต่อตัว (1 ชั่วโมง)',
+        price: '฿420', amount: 420,
+        desc: [
+          'เรียนสดเน้นเนื้อหาเจาะลึก',
+          'วิเคราะห์การแก้โจทย์ทันที',
+          'ฝึกการมองล่วงหน้าตามระดับความเหมาะสม',
+          'เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน',
+        ],
+      },
+      {
+        name: 'สอนสดตัวต่อตัว (1 ชั่วโมง) — ลูกค้าเก่า',
+        price: '฿390', amount: 390,
+        returningOnly: true,
+        desc: [
+          'เรียนสดเน้นเนื้อหาเจาะลึก',
+          'วิเคราะห์การแก้โจทย์ทันที',
+          'ฝึกการมองล่วงหน้าตามระดับความเหมาะสม',
+          'เจาะลึกประสิทธิภาพและความคล่องตัวการหมุน',
+          'ราคาพิเศษสำหรับลูกค้าที่เคยเรียนมาแล้ว',
+        ],
+      },
+      {
+        name: 'แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)',
+        price: '฿1,550', amount: 1550,
+        saving: 'ประหยัด ฿130', saving_desc: 'เมื่อเทียบกับคลาสรายครั้ง',
+        desc: [
+          'แผนการฝึกซ้อมต่อเนื่อง 4 สัปดาห์ เพื่อการพัฒนาที่เห็นผล',
+          'ติดตามผลรายสัปดาห์เพื่อเช็คการฝึกซ้อม',
+          'ให้ความสำคัญรอบด้านไม่ว่าจะเป็นสูตรที่ใช้ วิธีการหมุนที่คล่องตัว และ ประสิทธิภาพในการแก้',
+        ],
+      },
     ],
   },
 }
@@ -145,7 +276,7 @@ async function toBase64(file: File): Promise<string> {
   })
 }
 
-// ─── Progress bar component ───────────────────────────────────────────────────
+// ─── Progress bar ─────────────────────────────────────────────────────────────
 
 type ProgressMode = 1 | 2 | 3
 
@@ -167,11 +298,7 @@ function ProgressBar({ mode, currentStep }: ProgressBarProps) {
           if (stepNum < currentStep) color = 'bg-blue-500/60'
           if (stepNum === currentStep) color = 'bg-blue-600'
           return (
-            <div
-              key={stepNum}
-              className={`h-2 rounded-full transition-colors duration-300 ${color}`}
-              aria-label={`Step ${stepNum}`}
-            />
+            <div key={stepNum} className={`h-2 rounded-full transition-colors duration-300 ${color}`} />
           )
         })}
       </div>
@@ -192,6 +319,10 @@ export default function CoachingPage() {
   const { lang } = useLang()
   const trans = translations[lang]
   const c = cnt[lang]
+
+  // Auth state
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [hasPreviousSession, setHasPreviousSession] = useState(false)
 
   // Form state
   const [currentStep, setCurrentStep] = useState(1)
@@ -216,18 +347,36 @@ export default function CoachingPage() {
   const isCritique = selectedService.toLowerCase().includes('analysis')
   const progressMode: ProgressMode = !selectedService ? 1 : isCritique ? 2 : 3
 
-  // Time options — start at 14:00 if only weekend selected, else 19:00
+  // Time options
   const hasWeekend = selectedDays.some(d => d === 'Sat' || d === 'Sun')
   const hasWeekday = selectedDays.some(d => d === 'Mon' || d === 'Fri')
   const timeStartHour = hasWeekend && !hasWeekday ? 14 : 19
   const timeOptions = generateTimes(timeStartHour)
 
-  // Pre-fill from auth
+  // Services visible in pricing grid and booking dropdown
+  const visibleServices = trans.services.filter(
+    s => !s.returningOnly || (isLoggedIn && hasPreviousSession)
+  )
+
+  // Auth + previous session check
   useEffect(() => {
-    getUser().then(user => {
+    getUser().then(async user => {
       if (!user) return
+      setIsLoggedIn(true)
       if (!name) setName(user.user_metadata?.full_name || '')
       if (!email) setEmail(user.email || '')
+
+      // Check for a confirmed or completed 1-hr session
+      const { data } = await supabase
+        .from('coaching_bookings')
+        .select('id')
+        .eq('user_id', user.id)
+        .ilike('service', '%1 Hour%')
+        .in('status', ['confirmed', 'completed'])
+        .limit(1)
+        .maybeSingle()
+
+      setHasPreviousSession(data !== null)
     })
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -235,19 +384,16 @@ export default function CoachingPage() {
   useEffect(() => {
     if (!selectedService) { setQrSrc('/image/qr_payment.jpeg'); return }
     const svc = trans.services.find(s => s.name === selectedService)
-    if (svc) {
-      setQrSrc(`https://promptpay.io/0868545948/${svc.amount}.png`)
-    }
+    if (svc) setQrSrc(`https://promptpay.io/0868545948/${svc.amount}.png`)
   }, [selectedService, trans.services])
 
-  // When days change, reset invalid time selections
+  // Reset invalid times when days change
   useEffect(() => {
     const startH = selectedDays.some(d => d === 'Sat' || d === 'Sun') ? 14 : 19
     if (preferredTime && parseInt(preferredTime.split(':')[0]) < startH) setPreferredTime('')
     if (secondaryTime && parseInt(secondaryTime.split(':')[0]) < startH) setSecondaryTime('')
   }, [selectedDays]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Handle receipt upload with compression
   async function handleReceiptChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] ?? null
     setReceiptFile(file)
@@ -259,14 +405,7 @@ export default function CoachingPage() {
     }
   }
 
-  // Step navigation (mirrors nextStep() logic)
   function goToStep(target: number) {
-    // Going backwards — always allow
-    // if (target < currentStep) {
-    //   setCurrentStep(target)
-    //   return
-    // }
-
     let step = target
     if (step === 2 && isCritique) step = 3
     setCurrentStep(step)
@@ -288,7 +427,6 @@ export default function CoachingPage() {
         : 'ไฟล์มีขนาดใหญ่เกินไป! กรุณาแนบรูปภาพที่มีขนาดไม่เกิน 2MB')
       return
     }
-
     if (!isCritique && selectedDays.length === 0) {
       alert(lang === 'en' ? 'Please select at least one available day.' : 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน')
       return
@@ -297,8 +435,7 @@ export default function CoachingPage() {
     setSubmitting(true)
 
     const payload = {
-      name,
-      email,
+      name, email,
       service: selectedService,
       goal:          isCritique ? '' : goal,
       availableDate: isCritique ? '' : selectedDays,
@@ -310,29 +447,18 @@ export default function CoachingPage() {
       receiptName:   receiptFile ? receiptFile.name.replace(/\.[^/.]+$/, '.jpg') : 'receipt.jpg',
     }
 
-    // Fire-and-forget to Google Apps Script (no-cors)
-    // fetch(SCRIPT_URL, {
-    //   method: 'POST',
-    //   mode: 'no-cors',
-    //   headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    //   body: JSON.stringify(payload),
-    // }).catch(err => console.error('Background send failed:', err))
-
-    // Custom API calling
     fetch('/api/booking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     }).catch(err => console.error('Background send failed:', err))
 
-    // Also save to Supabase
     try {
       const user = await getUser()
       const svc = trans.services.find(s => s.name === selectedService)
       await supabase.from('coaching_bookings').insert({
         user_id:        user?.id ?? null,
-        name,
-        email,
+        name, email,
         service:        selectedService,
         wca_event:      isCritique ? null : wcaEvent || null,
         video_link:     isCritique ? videoLink || null : null,
@@ -348,24 +474,15 @@ export default function CoachingPage() {
 
     alert(trans.success)
 
-    // Reset form
-    setSelectedService('')
-    setVideoLink('')
-    setWcaEvent('')
-    setSelectedDays([])
-    setPreferredTime('')
-    setSecondaryTime('')
-    setGoal('')
-    setPaymentConfirmed(false)
-    setReceiptFile(null)
-    setCachedReceipt('')
-    setCurrentStep(1)
-    setSubmitting(false)
+    setSelectedService(''); setVideoLink(''); setWcaEvent(''); setSelectedDays([])
+    setPreferredTime(''); setSecondaryTime(''); setGoal('')
+    setPaymentConfirmed(false); setReceiptFile(null); setCachedReceipt('')
+    setCurrentStep(1); setSubmitting(false)
   }
 
-  // ── Render ──────────────────────────────────────────────────────────────────
-
   const inputCls = 'w-full bg-neutral-900 border border-neutral-800 p-4 rounded-xl focus:border-blue-500 outline-none text-white placeholder-neutral-500 transition'
+
+  // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
     <div className="bg-black text-white selection:bg-blue-500/30">
@@ -383,8 +500,6 @@ export default function CoachingPage() {
       <section id="why-me" className="py-24 px-6 bg-neutral-900/30">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-
-            {/* Profile card */}
             <div className="relative">
               <div className="absolute -inset-4 bg-blue-600/20 blur-2xl rounded-full -z-10" />
               <div className="bg-neutral-900 border border-neutral-800 p-2 rounded-3xl overflow-hidden">
@@ -429,7 +544,6 @@ export default function CoachingPage() {
               </div>
             </div>
 
-            {/* Benefits */}
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-8">
                 {c.whyMeTitle.replace('?', '')} <span className="text-blue-500">?</span>
@@ -453,31 +567,63 @@ export default function CoachingPage() {
                 </p>
               </div>
             </div>
-
           </div>
         </div>
       </section>
+
+      {/* ── Sign-in perks banner (logged-out only) ── */}
+      {!isLoggedIn && (
+        <div className="max-w-6xl mx-auto px-6 pt-16 -mb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl px-6 py-5">
+            <div className="flex items-center gap-3 flex-1">
+              <span className="text-2xl shrink-0">🔐</span>
+              <div>
+                <p className="font-bold text-indigo-300 mb-0.5">{trans.perksTitle}</p>
+                <p className="text-sm text-neutral-400 leading-relaxed">{trans.perksDesc}</p>
+              </div>
+            </div>
+            <Link
+              href="/login?next=/coaching"
+              className="shrink-0 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-xl text-sm font-bold transition active:scale-95 whitespace-nowrap"
+            >
+              {trans.perksSignIn}
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* ── Pricing ── */}
       <section id="pricing" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">{trans.pricingTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {trans.services.map((s, index) => {
-              const isPopular = index === 1 || index === 3
-              const isMastery = index === 4
+
+            {/* Visible service cards */}
+            {visibleServices.map((s, index) => {
+              const isPopular  = s.name.includes('Video Critique') || s.name.includes('1 Hour)') && !s.returningOnly
+              const isMastery  = s.name.includes('4 Sessions') || s.name.includes('4 ครั้ง')
+              const isReturn   = s.returningOnly === true
+
               return (
                 <div
-                  key={index}
+                  key={s.name}
                   className={`relative bg-neutral-900 border ${
-                    isPopular
+                    isReturn
+                      ? 'border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.15)]'
+                      : isPopular
                       ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]'
                       : isMastery
                       ? 'border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.15)]'
                       : 'border-neutral-800'
                   } p-8 rounded-2xl hover:border-blue-500 transition duration-300 flex flex-col justify-between h-full`}
                 >
-                  {isPopular && (
+                  {/* Badges */}
+                  {isReturn && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg whitespace-nowrap">
+                      <span>⭐</span> {trans.returnLabel}
+                    </div>
+                  )}
+                  {!isReturn && isPopular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg">
                       Most Popular
                     </div>
@@ -487,22 +633,28 @@ export default function CoachingPage() {
                       {s.saving}
                     </div>
                   )}
+
                   <div className="flex flex-col h-full">
                     <div>
                       <h3 className="text-xl font-bold text-white mb-4 min-h-[64px]">{s.name}</h3>
                       <ul className="text-neutral-400 text-sm mb-6 space-y-2">
                         {s.desc.map((f, j) => (
                           <li key={j} className="flex items-start gap-2">
-                            <span className="text-blue-500 font-bold mt-[2px]">✔</span>
-                            <span>{f}</span>
+                            <span className={`font-bold mt-[2px] ${isReturn ? 'text-emerald-400' : 'text-blue-500'}`}>✔</span>
+                            <span className={j === s.desc.length - 1 && isReturn ? 'text-emerald-300 font-medium' : ''}>{f}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                     <div className="mt-auto">
                       <div className="mb-6">
-                        <div className="text-3xl font-bold text-blue-500">{s.price}</div>
-                        {s.saving && (
+                        <div className={`text-3xl font-bold ${isReturn ? 'text-emerald-400' : 'text-blue-500'}`}>{s.price}</div>
+                        {isReturn && (
+                          <div className="text-sm text-emerald-500/80 font-semibold mt-1">
+                            {lang === 'en' ? 'Saved ฿30 vs standard rate' : 'ประหยัด ฿30 จากราคาปกติ'}
+                          </div>
+                        )}
+                        {s.saving && !isReturn && (
                           <div className="text-sm text-green-400 font-semibold mt-1">
                             {s.saving} {s.saving_desc}
                           </div>
@@ -510,7 +662,11 @@ export default function CoachingPage() {
                       </div>
                       <button
                         onClick={() => scrollToBooking(s.name)}
-                        className="w-full py-3 bg-neutral-800 hover:bg-indigo-600 text-white font-bold rounded-xl transition-colors shadow-lg active:scale-95"
+                        className={`w-full py-3 font-bold rounded-xl transition-colors shadow-lg active:scale-95 ${
+                          isReturn
+                            ? 'bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 hover:border-emerald-500'
+                            : 'bg-neutral-800 hover:bg-indigo-600 text-white'
+                        }`}
                       >
                         {trans.bookNow}
                       </button>
@@ -519,6 +675,37 @@ export default function CoachingPage() {
                 </div>
               )
             })}
+
+            {/* Locked teaser card — shown when logged out OR logged in but no previous session */}
+            {(!isLoggedIn || (isLoggedIn && !hasPreviousSession)) && (
+              <div className="relative bg-neutral-900/50 border border-neutral-800 border-dashed p-8 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[320px]">
+                {/* Subtle emerald glow hinting at what's inside */}
+                <div className="absolute inset-0 rounded-2xl bg-emerald-500/3 pointer-events-none" />
+                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl">
+                  🔒
+                </div>
+                <div>
+                  <p className="font-bold text-neutral-200 text-lg mb-1">{trans.returnTeaser}</p>
+                  <p className="text-sm text-neutral-500 leading-relaxed mb-1">{trans.returnTeaserSub}</p>
+                  <p className="text-2xl font-bold text-emerald-500/50 mt-3">฿390</p>
+                </div>
+                {!isLoggedIn ? (
+                  <Link
+                    href="/login?next=/coaching"
+                    className="px-5 py-2.5 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 rounded-xl text-sm font-semibold transition"
+                  >
+                    {trans.returnSignIn}
+                  </Link>
+                ) : (
+                  <p className="text-xs text-neutral-600 italic">
+                    {lang === 'en'
+                      ? 'Complete a 1-hr session to unlock this rate'
+                      : 'เรียนคลาส 1 ชั่วโมงให้ครบก่อนเพื่อปลดล็อกราคานี้'}
+                  </p>
+                )}
+              </div>
+            )}
+
           </div>
         </div>
       </section>
@@ -534,8 +721,6 @@ export default function CoachingPage() {
             if (currentStep === 2) { goToStep(3); return }
             handleSubmit(e)
           }}>
-
-            {/* Progress blocks */}
             <ProgressBar mode={progressMode} currentStep={currentStep} />
 
             {/* ── Step 1: Service selection ── */}
@@ -546,7 +731,6 @@ export default function CoachingPage() {
                   value={selectedService}
                   onChange={e => {
                     setSelectedService(e.target.value)
-                    // reset downstream fields when service changes
                     setVideoLink(''); setWcaEvent(''); setSelectedDays([])
                     setPreferredTime(''); setSecondaryTime(''); setGoal('')
                     setPaymentConfirmed(false)
@@ -554,12 +738,12 @@ export default function CoachingPage() {
                   className={inputCls}
                 >
                   <option value="" disabled>{trans.formService}</option>
-                  {trans.services.map(s => (
+                  {/* Only show returning-client option if eligible */}
+                  {visibleServices.map(s => (
                     <option key={s.name} value={s.name}>{s.name} - {s.price}</option>
                   ))}
                 </select>
 
-                {/* Video link — only for critique */}
                 {isCritique && selectedService && (
                   <div>
                     <label className="block mb-2 text-neutral-400">🔗 Video Link of your Solves</label>
@@ -576,7 +760,6 @@ export default function CoachingPage() {
 
                 <button
                   type="submit"
-                  // onClick={() => goToStep(2)}
                   disabled={!selectedService}
                   className="w-full bg-blue-600 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
                 >
@@ -588,21 +771,14 @@ export default function CoachingPage() {
             {/* ── Step 2: Logistics (live sessions only) ── */}
             {currentStep === 2 && (
               <div className="space-y-6">
-                {/* WCA Event */}
                 <div>
                   <label className="block mb-2 text-neutral-400">🏆 WCA Event</label>
-                  <select
-                    required
-                    value={wcaEvent}
-                    onChange={e => setWcaEvent(e.target.value)}
-                    className={inputCls}
-                  >
+                  <select required value={wcaEvent} onChange={e => setWcaEvent(e.target.value)} className={inputCls}>
                     <option value="">{lang === 'th' ? 'เลือกประเภท' : 'Select event'}</option>
                     {WCA_EVENTS.map(ev => <option key={ev}>{ev}</option>)}
                   </select>
                 </div>
 
-                {/* Available days */}
                 <div>
                   <label className="block mb-3 text-neutral-400">
                     {lang === 'th' ? '📅 วันที่สะดวก (กรุณาเลือกอย่างน้อย 1 วัน)' : '📅 Available Day (select all that applies)'}
@@ -614,11 +790,9 @@ export default function CoachingPage() {
                           type="checkbox"
                           value={day.value}
                           checked={selectedDays.includes(day.value)}
-                          onChange={e => {
-                            setSelectedDays(prev =>
-                              e.target.checked ? [...prev, day.value] : prev.filter(d => d !== day.value)
-                            )
-                          }}
+                          onChange={e => setSelectedDays(prev =>
+                            e.target.checked ? [...prev, day.value] : prev.filter(d => d !== day.value)
+                          )}
                           className="hidden peer"
                         />
                         <span className="px-5 py-3 rounded-full bg-neutral-800 peer-checked:bg-blue-600 text-sm select-none inline-block transition-colors">
@@ -629,21 +803,16 @@ export default function CoachingPage() {
                   </div>
                 </div>
 
-                {/* Time selectors */}
                 <div className="space-y-6">
                   <div>
                     <label className="block mb-2 text-neutral-400">
                       {lang === 'th' ? '⏰ เวลาที่สะดวกที่สุด' : '⏰ Most Preferred Starting Time'}
                     </label>
                     <select
-                      required
-                      value={preferredTime}
+                      required value={preferredTime}
                       onChange={e => {
                         const val = e.target.value
-                        if (val && val === secondaryTime) {
-                          alert('Primary and secondary time cannot be the same')
-                          return
-                        }
+                        if (val && val === secondaryTime) { alert('Primary and secondary time cannot be the same'); return }
                         setPreferredTime(val)
                       }}
                       className={inputCls}
@@ -657,14 +826,10 @@ export default function CoachingPage() {
                       {lang === 'th' ? '🕰️ เวลาสำรองที่สะดวก' : '🕰️ Secondary Preferred Starting Time'}
                     </label>
                     <select
-                      required
-                      value={secondaryTime}
+                      required value={secondaryTime}
                       onChange={e => {
                         const val = e.target.value
-                        if (val && val === preferredTime) {
-                          alert('Primary and secondary time cannot be the same')
-                          return
-                        }
+                        if (val && val === preferredTime) { alert('Primary and secondary time cannot be the same'); return }
                         setSecondaryTime(val)
                       }}
                       className={inputCls}
@@ -685,57 +850,32 @@ export default function CoachingPage() {
             {/* ── Step 3: Contact + Payment ── */}
             {currentStep === 3 && (
               <div className="space-y-6">
-                {/* Name + Email */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    required
-                    placeholder={trans.formName}
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    className={inputCls}
-                  />
-                  <input
-                    type="email"
-                    required
-                    placeholder={trans.formEmail}
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    className={inputCls}
-                  />
+                  <input type="text" required placeholder={trans.formName} value={name} onChange={e => setName(e.target.value)} className={inputCls} />
+                  <input type="email" required placeholder={trans.formEmail} value={email} onChange={e => setEmail(e.target.value)} className={inputCls} />
                 </div>
 
-                {/* Goal — live sessions only */}
                 {!isCritique && (
                   <div>
                     <label className="block mb-2 text-neutral-400">{trans.formGoal}</label>
                     <textarea
-                      rows={3}
-                      value={goal}
-                      onChange={e => setGoal(e.target.value)}
+                      rows={3} value={goal} onChange={e => setGoal(e.target.value)}
                       placeholder="e.g., I want to sub-10 or learn full ZBLL"
                       className={`${inputCls} resize-none`}
                     />
                   </div>
                 )}
 
-                {/* Payment */}
                 <div className="space-y-6">
                   <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center">
                     <h3 className="text-xl font-bold mb-6">{trans.paymentInstruction}</h3>
-                    <img
-                      src={qrSrc}
-                      alt="Payment QR"
-                      className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-white p-2 rounded-xl object-contain"
-                    />
+                    <img src={qrSrc} alt="Payment QR" className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-white p-2 rounded-xl object-contain" />
                   </div>
 
                   <div>
                     <label className="block text-sm text-neutral-400 mb-2">{trans.receiptLabel}</label>
                     <input
-                      type="file"
-                      accept="image/*"
-                      required
+                      type="file" accept="image/*" required
                       onChange={handleReceiptChange}
                       className="w-full bg-neutral-900 border border-neutral-800 p-3 rounded-xl file:bg-blue-600 file:border-0 file:rounded-full file:text-white file:px-4 text-white"
                     />
@@ -743,10 +883,8 @@ export default function CoachingPage() {
 
                   <div className="flex items-start gap-3 p-4 bg-blue-600/5 border border-blue-500/20 rounded-xl">
                     <input
-                      type="checkbox"
-                      id="confirm-payment"
-                      checked={paymentConfirmed}
-                      onChange={e => setPaymentConfirmed(e.target.checked)}
+                      type="checkbox" id="confirm-payment"
+                      checked={paymentConfirmed} onChange={e => setPaymentConfirmed(e.target.checked)}
                       className="mt-1 w-5 h-5 rounded border-neutral-800 bg-neutral-900 accent-blue-600"
                     />
                     <label htmlFor="confirm-payment" className="text-sm text-neutral-300 cursor-pointer">
