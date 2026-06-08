@@ -91,7 +91,7 @@ export default function ResourcesPage() {
           <h2 className="text-3xl font-semibold mb-10">{c.sectionMega}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {mega.map(s => (
-              <Link key={s.slug} href={`/resources/megaminx#${s.slug}`}>
+              <Link key={s.slug} href={`/resources/megaminx/4lll#${s.slug}`}>
                 <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
                   <h3 className="text-xl font-semibold mb-2">{s.label}</h3>
                   <p className="text-neutral-400 text-sm">{s.desc}</p>
