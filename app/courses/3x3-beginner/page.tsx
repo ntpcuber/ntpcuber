@@ -97,7 +97,7 @@ export default function BeginnerCoursePage() {
     setDuration(target.duration || 0);
   };
 
-  const handleSeekMouseDown = () => {
+  const handleSeekStart = () => {
     setSeeking(true);
     setWasPlaying(playing);
     setPlaying(false);
@@ -107,18 +107,24 @@ export default function BeginnerCoursePage() {
     setPlayed(parseFloat(e.target.value));
   };
 
-  const handleSeekMouseUp = (e: React.MouseEvent<HTMLInputElement> | React.TouchEvent<HTMLInputElement>) => {
+  const commitSeek = (newPos: number) => {
     setSeeking(false);
-    const newPos = parseFloat((e.target as HTMLInputElement).value);
-    const seekTime = duration > 0 ? newPos * duration : newPos;
     if (playerRef.current) {
       if (typeof playerRef.current.seekTo === "function") {
         playerRef.current.seekTo(newPos, "fraction");
       } else if (typeof playerRef.current.currentTime !== "undefined") {
-        playerRef.current.currentTime = seekTime;
+        playerRef.current.currentTime = duration > 0 ? newPos * duration : newPos;
       }
     }
     if (wasPlaying) setPlaying(true);
+  };
+
+  const handleSeekMouseUp = (e: React.MouseEvent<HTMLInputElement>) => {
+    commitSeek(parseFloat(e.currentTarget.value));
+  };
+
+  const handleSeekTouchEnd = (e: React.TouchEvent<HTMLInputElement>) => {
+    commitSeek(parseFloat(e.currentTarget.value));
   };
 
   const togglePlay = () => setPlaying(!playing);
@@ -191,26 +197,67 @@ export default function BeginnerCoursePage() {
               )}
             </div>
 
-            {/* Bottom controls */}
+            {/* Bottom controls — always visible on mobile, hover-reveal on desktop */}
             <div
-              className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-20"
+              className="absolute bottom-0 left-0 right-0 px-3 pb-3 pt-8 bg-gradient-to-t from-black/90 via-black/60 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity z-20"
               onClick={(e) => e.stopPropagation()}
             >
-              <input
-                type="range" min={0} max={0.999} step="any"
-                value={played}
-                onMouseDown={handleSeekMouseDown}
-                onChange={handleSeekChange}
-                onMouseUp={handleSeekMouseUp}
-                onTouchStart={handleSeekMouseDown}
-                onTouchEnd={handleSeekMouseUp}
-                className="w-full h-1.5 accent-blue-500 mb-4 cursor-pointer"
-              />
+              {/* Seek bar — taller hit area on mobile */}
+              <div className="flex items-center mb-2">
+                <input
+                  type="range" min={0} max={0.999} step="any"
+                  value={played}
+                  onMouseDown={handleSeekStart}
+                  onChange={handleSeekChange}
+                  onMouseUp={handleSeekMouseUp}
+                  onTouchStart={handleSeekStart}
+                  onTouchEnd={handleSeekTouchEnd}
+                  className="w-full h-1.5 accent-blue-500 cursor-pointer touch-none"
+                  style={{ WebkitAppearance: 'none' } as React.CSSProperties}
+                />
+              </div>
+
+              {/* Controls row */}
               <div className="flex items-center justify-between text-white">
-                <button onClick={togglePlay} className="hover:text-blue-400 transition-colors">
-                  {playing ? <Pause /> : <Play fill="currentColor" />}
-                </button>
-                <span className="text-xs font-mono">{formatTime(playedSeconds)} / {formatTime(duration)}</span>
+                {/* Left: play + volume */}
+                <div className="flex items-center gap-1">
+                  {/* Play/Pause — 44px tap target */}
+                  <button
+                    onClick={togglePlay}
+                    className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10 active:bg-white/20 transition-colors"
+                  >
+                    {playing ? <Pause size={20} /> : <Play size={20} fill="currentColor" />}
+                  </button>
+
+                  {/* Mute toggle — 44px tap target */}
+                  <button
+                    onClick={() => setMuted(m => !m)}
+                    className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-white/10 active:bg-white/20 transition-colors"
+                  >
+                    {muted || volume === 0 ? (
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Volume slider — wider on mobile for easier tap */}
+                  <input
+                    type="range" min={0} max={1} step={0.05}
+                    value={muted ? 0 : volume}
+                    onChange={e => { setVolume(parseFloat(e.target.value)); setMuted(false); }}
+                    className="w-20 sm:w-24 h-1.5 accent-blue-500 cursor-pointer touch-none"
+                  />
+                </div>
+
+                {/* Right: timestamp */}
+                <span className="text-xs font-mono tabular-nums pr-1">
+                  {formatTime(playedSeconds)} / {formatTime(duration)}
+                </span>
               </div>
             </div>
           </div>
