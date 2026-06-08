@@ -64,6 +64,25 @@ export default function AdminPage() {
       if (!map[p.user_id]) map[p.user_id] = { user_id: p.user_id, name: '—', email: '—', joined: p.purchased_at, bookings: 0, courses: 0 }
       map[p.user_id].courses++
     })
+
+    // Fill in missing emails/names from Supabase Auth
+    const missingIds = Object.values(map)
+      .filter(u => u.email === '—')
+      .map(u => u.user_id)
+
+    if (missingIds.length > 0) {
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: missingIds }),
+      })
+      const authUsers: { id: string; email: string; name: string }[] = await res.json()
+      authUsers.forEach(u => {
+        map[u.id].email = u.email
+        map[u.id].name  = u.name
+      })
+    }
+
     setUsers(Object.values(map))
   }
   async function loadPurchases() {
