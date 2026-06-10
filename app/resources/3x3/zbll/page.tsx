@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import ZBLLClient from './ZBLLClient';
+import ZBLLClient1 from './ZBLLClient1';
 
 export const metadata: Metadata = {
   title: 'NTP Cuber | 3×3 ZBLL Algorithms',
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ZBLLPage() {
-  return <ZBLLClient />;
+  return <ZBLLClient1 />;
 }
