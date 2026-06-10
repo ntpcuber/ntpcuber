@@ -74,8 +74,8 @@ export default function ResourcesPage() {
           <h2 className="text-3xl font-semibold mb-10">{c.section3x3}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {['OLL', 'PLL', 'ZBLL'].map(label => (
-              <Link href={`/resources/3x3/${label.toLowerCase()}`}>
-                <div key={label} className="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
+              <Link key={label} href={`/resources/3x3/${label.toLowerCase()}`}>
+                <div className="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
                   <h3 className="text-xl font-semibold mb-2">{label}</h3>
                   <p className="text-neutral-400 text-sm">
                     {label === 'OLL' ? 'Orient the last layer in one step.' : label === 'PLL' ? 'Permute the last layer.' : 'Full last layer algorithms for advanced speedcubing.'}

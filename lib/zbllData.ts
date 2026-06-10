@@ -19,7 +19,7 @@ const zbllData: ZBLLSet[] = [
     "name": "T set",
     "subsets": [
       {
-        "name": "T 1",
+        "name": "T-1",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']RUR'URU2R'U2R'U'RU'R'U2R"),
         "cases": [
           {
@@ -61,7 +61,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "T 2",
+        "name": "T-2",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]RU'R'U2LRU'R'UL'"),
         "cases": [
           {
@@ -103,7 +103,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "T 3",
+        "name": "T-3",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("R'D'RUR'DR2UR'U2RU'R'U'RU'R'"),
         "cases": [
           {
@@ -145,7 +145,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "T 4",
+        "name": "T-4",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]RU'R2D'rU2r'DR2UR'"),
         "cases": [
           {
@@ -187,7 +187,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "T 5",
+        "name": "T-5",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']rUR'U'r'FRF'"),
         "cases": [
           {
@@ -229,7 +229,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "T 6",
+        "name": "T-6",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]R'F'rURU'r'F"),
         "cases": [
           {
@@ -276,7 +276,7 @@ const zbllData: ZBLLSet[] = [
     "name": "U set",
     "subsets": [
       {
-        "name": "U 1",
+        "name": "U-1",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]R'F'RUR'U'R'FD'RUR'DR2"),
         "cases": [
           {
@@ -318,7 +318,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "U 2",
+        "name": "U-2",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']F2RU'R'U'RUR'F'RUR'U'R'FRF2'"),
         "cases": [
           {
@@ -360,7 +360,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "U 3",
+        "name": "U-3",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]RUR'URUR'U2RU'R2D'RU'R'DR"),
         "cases": [
           {
@@ -402,7 +402,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "U 4",
+        "name": "U-4",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']rU2R2FRF'U2r'RURU'R'"),
         "cases": [
           {
@@ -444,7 +444,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "U 5",
+        "name": "U-5",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("R2D'RU2R'DRU2R"),
         "cases": [
           {
@@ -486,7 +486,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "U 6",
+        "name": "U-6",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]R2DR'U2RD'R'U2R'"),
         "cases": [
           {
@@ -533,7 +533,7 @@ const zbllData: ZBLLSet[] = [
     "name": "L set",
     "subsets": [
       {
-        "name": "L 1",
+        "name": "L-1",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']R'U'R'FD'RUR'DR2U'R'F'R"),
         "cases": [
           {
@@ -575,7 +575,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "L 2",
+        "name": "L-2",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RU2RDR'U2RD'R2'"),
         "cases": [
           {
@@ -617,7 +617,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "L 3",
+        "name": "L-3",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']R'U2R'D'RU2R'DR2"),
         "cases": [
           {
@@ -659,7 +659,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "L 4",
+        "name": "L-4",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("rU2R2FRF'RU2r'"),
         "cases": [
           {
@@ -701,7 +701,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "L 5",
+        "name": "L-5",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("FR'F'rURU'r'"),
         "cases": [
           {
@@ -743,7 +743,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "L 6",
+        "name": "L-6",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]F'rUR'U'r'FR"),
         "cases": [
           {
@@ -790,7 +790,7 @@ const zbllData: ZBLLSet[] = [
     "name": "H set",
     "subsets": [
       {
-        "name": "H 1",
+        "name": "H-1",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RUR'URU'R'URU'R'UR'U'R2U'R'UR'UR"),
         "cases": [
           {
@@ -832,7 +832,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "H 2",
+        "name": "H-2",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]FRUR'U'RUR'U'RUR'U'F'"),
         "cases": [
           {
@@ -874,7 +874,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "H 3",
+        "name": "H-3",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("FRU'R'URU2R'U'RUR'U'F'"),
         "cases": [
           {
@@ -916,7 +916,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "H 4",
+        "name": "H-4",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RUR'URUL'UR'U'L"),
         "cases": [
           {
@@ -963,7 +963,7 @@ const zbllData: ZBLLSet[] = [
     "name": "Pi set",
     "subsets": [
       {
-        "name": "Pi 1",
+        "name": "Pi-1",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RUR2U'R2U'R2U2R2U'R'URU2R'"),
         "cases": [
           {
@@ -1005,7 +1005,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "Pi 2",
+        "name": "Pi-2",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RU'L'UR'ULUL'UL"),
         "cases": [
           {
@@ -1047,7 +1047,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "Pi 3",
+        "name": "Pi-3",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]FURU'R'URU2R'U'RUR'F'"),
         "cases": [
           {
@@ -1089,7 +1089,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "Pi 4",
+        "name": "Pi-4",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("R'F'U'FU'RUS'R'URS"),
         "cases": [
           {
@@ -1131,7 +1131,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "Pi 5",
+        "name": "Pi-5",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("RUR'U'R'FR2UR'U'RUR'U'F'"),
         "cases": [
           {
@@ -1173,7 +1173,7 @@ const zbllData: ZBLLSet[] = [
         ]
       },
       {
-        "name": "Pi 6",
+        "name": "Pi-6",
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("R'U'R'D'RU'R'DR2UR'U'RUR'UR"),
         "cases": [
           {
