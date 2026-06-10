@@ -6,6 +6,7 @@ import zbllData from '@/lib/zbllData';
 export default function ZBLLClient1() {
   const [mainFilter, setMainFilter] = useState('All');
   const [subFilter, setSubFilter] = useState('All');
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const mainOptions = ['All', 'T set', 'U set', 'L set', 'H set', 'Pi set'];
 
@@ -17,6 +18,7 @@ export default function ZBLLClient1() {
     setSubFilter('All');
   };
 
+  // Keep the same filter logic
   const filteredSets = zbllData
     .filter((set) => mainFilter === 'All' || set.name === mainFilter)
     .map((set) => ({
@@ -33,8 +35,21 @@ export default function ZBLLClient1() {
     )}`;
 
   const getSubsetLabel = (setName: string, subsetName: string) => {
-    const setPrefix = setName.split(' ')[0]; // e.g. "T" from "T set"
+    const setPrefix = setName.split(' ')[0]; // "T" from "T set"
     return subsetName.startsWith(setPrefix) ? subsetName : `${setPrefix} ${subsetName}`;
+  };
+
+  const copyToClipboard = async (text: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedKey(key);
+
+      window.setTimeout(() => {
+        setCopiedKey((current) => (current === key ? null : current));
+      }, 1500);
+    } catch {
+      setCopiedKey(null);
+    }
   };
 
   return (
@@ -55,7 +70,7 @@ export default function ZBLLClient1() {
 
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={getCubeUrl("R U R' U R U2 R' F R U R' U' F'")}
+              src={getCubeUrl(`R U R' U R U2 R' F R U R' U' F'`)}
               alt="3x3 ZBLL case diagram"
               className="max-w-xs rounded-xl shadow-lg bg-neutral-800/60 p-4"
             />
@@ -63,7 +78,7 @@ export default function ZBLLClient1() {
         </div>
       </section>
 
-      {/* Filters & Table Layout */}
+      {/* Filters & Tables */}
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-6">
           {/* Main Filter Dropdown */}
@@ -82,7 +97,7 @@ export default function ZBLLClient1() {
             </select>
           </div>
 
-          {/* Sub Filter Pills (Only visible when a specific set is selected) */}
+          {/* Sub Filter Pills */}
           {mainFilter !== 'All' && subsets.length > 0 && (
             <div className="mb-10 flex flex-wrap gap-3">
               <button
@@ -117,7 +132,7 @@ export default function ZBLLClient1() {
             </div>
           )}
 
-          {/* Algorithms in table-style sections */}
+          {/* Algorithms Table Grouped by Set */}
           <div className="flex flex-col gap-16">
             {filteredSets.map((set) => (
               <div key={set.name}>
@@ -138,51 +153,80 @@ export default function ZBLLClient1() {
                           {subsetLabel}
                         </h3>
 
-                        {/* Table-style container */}
-                        <div className="overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
-                          {/* Optional header row */}
-                          <div className="hidden md:grid md:grid-cols-[180px_1fr] border-b border-neutral-800 bg-neutral-950/60">
-                            <div className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                              Case
-                            </div>
-                            <div className="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-neutral-400">
-                              Algorithm
-                            </div>
+                        {/* Centered table wrapper */}
+                        <div className="flex justify-center">
+                          <div className="overflow-x-auto max-w-full">
+                            <table className="w-max border-collapse overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900 shadow-lg">
+                              <tbody>
+                                {subset.cases.map((c, i) => {
+                                  const mainCopyKey = `${subsetLabel}-${i}-main`;
+                                  const altCopyKey = `${subsetLabel}-${i}-alt`;
+
+                                  return (
+                                    <tr
+                                      key={`${subset.name}-${i}`}
+                                      className="border-b border-neutral-800 last:border-b-0"
+                                    >
+                                      {/* Column 1: image */}
+                                      <td className="w-[152px] min-w-[152px] border-r border-neutral-800 bg-neutral-950/40 p-4 align-middle">
+                                        <div className="flex items-center justify-center">
+                                          <img
+                                            src={getCubeUrl(c.alg)}
+                                            alt={`${subsetLabel} algorithm ${i + 1}`}
+                                            className="w-24 h-24 md:w-28 md:h-28"
+                                          />
+                                        </div>
+                                      </td>
+
+                                      {/* Column 2: algorithm width fits content */}
+                                      <td className="p-4 align-middle whitespace-nowrap">
+                                        <div className="flex flex-col gap-4">
+                                          {/* Main algorithm */}
+                                          <div className="flex items-center gap-3">
+                                            <p className="font-mono text-indigo-400 font-medium text-[14px] md:text-[15px] leading-relaxed">
+                                              {c.alg}
+                                            </p>
+                                            <button
+                                              type="button"
+                                              onClick={() =>
+                                                copyToClipboard(c.alg, mainCopyKey)
+                                              }
+                                              className="shrink-0 rounded-md border border-neutral-700 bg-neutral-800 px-2.5 py-1 text-xs font-semibold text-neutral-200 hover:bg-neutral-700 transition-colors"
+                                            >
+                                              {copiedKey === mainCopyKey ? 'Copied' : 'Copy'}
+                                            </button>
+                                          </div>
+
+                                          {/* Alternate algorithm */}
+                                          {c.alt && (
+                                            <div>
+                                              <p className="text-[11px] uppercase tracking-wider text-neutral-500 mb-1">
+                                                Alternate
+                                              </p>
+                                              <div className="flex items-center gap-3">
+                                                <p className="font-mono text-neutral-400 text-sm leading-relaxed">
+                                                  {c.alt}
+                                                </p>
+                                                <button
+                                                  type="button"
+                                                  onClick={() =>
+                                                    copyToClipboard(c.alt!, altCopyKey)
+                                                  }
+                                                  className="shrink-0 rounded-md border border-neutral-700 bg-neutral-800 px-2.5 py-1 text-xs font-semibold text-neutral-200 hover:bg-neutral-700 transition-colors"
+                                                >
+                                                  {copiedKey === altCopyKey ? 'Copied' : 'Copy'}
+                                                </button>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
                           </div>
-
-                          {subset.cases.map((c, i) => (
-                            <div
-                              key={`${subset.name}-${i}`}
-                              className="grid grid-cols-1 md:grid-cols-[180px_1fr] border-b border-neutral-800 last:border-b-0"
-                            >
-                              {/* First column: image */}
-                              <div className="flex items-center justify-center p-5 border-b md:border-b-0 md:border-r border-neutral-800 bg-neutral-950/40">
-                                <img
-                                  src={getCubeUrl(c.alg)}
-                                  alt={`${subsetLabel} algorithm ${i + 1}`}
-                                  className="w-28 h-28 md:w-32 md:h-32"
-                                />
-                              </div>
-
-                              {/* Second column: algorithm + alternate */}
-                              <div className="p-5 flex flex-col justify-center">
-                                <p className="font-mono text-indigo-400 font-medium text-[14px] md:text-[15px] leading-relaxed break-words">
-                                  {c.alg}
-                                </p>
-
-                                {c.alt && (
-                                  <div className="mt-4">
-                                    <p className="text-[11px] uppercase tracking-wider text-neutral-500 mb-1">
-                                      Alternate
-                                    </p>
-                                    <p className="font-mono text-neutral-400 text-sm leading-relaxed break-words">
-                                      {c.alt}
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          ))}
                         </div>
                       </div>
                     );
