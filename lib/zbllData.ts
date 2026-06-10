@@ -74,7 +74,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U2 R' U' R' F R2 U' R' U' R U R' F' R U' R'"
           },
           {
-            "alg": "[U'] R U R D R' U' R D' R' U2 R' U' R U' R'\r\n[U] F' U' F R U R' F R' F' R2 U' R'"
+            "alg": "[U'] R U R D R' U' R D' R' U2 R' U' R U' R'", "alt" : "[U] F' U' F R U R' F R' F' R2 U' R'"
           },
           {
             "alg": "[U2] r U' r U2 R' F R U2 r2 F"
@@ -122,7 +122,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' U R2 D R' U R D' R' U R' U' R U' R' U' R"
           },
           {
-            "alg": "[U2] R U' R2 D' R U' R' D R U' R U R' U R U R'\r\n[U2] R U2 R' U' R U' R2 F' r U R U' r' F"
+            "alg": "[U2] R U' R2 D' R U' R' D R U' R U R' U R U R'", "alt" : "[U2] R U2 R' U' R U' R2 F' r U R U' r' F"
           },
           {
             "alg": "R' U2 R' D' R U2 R' D R' U R' U R U2 R'"
@@ -137,10 +137,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R' U' R' D' R U R' D R U' R U' R' U2 R"
           },
           {
-            "alg": "[U2] R U2 R' U2 R' F' R U2 R U2 R' F \r\n[U'] l' U2 R' D2 R U2 R' D2 (R l)"
+            "alg": "[U2] R U2 R' U2 R' F' R U2 R U2 R' F", "alt" : "[U'] l' U2 R' D2 R U2 R' D2 (R l)"
           },
           {
-            "alg": "R' U2 R U' R' F R U R' U' R' F' R U' R \r\n[U'] l U2 R D2 R' U2 R D2 (R' l')"
+            "alg": "R' U2 R U' R' F R U R' U' R' F' R U' R", "alt" : "[U'] l U2 R D2 R' U2 R D2 (R' l')"
           }
         ]
       },
@@ -158,7 +158,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R U R' U' R U R2 D' R U' R' D R U2 R U' R'"
           },
           {
-            "alg": "R' U' R U R2 D' R U2 R' D R2 U2 R' U2 R\r\nR' U' R2 U2 L' U R2 U' L U' R2 U' R'"
+            "alg": "R' U' R U R2 D' R U2 R' D R2 U2 R' U2 R", "alt" : "R' U' R2 U2 L' U R2 U' L U' R2 U' R'"
           },
           {
             "alg": "[U2] R U R' U2 R' D' R U R' D R2 U' R' U R U' R'"
@@ -167,22 +167,22 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' U' R U2 R D R' U' R D' R2 U R U' R' U R"
           },
           {
-            "alg": "[U2] R U R' F' R U R' U' R' F R U' R' F R U R U' R' F'\r\n[U] R U R' U R U R2' D' r U2 r' D R2 U R'"
+            "alg": "[U2] R U R' F' R U R' U' R' F R U' R' F R U R U' R' F'", "alt" : "[U] R U R' U R U R2' D' r U2 r' D R2 U R'"
           },
           {
             "alg": "[U] R U' R2 D' r U2 r' D R2 U' R' U' R U' R'"
           },
           {
-            "alg": "[U'] F R' D' R U R' D R U R' D' R U' R' D R U' F'\r\nR U2 R' U L U' R U L2 U R' U' L"
+            "alg": "[U'] F R' D' R U R' D R U R' D' R U' R' D R U' F'", "alt" : "R U2 R' U L U' R U L2 U R' U' L"
           },
           {
             "alg": "[U2] R2 F R U R' U' R' F' R' U' R2 U2 R U2 R"
           },
           {
-            "alg": "[U'] R (U' D) R' U2 R D' R U R' U2 R U R2'\r\n[U] R2' F R U R U' R' F R U2 R' U2 R' F2 R2"
+            "alg": "[U'] R (U' D) R' U2 R D' R U R' U2 R U R2'", "alt" : "[U] R2' F R U R U' R' F R U2 R' U2 R' F2 R2"
           },
           {
-            "alg": "R U' R' U R U R' U' R U R' U R' D' R U R' D R\r\nF U' R2 U R' U R U2 R2' U' R U2 R' F'"
+            "alg": "R U' R' U R U R' U' R U R' U R' D' R U R' D R", "alt" : "F U' R2 U R' U R U2 R2' U' R U2 R' F'"
           }
         ]
       },
@@ -212,19 +212,19 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R U R' U R U R' U2 L R U' R' U L'"
           },
           {
-            "alg": "[U2] R2 U R' U' R' U R' (U' D) U' R' U2 R D'\r\n[U'] R U R D R' U2 R D' R' U' R' U R U' R' U' R U' R'"
+            "alg": "[U2] R2 U R' U' R' U R' (U' D) U' R' U2 R D'", "alt" : "[U'] R U R D R' U2 R D' R' U' R' U R U' R' U' R U' R'"
           },
           {
-            "alg": "R' U' R U' R2' F' R U R U' R' F U R U' R' U2 R\r\n[U'] R' U2 R U2 R' U R U' L U' R' U L' U R"
+            "alg": "R' U' R U' R2' F' R U R U' R' F U R U' R' U2 R", "alt" : "[U'] R' U2 R U2 R' U R U' L U' R' U L' U R"
           },
           {
-            "alg": "[U2] r' F R F' r U' R' U' R U R' U' R U' R'\r\n[U2] L' R U R' U' L U R U R' U' R U' R'"
+            "alg": "[U2] r' F R F' r U' R' U' R U R' U' R U' R'", "alt" : "[U2] L' R U R' U' L U R U R' U' R U' R'"
           },
           {
             "alg": "[U'] R U' R' U' R U R D R' U2 R D' R' U' R'"
           },
           {
-            "alg": "[U] M U' r U R' U' R' F R F' (R r') U M'\r\n[U2] F R U R' U' R' F' U2 R U R U' R2' U2 R"
+            "alg": "[U] M U' r U R' U' R' F R F' (R r') U M'", "alt" : "[U2] F R U R' U' R' F' U2 R U R U' R2' U2 R"
           }
         ]
       },
@@ -233,7 +233,7 @@ const zbllData: ZBLLSet[] = [
         "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]R'F'rURU'r'F"),
         "cases": [
           {
-            "alg": "[U] R' F' r U R U' r' F", alt:"[U'] F R F' r U R' U' r'"
+            "alg": "[U] R' F' r U R U' r' F", "alt" : "[U'] F R F' r U R' U' r'"
           },
           {
             "alg": "[U] R U R' U' R' F' R U2 R U2 R' F"
@@ -245,16 +245,16 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] F U R U2 R' U R U R' F'"
           },
           {
-            "alg": "[U'] R D R' U' R D' R2 U R U' R' U' R U R' U' R\r\n[U2] F R2 D R' U' R D' R2 U' R U2 R' U' F'"
+            "alg": "[U'] R D R' U' R D' R2 U R U' R' U' R U R' U' R", "alt" : "[U2] F R2 D R' U' R D' R2 U' R U2 R' U' F'"
           },
           {
             "alg": "R U R' U' R U' R' U' F R U R' U' R' F' R"
           },
           {
-            "alg": "[U] R' U' R U' R' U' R U2 r' R' F R F' r\r\n[U] R' U' R U' R' U' R U2 L' R' U R U' L"
+            "alg": "[U] R' U' R U' R' U' R U2 r' R' F R F' r", "alt" : "[U] R' U' R U' R' U' R U2 L' R' U R U' L"
           },
           {
-            "alg": "R' U2 R F U' R' U R U F' R' U R\r\nR' U2 R U' R2 F' R U R U' R' F R U2 R' U R"
+            "alg": "R' U2 R F U' R' U R U F' R' U R", "alt" : "R' U2 R U' R2 F' R U R U' R' F R U2 R' U R"
           },
           {
             "alg": "[U] F R U R' U' R U R' U' F' R U R' U' R' F R F'"
@@ -277,13 +277,13 @@ const zbllData: ZBLLSet[] = [
     "subsets": [
       {
         "name": "U 1",
-        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]R'F'RUR'U'R'FD'RUR'DR2[U]RU2R'U'RU'R'U2R'U2RUR'UR[U]RU2R'U'RU'R'L'U2LUL'UL"),
+        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U]R'F'RUR'U'R'FD'RUR'DR2"),
         "cases": [
           {
-            "alg": "[U] R' F' R U R' U' R' F D' R U R' D R2\r\n[U] R U2 R' U' R U' R' U2 R' U2 R U R' U R\r\n[U] R U2 R' U' R U' R' L' U2 L U L' U L"
+            "alg": "[U] R' F' R U R' U' R' F D' R U R' D R2", "alt" : "[U] R U2 R' U' R U' R' U2 R' U2 R U R' U R\r\n[U] R U2 R' U' R U' R' L' U2 L U L' U L"
           },
           {
-            "alg": "R U R' U' R' U R U R U' R' U R' U R U2  R' U' R\r\nx' R2 D2 R' U' R D2 R2' D R U R' D'"
+            "alg": "R U R' U' R' U R U R U' R' U R' U R U2  R' U' R", "alt" : "x' R2 D2 R' U' R D2 R2' D R U R' D'"
           },
           {
             "alg": "R' U' R U' R' U2 R2 U R' U R U2 R'"
@@ -310,10 +310,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R' U2 R U R' U R U R' U' R U' R' U2 R"
           },
           {
-            "alg": "R' U' R U' R U R' U R U2 R' U2 R' U2 R\r\nR' U' R U' R U2 R2 U' R2 U' R2 U R\r\nR' U' R U' R U R2 U' R2 U R2 U R2 U' R'"
+            "alg": "R' U' R U' R U R' U R U2 R' U2 R' U2 R"
           },
           {
-            "alg": "[U2] R U R' U R' U2 R2 U R2 U R2 U' R'\r\n[U2] R U R' U R' U' R U R U2 R' U2 R' U2 R \r\n[U2] R U R' U R' U' R2 U R2 U' R2 U' R2 U R"
+            "alg": "[U2] R U R' U R' U2 R2 U R2 U R2 U' R'", "alt" : "[U2] R U R' U R' U' R U R U2 R' U2 R' U2 R"
           }
         ]
       },
@@ -328,28 +328,28 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' F R U' R' U' R U R' F' R U R' U' R' F R F' R"
           },
           {
-            "alg": "(l R) U2 R' U2 R' F R F' r U' L' U R'\r\nR U R' U R U2 R' U R2 D' r U2 r' D R U2 R"
+            "alg": "(l R) U2 R' U2 R' F R F' r U' L' U R'", "alt" : "R U R' U R U2 R' U R2 D' r U2 r' D R U2 R"
           },
           {
-            "alg": "(r' L') U2 L U2 r U' r' F R' F R F' r\r\nR U2 R D r' U2 r D' R2 U R' U2 R U R' U R"
+            "alg": "(r' L') U2 L U2 r U' r' F R' F R F' r", "alt" : "R U2 R D r' U2 r D' R2 U R' U2 R U R' U R"
           },
           {
             "alg": "[U] R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R' U2 R"
           },
           {
-            "alg": "[U'] R2' F' R U R' U' R' F R2 U' R' U2 R2 U R' U R\r\n[U'] S R U R' U' R' F R f' R' F R U R' U' F' U R\r\n[U2] R2 D R' U2 R D' R' U' R' U' R' F R2 U' R' U' R U R' F'"
+            "alg": "[U'] R2' F' R U R' U' R' F R2 U' R' U2 R2 U R' U R", "alt" : "[U'] S R U R' U' R' F R f' R' F R U R' U' F' U R"
           },
           {
             "alg": "[U'] r U R' U' r' F R2 U' R' U' R U2 R' U' F'"
           },
           {
-            "alg": "R2' F R U R U' R' F' R U' R2' D' R U R' D R2 \r\n[U'] R2 D R' U2 R D' R' U2 R' U' R U2 R' U' R U' R'"
+            "alg": "R2' F R U R U' R' F' R U' R2' D' R U R' D R2", "alt" : "[U'] R2 D R' U2 R D' R' U2 R' U' R U2 R' U' R U' R'"
           },
           {
             "alg": "[U] F U R U2 R' U R U R2 F' r U R U' r'"
           },
           {
-            "alg": "[U'] F' U' r' F2 r U' r' F' r2 U R' U' r' F R\r\n[U] R U R' U R U2 R' U R U2 R D R' U2 R D' R2"
+            "alg": "[U'] F' U' r' F2 r U' r' F' r2 U R' U' r' F R", "alt" : "[U] R U R' U R U2 R' U R U2 R D R' U2 R D' R2"
           },
           {
             "alg": "[U'] F U R2 D' R U' R' D R2 F' R' U R"
@@ -361,13 +361,13 @@ const zbllData: ZBLLSet[] = [
       },
       {
         "name": "U 3",
-        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]RUR'URUR'U2RU'R2D'RU'R'DR[U2]RUR'U'L'U2RU'R'U2LRU'R'"),
+        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U2]RUR'URUR'U2RU'R2D'RU'R'DR"),
         "cases": [
           {
-            "alg": "[U2] R U R' U R U R' U2 R U' R2 D' R U' R' D R\r\n[U2] R U R' U' L' U2 R U' R' U2 L R U' R'"
+            "alg": "[U2] R U R' U R U R' U2 R U' R2 D' R U' R' D R", "alt" : "[U2] R U R' U' L' U2 R U' R' U2 L R U' R'"
           },
           {
-            "alg": "R' U' R U2 R' F' R U R' U' R' F R2 U2 R' U R\r\nR' U' R F U' R' U' R U F' U R' U R"
+            "alg": "R' U' R U2 R' F' R U R' U' R' F R2 U2 R' U R", "alt" : "R' U' R F U' R' U' R U F' U R' U R"
           },
           {
             "alg": "F R U' R' U R U R' U R U' R' F'"
@@ -385,7 +385,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U R' U R U' R' U2 R' D' R U2 R' D R2 U' R'"
           },
           {
-            "alg": "[U'] R' U2 R U R' U R3 D R' U2 R D' R' U2 R'\r\n[U2] R' U' R U' R' U R U2 R D R' U2 R D' R2 U R"
+            "alg": "[U'] R' U2 R U R' U R3 D R' U2 R D' R' U2 R'", "alt" : "[U2] R' U' R U' R' U R U2 R D R' U2 R D' R2 U R"
           },
           {
             "alg": "R U' R' U' R U2 R' U2 R' D' R U' R' D R"
@@ -403,10 +403,10 @@ const zbllData: ZBLLSet[] = [
       },
       {
         "name": "U 4",
-        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']rU2R2FRF'U2r'RURU'R'[U']RU2R2FRF'M'U'RU'R'UM"),
+        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']rU2R2FRF'U2r'RURU'R'"),
         "cases": [
           {
-            "alg": "[U'] r U2 R2 F R F' U2 r' R U R U' R'\r\n[U'] R U2 R2 F R F' M' U' R U' R' U M"
+            "alg": "[U'] r U2 R2 F R F' U2 r' R U R U' R'", "alt" : "[U'] R U2 R2 F R F' M' U' R U' R' U M"
           },
           {
             "alg": "F U R' U' R U' R' U' R U F' R' U2 R"
@@ -415,7 +415,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U2] R' U R U R' U' R' D' R U' R' D R2"
           },
           {
-            "alg": "R U' R' U' R U R D R' U R D' R2\r\nR U' R' U' R U2 R2 D' R U R' D R"
+            "alg": "R U' R' U' R U R D R' U R D' R2", "alt" : "R U' R' U' R U2 R2 D' R U R' D R"
           },
           {
             "alg": "R2 D' R U R' D R U R U' R' U' R"
@@ -436,10 +436,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "F R U' R' U' R U2 R' U' R U' R' U' R U2 R' U' F'"
           },
           {
-            "alg": "[U'] R' U' F R' F' R U2 R S' R' U' R S\r\n[U] F R U R' U' F' R' F R2 B' R2 F' R2 B R'"
+            "alg": "[U'] R' U' F R' F' R U2 R S' R' U' R S", "alt" : "[U] F R U R' U' F' R' F R2 B' R2 F' R2 B R'"
           },
           {
-            "alg": "[U] S' R' U R S R' U2' R' F R F' U R\r\n[U'] F R U R' U' R U R' U' F' U' R' F' U' F U R"
+            "alg": "[U] S' R' U R S R' U2' R' F R F' U R", "alt" : "[U'] F R U R' U' R U R' U' F' U' R' F' U' F U R"
           }
         ]
       },
@@ -463,19 +463,19 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R2 D' R U' R' D R2 U' R' U2 R"
           },
           {
-            "alg": "[U] R B R' U2 R B' R2 D2 r U' r' D2 R\r\nR U' R' D R' U' R D' R2 U R' U' R' U2 R'"
+            "alg": "[U] R B R' U2 R B' R2 D2 r U' r' D2 R", "alt" : "R U' R' D R' U' R D' R2 U R' U' R' U2 R'"
           },
           {
             "alg": "[U2] R' U R U R' U2 R U R D R' U2 R D' R'"
           },
           {
-            "alg": "R D r' U2 r D' R' U2 R' U R U R' U R\r\n[U'] R' U R U R' U2 R (U' D') R U' R' U2 R U' R' D"
+            "alg": "R D r' U2 r D' R' U2 R' U R U R' U R", "alt" : "[U'] R' U R U R' U2 R (U' D') R U' R' U2 R U' R' D"
           },
           {
             "alg": "[U] F U R U2 R' U R U2 R2 F R F' R U' R' F'"
           },
           {
-            "alg": "F U R U' R D R' U' R D' R2 U R U R' F'\r\nR2' D' R U2 R' D R U R U' R U R2' U R U' R U' R'"
+            "alg": "F U R U' R D R' U' R D' R2 U R U R' F'", "alt" : "R2' D' R U2 R' D R U R U' R U R2' U R U' R U' R'"
           },
           {
             "alg": "[U'] R' U R U' R' U' R U2 R D R' U' R D' R2 U' R"
@@ -499,7 +499,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U2] R2 D r' U2 r D' R' U2 R'"
           },
           {
-            "alg": "[U] R' U R' (U' D') R U' R' U2 R U' R' D R U' R\r\n[U2] R2 D R' U2 R D' R U' R U R U2 R' U' R' U R"
+            "alg": "[U] R' U R' (U' D') R U' R' U2 R U' R' D R U' R", "alt" : "[U2] R2 D R' U2 R D' R U' R U R U2 R' U' R' U R"
           },
           {
             "alg": "[U] R U R2 D' R U R' D R2 U2 R'"
@@ -511,13 +511,13 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U' R' U' R U2 R' U' R' D' R U2 R' D R"
           },
           {
-            "alg": "[U2] R' D' r U2 r' D R U2 R U' R' U' R U' R'\r\nR U R' F' U' F2 D R' U R' U' R D' F'"
+            "alg": "[U2] R' D' r U2 r' D R U2 R U' R' U' R U' R'", "alt" : "R U R' F' U' F2 D R' U R' U' R D' F'"
           },
           {
             "alg": "[U'] R U2 R2 D' R U2 R' D R2 U' R' U2 R U2 R'"
           },
           {
-            "alg": "[U] R U R' U R U' R' U R U' R' U' r' F R F' M'\r\n[U] R U R' U R U' R' U R U' R' U' L' U R U' R' L\r\n[U2] R2 D R' U2 R D' R' U' R' U R' U' R2 U' R' U R' U R"
+            "alg": "[U] R U R' U R U' R' U R U' R' U' r' F R F' M'"
           },
           {
             "alg": "[U'] R U' R' U R U R' U2 R' D' R U R' D R2 U R'"
@@ -534,13 +534,13 @@ const zbllData: ZBLLSet[] = [
     "subsets": [
       {
         "name": "L 1",
-        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']R'U'R'FD'RUR'DR2U'R'F'R[U2]RU'R'UR'U'R2U'R2'URU'RUR2'UR[U']RU'R'L'U2LUL'ULRU2'R'"),
+        "image": "https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=coll&case=" + encodeURIComponent("[U']R'U'R'FD'RUR'DR2U'R'F'R"),
         "cases": [
           {
-            "alg": "[U'] R' U' R' F D' R U R' D R2 U' R' F' R\r\n[U2] R U' R' U R' U' R2 U' R2' U R U' R U R2' U R\r\n[U'] R U' R' L' U2 L U L' U L R U2' R'"
+            "alg": "[U'] R' U' R' F D' R U R' D R2 U' R' F' R", "alt" : "[U2] R U' R' U R' U' R2 U' R2' U R U' R U R2' U R"
           },
           {
-            "alg": "[U2] R U R' U R U' R' U R U' R' U R U2 R' \r\n[U2] R U2 R' U' R U R' U' R U R' U' R U' R'"
+            "alg": "[U2] R U R' U R U' R' U R U' R' U R U2 R'", "alt" : "[U2] R U2 R' U' R U R' U' R U R' U' R U' R'"
           },
           {
             "alg": "R U2 R' U' R U' R' U2 R U R' U R U2 R'"
@@ -549,7 +549,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U R' U R U2 R' U2 R U2 R' U' R U' R'"
           },
           {
-            "alg": "[U'] R2 U R' U' R' U R U R' U R U' R U' R2\r\n[U2] R U2 R' U' R U' R2' U2 R' U R' U' R U R' U R"
+            "alg": "[U'] R2 U R' U' R' U R U R' U R U' R U' R2", "alt" : "[U2] R U2 R' U' R U' R2' U2 R' U R' U' R U R' U R"
           },
           {
             "alg": "[U'] R' U' R U' R' U2 R U' R U R' U R U2 R'"
@@ -558,13 +558,13 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U'] R' U2 R U R' U R U' R U2 R' U' R U' R'"
           },
           {
-            "alg": "[U] R2 U' R U' R U R' U R U R' U' R' U R2\r\nR' U' R U' R' U R U' R' U2 R U2 R U R' U R U2 R'"
+            "alg": "[U] R2 U' R U' R U R' U R U R' U' R' U R2", "alt" : "R' U' R U' R' U R U' R' U2 R U2 R U R' U R U2 R'"
           },
           {
             "alg": "R U R' U R U2 R' U R' U' R U' R' U2 R"
           },
           {
-            "alg": "R2 U' R U R U' R' U' R U' R' U R' U R2\r\n[U] R' U' R U' R' U2 R2 U2 R' U' R U R' U' R U' R'"
+            "alg": "R2 U' R U R U' R' U' R U' R' U R' U R2", "alt" : "[U] R' U' R U' R' U2 R2 U2 R' U' R U R' U' R U' R'"
           },
           {
             "alg": "[U2] R2 U R' U R' U' R U' R' U' R U R U' R2"
@@ -591,13 +591,13 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U'] R' D' R U2 R' D R U R U2 R' U R U R'"
           },
           {
-            "alg": "R D2 r' U' r D2 R2 F' R U2 R' F R\r\n[U] F R U R' U' R' F' U' R U R U' R' U' R' U R"
+            "alg": "R D2 r' U' r D2 R2 F' R U2 R' F R", "alt" : "[U] F R U R' U' R' F' U' R U R U' R' U' R' U R"
           },
           {
             "alg": "[U] R' F' R U2 R U2 R' F U' R U R' U' R U' R'"
           },
           {
-            "alg": "[U] R U R' U R U R' U2 R' D' r U2 r' D R\r\nR' U' R U2 R' U' R (U' D') R U2 R' U R U R' D"
+            "alg": "[U] R U R' U R U R' U2 R' D' r U2 r' D R", "alt" : "R' U' R U2 R' U' R (U' D') R U2 R' U R U R' D"
           },
           {
             "alg": "R' U R' D' R U R' U2 R U R' (U D) R U' R"
@@ -606,7 +606,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U2 R' U2 R U R2 D' R U2 R' D R2 U2 R'"
           },
           {
-            "alg": "[U2] R' F' R U R' U' R' F D' R U' R' D R2 U R' U R\r\nR U2 R D R' U2 R D' R U R' U' R' U' R' U R U R2"
+            "alg": "[U2] R' F' R U R' U' R' F D' R U' R' D R2 U R' U R", "alt" : "R U2 R D R' U2 R D' R U R' U' R' U' R' U R U R2"
           },
           {
             "alg": "[U] R U R' U R U2 R D R' U2 R D' R' U2 R'"
@@ -633,7 +633,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R D R' U2 R D' R' U' R' U2 R U' R' U' R"
           },
           {
-            "alg": "[U'] R' D2 r U r' D2 R2 B R' U2 R B' R'\r\nR U2 R' F U2 F' U' R F U' F' U2 R'"
+            "alg": "[U'] R' D2 r U r' D2 R2 B R' U2 R B' R'", "alt" : "R U2 R' F U2 F' U' R F U' F' U2 R'"
           },
           {
             "alg": "[U'] R' U R U' R' U F' R U2 R' U2 R' F R2"
@@ -642,16 +642,16 @@ const zbllData: ZBLLSet[] = [
             "alg": "‌[U2] R' U' R U' R' U' R U2 R D r' U2 r D' R'"
           },
           {
-            "alg": "[U'] R' U2 R' D' R' F2 R2 U2 R2 F2 R D R2\r\n[U'] R' U2 R' D' R U2 R' D U' F B' R2 F' B U' R2"
+            "alg": "[U'] R' U2 R' D' R' F2 R2 U2 R2 F2 R D R2", "alt" : "[U'] R' U2 R' D' R U2 R' D U' F B' R2 F' B U' R2"
           },
           {
             "alg": "[U'] R' U2 R U2 R' U' R2 D R' U2 R D' R2 U2 R"
           },
           {
-            "alg": "[U2] F R U' R' U' R2 D R' U R D' R' U R' U' F'\r\n[U2] R U' R2 F2 R U2 R U2 R' F2 U2 R U' R'"
+            "alg": "[U2] F R U' R' U' R2 D R' U R D' R' U R' U' F'", "alt" : "[U2] R U' R2 F2 R U2 R U2 R' F2 U2 R U' R'"
           },
           {
-            "alg": "F' R U R' U' R' F R2 U' R' U' R U' R' U R U R'\r\n[U2] R' U' R U' R' U2 R' D' R U2 R' D R U2 R"
+            "alg": "F' R U R' U' R' F R2 U' R' U' R U' R' U R U R'", "alt" : "[U2] R' U' R U' R' U2 R' D' R U2 R' D R U2 R"
           },
           {
             "alg": "[U'] R' U R2 D R' U R D' R' U2 R' U R U R' U' R"
@@ -666,37 +666,37 @@ const zbllData: ZBLLSet[] = [
             "alg": "r U2 R2 F R F' R U2 r'"
           },
           {
-            "alg": "[U2] L' U2 R U' R' U2 L R U' R'\r\n[U'] L U L' U' L F L' U' L U L F' L2"
+            "alg": "[U2] L' U2 R U' R' U2 L R U' R'", "alt" : "[U'] L U L' U' L F L' U' L U L F' L2"
           },
           {
-            "alg": "R' U R U' R' U' R U' R' U R2 D R' U' R D' R' \r\n[U2] F R U R' U' R' F R2 U' R' U' R U R' F2"
+            "alg": "R' U R U' R' U' R U' R' U R2 D R' U' R D' R'", "alt" : "[U2] F R U R' U' R' F R2 U' R' U' R U R' F2"
           },
           {
-            "alg": "[U'] R U' R' U R U R' U R U' R2 D' R U R' D R\r\n[U2] R' U' R U R' U' R' F R2 U' R' U' R U R' F' U R\r\nR' D' R U' R' D R2 U R' U' R U' R' U' R U R'"
+            "alg": "[U'] R U' R' U R U R' U R U' R2 D' R U R' D R", "alt" : "[U2] R' U' R U R' U' R' F R2 U' R' U' R U R' F' U R"
           },
           {
             "alg": "F R U R2 F R F' R U' R' F'"
           },
           {
-            "alg": "R' (U' D) R' U' R D' R2 U R' U' R2' U2 R\r\n[U2] F R U' R' U' R U R D R' U' R D' R' U2 R' U' F'"
+            "alg": "R' (U' D) R' U' R D' R2 U R' U' R2' U2 R", "alt" : "[U2] F R U' R' U' R U R D R' U' R D' R' U2 R' U' F'"
           },
           {
             "alg": "r U2 r2' F R F' R' r2 U2 r'"
           },
           {
-            "alg": "[U'] r U2 r2' R F R' F' r2 U2 r'\r\n[U2] R' F2 R2 L' U' L U R2 F2 R"
+            "alg": "[U'] r U2 r2' R F R' F' r2 U2 r'", "alt" : "[U2] R' F2 R2 L' U' L U R2 F2 R"
           },
           {
-            "alg": "R U' R' U R U' R' U' R U R' U2 R' D' R U R' D R\r\n[U'] R U2 R' U' L' U2 R U R' L U L' U L"
+            "alg": "R U' R' U R U' R' U' R U R' U2 R' D' R U R' D R", "alt" : "[U'] R U2 R' U' L' U2 R U R' L U L' U L"
           },
           {
-            "alg": "[U'] R' D' R U' R' D R U2 R U' R' U R U R' U' R U R'\r\n[U2] L' U2 L U R U2 L' U' L R' U' R U' R'"
+            "alg": "[U'] R' D' R U' R' D R U2 R U' R' U R U R' U' R U R'", "alt" : "[U2] L' U2 L U R U2 L' U' L R' U' R U' R'"
           },
           {
             "alg": "[U'] r U r' R U R' U' r U' r' F U R U' R' F'"
           },
           {
-            "alg": "[U'] r U R2' D' R U2 R' D R U r' F R F'\r\nF R U R' U' F' r U r' U R U' R' r U' r'"
+            "alg": "[U'] r U R2' D' R U2 R' D R U r' F R F'", "alt" : "F R U R' U' F' r U r' U R U' R' r U' r'"
           }
         ]
       },
@@ -729,7 +729,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U2] R' U2 R (U2 D') R U' R U R U' R2 D"
           },
           {
-            "alg": "[U'] R' U2 R U R' U' F' R U R' U' R' F R2 U R' U R\r\n[U'] R' U' R U' R' U R U' R' U R U' R2 D' R U2 R' D R2"
+            "alg": "[U'] R' U2 R U R' U' F' R U R' U' R' F R2 U R' U R", "alt" : "[U'] R' U' R U' R' U R U' R' U R U' R2 D' R U2 R' D R2"
           },
           {
             "alg": "[U'] R U R' U R U' R' U' r' F R F' M'"
@@ -753,7 +753,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] F' R U2 R' U2 R' F R U R U' R'"
           },
           {
-            "alg": "[U2] R2' D' r U2 (r' R) U R' D R U R\r\n[U2] R' U' R U R' F2 R U2 R' U2 R' F2 R2"
+            "alg": "[U2] R2' D' r U2 (r' R) U R' D R U R", "alt" : "[U2] R' U' R U R' F2 R U2 R' U2 R' F2 R2"
           },
           {
             "alg": "[U] F U R U2 R' U R2 D R' U R D' R2 F'"
@@ -762,7 +762,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U2] F R U' R' U' R U2 R' U' F'"
           },
           {
-            "alg": "[U2] R' F R U R U' R' F' U R U R' U R U' R'\r\nL' R' U R U' L R' U' R U' R' U R"
+            "alg": "[U2] R' F R U R U' R' F' U R U R' U R U' R'", "alt" : "L' R' U R U' L R' U' R U' R' U R"
           },
           {
             "alg": "r' F R' F' r R U2 R' U R U R' U R"
@@ -771,10 +771,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' U' R F U' R' U' R U F' R' U2 R"
           },
           {
-            "alg": "[U'] F R' F' R U R U' R' F U R U' R' U R U' R' F'\r\nR U R' U R U' R' U R U' R' U R2 D R' U2 R D' R2'"
+            "alg": "[U'] F R' F' R U R U' R' F U R U' R' U R U' R' F'", "alt" : "R U R' U R U' R' U R U' R' U R2 D R' U2 R D' R2'"
           },
           {
-            "alg": "R' U' R U' R' U R F R' U R U' F'\r\nR U R' U R' D' R U2 R' D R2 U' R' U R U' R'"
+            "alg": "R' U' R U' R' U R F R' U R U' F'", "alt" : "R U R' U R' D' R U2 R' D R2 U' R' U R U' R'"
           },
           {
             "alg": "[U'] R' U' R' D' R U2 R' D R U R U' R' U' R"
@@ -848,10 +848,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U'] R' U' R U' y R U' R' U (l R) U' R' U l'"
           },
           {
-            "alg": "R' F' R U R' U' R' F D' R U2 R' D R U R U' R' U' R\r\n[U'] F R U R' U' R U R' U' F' U R' F' U' F U R"
+            "alg": "R' F' R U R' U' R' F D' R U2 R' D R U R U' R' U' R", "alt" : "[U'] F R U R' U' R U R' U' F' U R' F' U' F U R"
           },
           {
-            "alg": "R' U' F' U F R U' F U R U' R' U R U' R' F'\r\n[U'] R' U' R U' R' U2 R U R' U' R U R' F' R U R' U' R' F R2"
+            "alg": "R' U' F' U F R U' F U R U' R' U R U' R' F'", "alt" : "[U'] R' U' R U' R' U2 R U R' U' R U R' F' R U R' U' R' F R2"
           },
           {
             "alg": "R' U2 R U R' U R U R' U' R U R' F' R U R' U' R' F R2"
@@ -881,31 +881,31 @@ const zbllData: ZBLLSet[] = [
             "alg": "F R U' R' U R U2 R' U' R U R' U' F'"
           },
           {
-            "alg": "[U2] R U R' U R U' R2' F' R U2 R U2 R' F R U' R'\r\n[U] F R U R' U' R' F' U2 R U R' U R2 U2 R'"
+            "alg": "[U2] R U R' U R U' R2' F' R U2 R U2 R' F R U' R'", "alt" : "[U] F R U R' U' R' F' U2 R U R' U R2 U2 R'"
           },
           {
-            "alg": "F U R U' R' F' r' F' r U r U' r' F\r\n[U] F R' F' L F R F' L2 U2 L U L' U L"
+            "alg": "F U R U' R' F' r' F' r U r U' r' F", "alt" : "[U] F R' F' L F R F' L2 U2 L U L' U L"
           },
           {
-            "alg": "[U'] R' U' F' U F R U R U R' U' R' F R F'\r\n[U'] F' r U R' U' r' F R2 U2 R' U' R U' R'"
+            "alg": "[U'] R' U' F' U F R U R U R' U' R' F R F'", "alt" : "[U'] F' r U R' U' r' F R2 U2 R' U' R U' R'"
           },
           {
-            "alg": "[U] R U2 R' U' R U R' U' F' R U R' U' R' F R2 U' R'\r\n[U] R U' R2 F2 R U2 R U2 R' F2 U' R U2 R'"
+            "alg": "[U] R U2 R' U' R U R' U' F' R U R' U' R' F R2 U' R'", "alt" : "[U] R U' R2 F2 R U2 R U2 R' F2 U' R U2 R'"
           },
           {
-            "alg": "[U2] R' F' R U R' U' R' F D' R U' R' D R U2 R\r\n[U'] R U2 R' U L' U2 R U2 R' U2 L R U' R'"
+            "alg": "[U2] R' F' R U R' U' R' F D' R U' R' D R U2 R", "alt" : "[U'] R U2 R' U L' U2 R U2 R' U2 L R U' R'"
           },
           {
             "alg": "[U2] F U' R U2 R' U2 R U' R' U' R U R' U F'"
           },
           {
-            "alg": "[U2] R' F R U R' U' F' R U' R' U R' F R F' U R\r\n[U2] R F R2' U' R2 U' R2' U2 R2 U' F' R'"
+            "alg": "[U2] R' F R U R' U' F' R U' R' U R' F R F' U R", "alt" : "[U2] R F R2' U' R2 U' R2' U2 R2 U' F' R'"
           },
           {
             "alg": "R' U2 R U R' U R' D R' U R D' R' U' R'"
           },
           {
-            "alg": "[U] R U2 R' U' R U R' U2 R' F R2 U' R' U' R U R' F'\r\n[U2] R U2 R' U' R U' R D' R U' R' D R U R"
+            "alg": "[U] R U2 R' U' R U R' U2 R' F R2 U' R' U' R U R' F'", "alt" : "[U2] R U2 R' U' R U' R D' R U' R' D R U R"
           },
           {
             "alg": "[U] R' U2 R U2 R2 F' R U R U' R' F U R"
@@ -923,13 +923,13 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U R' U R U L' U R' U' L"
           },
           {
-            "alg": "R' F' R U2 R U2 R' F U' R U' R'\r\n[U2] L' U' L U' L' U' R U' L U R'\r\nR' U' R U' R' U' L U' R U L'"
+            "alg": "R' F' R U2 R U2 R' F U' R U' R'", "alt" : "[U2] L' U' L U' L' U' R U' L U R'"
           },
           {
             "alg": "[U] R U R' U R U2 R' F R U' R' U' R U2 R' U' F'"
           },
           {
-            "alg": "[U'] u R' U' R D' R U' R' U2 R U2 R U R U' R2 \r\n[U'] F R U' R' U' R U2 R' U' F' U R U R' U R U2 R'\r\nR' U' R D' R U' R' U2 R U2 R U R U' R2' D"
+            "alg": "[U'] u R' U' R D' R U' R' U2 R U2 R U R U' R2", "alt" : "[U'] F R U' R' U' R U2 R' U' F' U R U R' U R U2 R'"
           },
           {
             "alg": "[U'] R U R2' F R F' r U' r' U r U r'"
@@ -938,7 +938,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R' F R' F' R2 U' r' U r U' r' U' r"
           },
           {
-            "alg": "R' F' R U2 R U2 R' F R' U' R2 U' R' U R' U R\r\nF R' F' R U2 R U2 R' U' R' F2 r U r' F R"
+            "alg": "R' F' R U2 R U2 R' F R' U' R2 U' R' U R' U R", "alt" : "F R' F' R U2 R U2 R' U' R' F2 r U r' F R"
           },
           {
             "alg": "[U2] R' U' R U' R' U F' R U R' U' R' F R2 U' R' U R"
@@ -985,16 +985,16 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] R' U2 R U2 R' U R U2 R' U R U2 R' U' R"
           },
           {
-            "alg": "[U2] R' U R U' R2 U2 R U R' U R2 U' R' U R\r\n[U2] R U' R' U2 R U R' U2 R U R' U2 R U2 R'"
+            "alg": "[U2] R' U R U' R2 U2 R U R' U R2 U' R' U R", "alt" : "[U2] R U' R' U2 R U R' U2 R U R' U2 R U2 R'"
           },
           {
-            "alg": "[U2] R2' U2 R U R U' R' U R' U R2 U' R' U R\r\n[U2] R' U R U2 R' U' R U2 R' U' R U2 R' U2 R"
+            "alg": "[U2] R2' U2 R U R U' R' U R' U R2 U' R' U R", "alt" : "[U2] R' U R U2 R' U' R U2 R' U' R U2 R' U2 R"
           },
           {
             "alg": "R U R' U R U2 R' U' R U R' U R U2 R'"
           },
           {
-            "alg": "R U R' U' R' U2 R U R' U R2 U2 R'\r\nR U2 R2 U' R U' R' U2 R U R U' R'"
+            "alg": "R U R' U' R' U2 R U R' U R2 U2 R'", "alt" : "R U2 R2 U' R U' R' U2 R U R U' R'"
           },
           {
             "alg": "[U] R U2 R' U' R U' R2 U' R U' R' U2 R"
@@ -1018,7 +1018,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U'] F U R U2 R' U R U R' F' R U2 R' U' R U' R'"
           },
           {
-            "alg": "R U2 R' U' R U' R' U' F U R U2 R' U R U R' F'\r\n[U2] R U2 R' U' R U L' U2 L U2 R' U' L' U L"
+            "alg": "R U2 R' U' R U' R' U' F U R U2 R' U R U R' F'", "alt" : "[U2] R U2 R' U' R U L' U2 L U2 R' U' L' U L"
           },
           {
             "alg": "r U' r' U' r U r' U' (l R) U' R' U l'"
@@ -1030,7 +1030,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' U' R U R2 F' R U R U' R' F U' R U R' U R"
           },
           {
-            "alg": "[U2] R' F' r U' r' F2 R U R U2 R' U2 R' F R F' \r\n[U'] R' U' F' R U2 R' U' R U' R' F U R U R' U2 R"
+            "alg": "[U2] R' F' r U' r' F2 R U R U2 R' U2 R' F R F'", "alt" : "[U'] R' U' F' R U2 R' U' R U' R' F U R U R' U2 R"
           },
           {
             "alg": "R U R' U R2 D R' U' R D' R2 U R U2 R'"
@@ -1039,10 +1039,10 @@ const zbllData: ZBLLSet[] = [
             "alg": "R' U' R U' R2' D' R U R' D R2 U' R' U2 R"
           },
           {
-            "alg": "[U2] R' U2 R' F' R U R U' R' F U R U' R' U2 R\r\n[U'] R2 D R' U2 R D' R2 U' R2 D R' U' R D' R2"
+            "alg": "[U2] R' U2 R' F' R U R U' R' F U R U' R' U2 R", "alt" : "[U'] R2 D R' U2 R D' R2 U' R2 D R' U' R D' R2"
           },
           {
-            "alg": "[U2] R' U R U' R' U R U R' U2 r' F R F' r\r\n[U] R2 D' R U2 R' D R2 U R2 D' R U R' D R2"
+            "alg": "[U2] R' U R U' R' U R U R' U2 r' F R F' r", "alt" : "[U] R2 D' R U2 R' D R2 U R2 D' R U R' D R2"
           }
         ]
       },
@@ -1054,7 +1054,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U] F U R U' R' U R U2 R' U' R U R' F'"
           },
           {
-            "alg": "[U'] R U R' U R U2 R2 U' R' F R U R U' R' F' R\r\n[U'] R U R' U R U2 R2 F' r U R U' r' F"
+            "alg": "[U'] R U R' U R U2 R2 U' R' F R U R U' R' F' R", "alt" : "[U'] R U R' U R U2 R2 F' r U R U' r' F"
           },
           {
             "alg": "[U'] L' U' L U' r' F2 r2 U R' U' r' F R F'"
@@ -1072,7 +1072,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "R U R' U R' F R F' R' U' F' U F R2 U' R'"
           },
           {
-            "alg": "[U2] L' U' L U' L F' L' F L U F U' F' L2 U L\r\nF R U R' U' R' F' R U2 R' U' R2 U' R2' U2 R"
+            "alg": "[U2] L' U' L U' L F' L' F L U F U' F' L2 U L", "alt" : "F R U R' U' R' F' R U2 R' U' R2 U' R2' U2 R"
           },
           {
             "alg": "[U'] F U' R U' R' U R U R' U2 R U2 R' U F'"
@@ -1102,13 +1102,13 @@ const zbllData: ZBLLSet[] = [
             "alg": "R (U D') R U R' D R2 U' R' U' R2 U2 R"
           },
           {
-            "alg": "[U2] R U2 R' U R' D' R U R' D R2 U' R' U R U' R'\r\n[U2] R' U R U F U R' U' R F' U' R' U' R"
+            "alg": "[U2] R U2 R' U R' D' R U R' D R2 U' R' U R U' R'", "alt" : "[U2] R' U R U F U R' U' R F' U' R' U' R"
           },
           {
             "alg": "R' U R U F R' U R U' F' U' R' U' R"
           },
           {
-            "alg": "[U'] r U R' U R' F R F' R U' R' U R U2 r'\r\nR F' U' R2 F U' F' U R2 U F R'"
+            "alg": "[U'] r U R' U R' F R F' R U' R' U R U2 r'", "alt" : "R F' U' R2 F U' F' U R2 U F R'"
           },
           {
             "alg": "[U] R' U' R' D' R U R' D R U2 R' D' R U2 R' D R2"
@@ -1126,7 +1126,7 @@ const zbllData: ZBLLSet[] = [
             "alg": "[U2] R F U' R2 U2 R U R' U R2 U F' R'"
           },
           {
-            "alg": "R2 D R' U2 R D' R2 U' R U R D R' U2 R D' R2\r\nR F U' R2 U' R U' R' U2 R2 U F' R'"
+            "alg": "R2 D R' U2 R D' R2 U' R U R D R' U2 R D' R2", "alt" : "R F U' R2 U' R U' R' U2 R2 U F' R'"
           }
         ]
       },
