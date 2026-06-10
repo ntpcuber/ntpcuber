@@ -45,7 +45,7 @@ export default function ZBLLClient() {
           </div>
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={`https://cube.rider.biz/visualcube.php?fmt=png&bg=transparent&pzl=3&view=plan&stage=ll&case=${encodeURIComponent("R U R' U R U2 R' F R U R' U' F'")}`}
+              src={`https://cube.rider.biz/visualcube.php?fmt=svg&pzl=3&view=plan&stage=ll&case=${encodeURIComponent("R U R' U R U2 R' F R U R' U' F'")}`}
               alt="3x3 ZBLL case diagram"
               className="max-w-xs rounded-xl shadow-lg bg-neutral-800 p-4"
             />
@@ -127,7 +127,7 @@ export default function ZBLLClient() {
                           {set.name} - {subset.name}
                         </div>
                         <img
-                          src={`https://visualcube.api.cubing.net/visualcube.php?fmt=png&bg=transparent&pzl=3&view=plan&stage=ll&case=${encodeURIComponent(c.alg)}`}
+                          src={`https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=ll&case=${encodeURIComponent(c.alg)}`}
                           alt={`${subset.name} algorithm`}
                           className="w-32 h-32 mb-4"
                         />
