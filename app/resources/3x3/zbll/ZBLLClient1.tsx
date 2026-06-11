@@ -84,7 +84,7 @@ export default function ZBLLClient1() {
       <div className="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
 
       {/* Hero */}
-      <section className="pt-32 pb-12">
+      <section className="pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">3x3 ZBLL</h1>
@@ -95,9 +95,9 @@ export default function ZBLLClient1() {
           </div>
           <div className="md:w-1/2 flex justify-center">
             <img
-              src={getCubeUrl(`R U R' U R U2 R' F R U R' U' F'`)}
+              src="/image/zb_hero.png"
               alt="3x3 ZBLL case diagram"
-              className="max-w-xs rounded-xl shadow-lg bg-neutral-800/60 p-4"
+              className="max-w-full rounded-xl shadow-lg"
             />
           </div>
         </div>
