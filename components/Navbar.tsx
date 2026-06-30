@@ -38,8 +38,12 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-neutral-900/80 backdrop-blur-md border-b border-neutral-800/50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Brand */}
-        <Link href="/" className="font-bold text-xl tracking-tighter text-white">
-          NTP Cuber <span className="text-blue-500">Academy</span>
+        <Link href="/" className="flex items-center shrink-0">
+          <img
+            src="/image/logo-banner.svg"
+            alt="NTP Cuber Academy"
+            className="h-9 w-[200px] md:h-11 md:w-[155px]"
+          />
         </Link>
 
         {/* Desktop nav */}
