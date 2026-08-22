@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useLang } from '@/context/LanguageContext'
 import { supabase, getUser } from '@/lib/supabase'
 import Link from 'next/link'
+import testimonials from '@/lib/testimonials'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -274,6 +275,45 @@ async function toBase64(file: File): Promise<string> {
     reader.onload = () => resolve((reader.result as string).split(',')[1])
     reader.onerror = reject
   })
+}
+
+// ─── Star Rating & Testimonial Card ─────────────────────────────────────────────────────────────
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5 mb-4">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <svg
+          key={i}
+          className={`w-4 h-4 ${i < rating ? 'text-amber-400' : 'text-neutral-700'}`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.539 1.118l-3.367-2.445a1 1 0 00-1.175 0l-3.366 2.445c-.784.57-1.838-.196-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.813 9.385c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.958z" />
+        </svg>
+      ))}
+    </div>
+  )
+}
+
+function TestimonialCard({ t, lang }: { t: typeof testimonials[number]; lang: string }) {
+  const initials = t.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+  const quote = lang === 'th' && t.quoteTh ? t.quoteTh : t.quoteEn
+
+  return (
+    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 hover:border-blue-500/40 transition flex flex-col">
+      <StarRating rating={t.rating} />
+      <p className="text-neutral-300 text-sm leading-relaxed mb-6 flex-1">&ldquo;{quote}&rdquo;</p>
+      <div className="flex items-center gap-3 pt-4 border-t border-neutral-800">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0">
+          {initials}
+        </div>
+        <div className="min-w-0">
+          <p className="font-bold text-white text-sm truncate">{t.name}</p>
+          <p className="text-xs text-neutral-500 truncate">{t.service}</p>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // ─── Progress bar ─────────────────────────────────────────────────────────────
@@ -567,6 +607,20 @@ export default function CoachingPage() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials ── */}
+      <section id="testimonials" className="py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-12 text-center">
+            {lang === 'th' ? 'รีวิวจากผู้เรียน' : 'What Clients Say'}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((t, i) => (
+              <TestimonialCard key={i} t={t} lang={lang} />
+            ))}
           </div>
         </div>
       </section>
