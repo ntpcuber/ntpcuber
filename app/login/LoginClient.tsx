@@ -68,7 +68,7 @@ export default function LoginClient() {
     else setSuccess('Password reset email sent — check your inbox.')
   }
 
-  const inputCls = "w-full bg-neutral-900 border border-neutral-800 focus:border-indigo-500 outline-none px-4 py-3 rounded-xl text-sm text-white placeholder-neutral-500 transition"
+  const inputCls = "w-full bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 focus:border-indigo-500 outline-none px-4 py-3 rounded-xl text-sm text-neutral-900 dark:text-white placeholder-neutral-500 transition"
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-16 relative overflow-x-hidden">
@@ -76,14 +76,14 @@ export default function LoginClient() {
       <div className="absolute bottom-[-6rem] right-[-6rem] w-[24rem] h-[24rem] bg-purple-600/15 rounded-full blur-[100px] -z-10" />
 
       <div className="w-full max-w-md">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-neutral-300 transition mb-8">
+        <Link href="/" className="inline-flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition mb-8">
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7"/>
           </svg>
           Back to Home
         </Link>
 
-        <div className="bg-neutral-900/60 border border-neutral-800 rounded-3xl p-8 backdrop-blur-sm">
+        <div className="bg-white dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 rounded-3xl p-8 backdrop-blur-sm">
           {/* Brand */}
           <div className="flex items-center gap-3 mb-8">
             <div className="w-9 h-9 bg-indigo-600/15 border border-indigo-500/30 rounded-xl flex items-center justify-center">
@@ -91,14 +91,14 @@ export default function LoginClient() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
               </svg>
             </div>
-            <span className="font-extrabold tracking-tight text-white">NTP Cuber</span>
+            <span className="font-extrabold tracking-tight text-neutral-900 dark:text-white">NTP Cuber</span>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-6 mb-8 border-b border-neutral-800">
+          <div className="flex gap-6 mb-8 border-b border-neutral-200 dark:border-neutral-800">
             {(['login', 'signup'] as const).map(t => (
               <button key={t} onClick={() => { setTab(t); setError(''); setSuccess('') }}
-                className={`pb-3 text-sm font-bold relative ${tab === t ? 'text-white' : 'text-neutral-500 hover:text-neutral-300'}`}>
+                className={`pb-3 text-sm font-bold relative ${tab === t ? 'text-neutral-900 dark:text-white' : 'text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300'}`}>
                 {t === 'login' ? 'Sign In' : 'Create Account'}
                 <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-500 rounded-full transition-opacity ${tab === t ? 'opacity-100' : 'opacity-0'}`} />
               </button>
@@ -116,7 +116,7 @@ export default function LoginClient() {
                 <input name="password" type={showPw ? 'text' : 'password'} required placeholder="Password"
                   className={`${inputCls} pr-10`} />
                 <button type="button" onClick={() => setShowPw(s => !s)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-300">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
@@ -132,7 +132,7 @@ export default function LoginClient() {
                 </button>
               </div>
               <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
+                className="w-full py-3.5 rounded-xl font-bold text-sm text-neutral-900 dark:text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
                 {loading ? 'Please wait…' : 'Sign In'}
               </button>
             </form>
@@ -145,7 +145,7 @@ export default function LoginClient() {
               <input name="email" type="email" required placeholder="Email address" className={inputCls} />
               <input name="password" type="password" required minLength={6} placeholder="Password (min 6 chars)" className={inputCls} />
               <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
+                className="w-full py-3.5 rounded-xl font-bold text-sm text-neutral-900 dark:text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
                 {loading ? 'Please wait…' : 'Create Account'}
               </button>
             </form>
@@ -160,7 +160,7 @@ export default function LoginClient() {
 
           {/* Google OAuth */}
           <button onClick={() => signInWithGoogle()}
-            className="w-full flex items-center justify-center gap-2.5 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 py-3 rounded-xl text-sm font-semibold transition active:scale-95">
+            className="w-full flex items-center justify-center gap-2.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 border border-neutral-300 dark:border-neutral-700 py-3 rounded-xl text-sm font-semibold transition active:scale-95">
             <svg viewBox="0 0 48 48" className="w-4 h-4">
               <path fill="#FFC107" d="M43.6 20H24v8h11.3C33.6 33.7 29.3 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9L38 8C34.3 4.8 29.4 3 24 3 11.8 3 2 12.8 2 25s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.4-5z"/>
               <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.1 19 12 24 12c3.1 0 5.9 1.1 8.1 2.9L38 8C34.3 4.8 29.4 3 24 3c-7.7 0-14.4 4.4-17.7 11.7z"/>
@@ -171,7 +171,7 @@ export default function LoginClient() {
           </button>
         </div>
 
-        <p className="text-center text-xs text-neutral-600 mt-6">
+        <p className="text-center text-xs text-neutral-500 dark:text-neutral-600 mt-6">
           © 2026 NTP Cuber — Your account data is secure and private.
         </p>
       </div>

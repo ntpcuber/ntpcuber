@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function EG2Page() {
   return (
-    <div className="bg-neutral-950 text-neutral-100 font-sans">
+    <div className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans">
       {/* Gradient accent */}
       <div className="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
 
@@ -18,7 +18,7 @@ export default function EG2Page() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">2x2 EG-2 / Anti-CLL</h1>
-            <p className="text-neutral-400 max-w-2xl text-lg">
+            <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl text-lg">
               A last layer algorithm set where the 2 pieces of the solved face are diagonally swapped.
             </p>
           </div>

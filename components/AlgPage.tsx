@@ -7,13 +7,13 @@ import type { AlgSet } from '@/lib/algTypes'
 
 function AlgCard({ img, alg, alt }: { img: string; alg: string; alt?: string }) {
   return (
-    <div className="group bg-neutral-900 rounded-xl border border-neutral-800 overflow-hidden hover:border-indigo-500 transition">
-      <div className="bg-neutral-950 aspect-square flex items-center justify-center">
+    <div className="group bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden hover:border-indigo-500 transition">
+      <div className="bg-neutral-100 dark:bg-neutral-950 aspect-square flex items-center justify-center">
         <img src={img} alt="" className="w-48 h-48 object-contain" />
       </div>
       <div className="p-4">
         <p className="font-mono text-sm mb-1">{alg}</p>
-        {alt && <p className="font-mono text-xs text-neutral-400">{alt}</p>}
+        {alt && <p className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{alt}</p>}
       </div>
     </div>
   )
@@ -32,9 +32,9 @@ function Pill({
 }) {
   const base =
     'px-3 py-1 rounded-full border text-sm transition select-none cursor-pointer ' +
-    'border-neutral-800 bg-neutral-900/40 hover:border-indigo-500 hover:bg-indigo-500/10'
+    'border-neutral-300 dark:border-neutral-800 bg-neutral-100/40 dark:bg-neutral-900/40 hover:border-indigo-500 hover:bg-indigo-500/10'
   const activeClass = ' border-indigo-500 bg-indigo-500/10 text-indigo-200'
-  const inactiveClass = ' text-neutral-200'
+  const inactiveClass = ' text-neutral-700 dark:text-neutral-200'
   return (
     <button type="button" onClick={onClick} className={base + (active ? activeClass : inactiveClass)}>
       {label}

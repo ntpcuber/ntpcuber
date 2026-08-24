@@ -55,7 +55,7 @@ const fourLLLData: MegaSection[] = [
     id: 'co',
     titleEn: 'CO (Corner Orientation)',
     titleTh: 'CO (การพลิกชิ้นมุม)',
-    sectionClass: 'bg-neutral-900',
+    sectionClass: '',
     groups: [
       {
         label: '2 Corners', labelTh: 'พลิก 2 มุม',
@@ -141,7 +141,7 @@ const fourLLLData: MegaSection[] = [
     id: 'cp',
     titleEn: 'CP (Corner Permutation)',
     titleTh: 'CP (การย้ายชิ้นมุม)',
-    sectionClass: 'bg-neutral-900',
+    sectionClass: '',
     groups: [
       {
         label: '3 Corners', labelTh: 'ย้ายมุม 3 ชิ้น',

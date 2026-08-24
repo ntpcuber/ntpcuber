@@ -98,7 +98,7 @@ export default function CoursesPage() {
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {/* ── Card 1: Beginner (Free) ── */}
-          <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500 transition group flex flex-col">
+          <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden hover:border-blue-500 transition group flex flex-col">
             <div className="aspect-video bg-neutral-800 relative">
               <img
                 src="/image/course_thumb_3x3beginner.png"
@@ -120,7 +120,7 @@ export default function CoursesPage() {
                 <span className="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-1 rounded uppercase font-bold">
                   {c.badgeBeginner}
                 </span>
-                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">
+                <span className="text-[10px] bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-2 py-1 rounded uppercase font-bold">
                   {c.badgeLessons9}
                 </span>
                 <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-1 rounded uppercase font-bold">
@@ -129,7 +129,7 @@ export default function CoursesPage() {
               </div>
 
               <h3 className="text-xl font-bold mb-2">{c.course1Title}</h3>
-              <p className="text-neutral-400 text-sm mb-6 flex-1">{c.course1Desc}</p>
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 flex-1">{c.course1Desc}</p>
 
               <div className="mt-auto space-y-2">
                 {authLoading ? (
@@ -155,10 +155,10 @@ export default function CoursesPage() {
           </div>
 
           {/* ── Card 2: Advanced F2L (Paid, Coming Soon) ── */}
-          <div className="relative bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden flex flex-col">
+          <div className="relative bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden flex flex-col">
             {/* Coming Soon overlay */}
             <div className="absolute inset-0 z-10 bg-neutral-950/60 backdrop-blur-[2px] flex flex-col items-center justify-center gap-3 pointer-events-none">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-neutral-400 border border-neutral-700 px-4 py-1.5 rounded-full bg-neutral-900/80">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-400 border border-neutral-700 px-4 py-1.5 rounded-full bg-neutral-900/80">
                 {c.badgeComingSoon}
               </span>
             </div>
@@ -181,17 +181,17 @@ export default function CoursesPage() {
                 <span className="text-[10px] bg-purple-600/20 text-purple-400 px-2 py-1 rounded uppercase font-bold">
                   {c.badgeIntermediate}
                 </span>
-                <span className="text-[10px] bg-neutral-800 text-neutral-400 px-2 py-1 rounded uppercase font-bold">
+                <span className="text-[10px] bg-neutral-800 text-neutral-600 dark:text-neutral-400 px-2 py-1 rounded uppercase font-bold">
                   {c.badgeLessons14}
                 </span>
               </div>
 
               <h3 className="text-xl font-bold mb-2">{c.course2Title}</h3>
-              <p className="text-neutral-400 text-sm mb-4">{c.course2Desc}</p>
+              <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-4">{c.course2Desc}</p>
 
               <ul className="space-y-1.5 mb-6">
                 {c.course2Features.map((f, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-neutral-400">
+                  <li key={i} className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
                     <span className="text-indigo-500 font-bold">✔</span>
                     {f}
                   </li>
