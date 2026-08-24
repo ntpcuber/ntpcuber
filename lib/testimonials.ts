@@ -8,6 +8,13 @@ export interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
+    name: 'Wasikrit R.',
+    service: 'Mastery Pack Live 1-on-1 (4 Sessions)',
+    rating: 5,
+    quoteEn: 'From what I’ve learned from Sarah’s Advanced algorithms, it has been both fun and very useful. The teaching is easy to understand and very detailed, which has helped me memorize and perform the algorithms much better.',
+    quoteTh: 'จากที่ผมได้เรียนรู้อัลกอริทึมของ Sarah’s Advanced รู้สึกว่าสนุกและมีประโยชน์มาก สอนเข้าใจง่ายและละเอียด ทำให้ผมสามารถจำและทำอัลกอริทึมได้ดีขึ้นครับ',
+  },
+  {
     name: 'Chawanwit C.',
     service: 'Video Critique (Video Analysis)',
     rating: 5,
