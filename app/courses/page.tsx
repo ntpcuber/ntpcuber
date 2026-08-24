@@ -89,8 +89,8 @@ export default function CoursesPage() {
       {/* Hero */}
       <section className="relative pt-32 pb-16 px-6 text-center">
         <div className="absolute inset-x-0 top-0 h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10" />
-        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4">{c.heroTitle}</h1>
-        <p className="text-neutral-400 text-lg max-w-2xl mx-auto">{c.heroDesc}</p>
+        <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-4 text-neutral-900 dark:text-white">{c.heroTitle}</h1>
+        <p className="text-neutral-600 dark:text-neutral-400 text-lg max-w-2xl mx-auto">{c.heroDesc}</p>
       </section>
 
       {/* Cards */}
@@ -128,7 +128,7 @@ export default function CoursesPage() {
                 </span>
               </div>
 
-              <h3 className="text-xl font-bold mb-2">{c.course1Title}</h3>
+              <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-white">{c.course1Title}</h3>
               <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 flex-1">{c.course1Desc}</p>
 
               <div className="mt-auto space-y-2">
@@ -186,7 +186,7 @@ export default function CoursesPage() {
                 </span>
               </div>
 
-              <h3 className="text-xl font-bold mb-2">{c.course2Title}</h3>
+              <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-white">{c.course2Title}</h3>
               <p className="text-neutral-600 dark:text-neutral-400 text-sm mb-4">{c.course2Desc}</p>
 
               <ul className="space-y-1.5 mb-6">
@@ -200,7 +200,7 @@ export default function CoursesPage() {
 
               <div className="mt-auto">
                 <div className="flex items-baseline gap-2 mb-3">
-                  <span className="text-3xl font-bold text-white">{c.badgePrice}</span>
+                  <span className="text-3xl font-bold text-neutral-900 dark:text-white">{c.badgePrice}</span>
                   <span className="text-neutral-500 text-sm">/ {lang === 'th' ? 'คอร์ส' : 'course'}</span>
                 </div>
                 <button

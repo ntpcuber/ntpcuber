@@ -300,15 +300,15 @@ function TestimonialCard({ t, lang }: { t: typeof testimonials[number]; lang: st
   const quote = lang === 'th' && t.quoteTh ? t.quoteTh : t.quoteEn
 
   return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 hover:border-blue-500/40 transition flex flex-col">
+    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 hover:border-blue-500/40 transition flex flex-col shadow-sm dark:shadow-none">
       <StarRating rating={t.rating} />
-      <p className="text-neutral-300 text-sm leading-relaxed mb-6 flex-1">&ldquo;{quote}&rdquo;</p>
-      <div className="flex items-center gap-3 pt-4 border-t border-neutral-800">
+      <p className="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed mb-6 flex-1">&ldquo;{quote}&rdquo;</p>
+      <div className="flex items-center gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-800">
         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0">
           {initials}
         </div>
         <div className="min-w-0">
-          <p className="font-bold text-white text-sm truncate">{t.name}</p>
+          <p className="font-bold text-neutral-900 dark:text-white text-sm truncate">{t.name}</p>
           <p className="text-xs text-neutral-500 truncate">{t.service}</p>
         </div>
       </div>
@@ -520,39 +520,39 @@ export default function CoachingPage() {
     setCurrentStep(1); setSubmitting(false)
   }
 
-  const inputCls = 'w-full bg-neutral-900 border border-neutral-800 p-4 rounded-xl focus:border-blue-500 outline-none text-white placeholder-neutral-500 transition'
+  const inputCls = 'w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-4 rounded-xl focus:border-blue-500 outline-none text-neutral-900 dark:text-white placeholder-neutral-500 transition'
 
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-black text-white selection:bg-blue-500/30">
+    <div className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 selection:bg-blue-500/30 transition-colors">
 
       {/* ── Hero ── */}
       <section className="relative pt-32 pb-24 px-6 text-center">
         <div className="absolute inset-x-0 top-0 h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10" />
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8">{trans.title}</h1>
-          <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">{trans.subtitle}</p>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-neutral-900 dark:text-white">{trans.title}</h1>
+          <p className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">{trans.subtitle}</p>
         </div>
       </section>
 
       {/* ── Why Me ── */}
-      <section id="why-me" className="py-24 px-6 bg-neutral-900/30">
+      <section id="why-me" className="py-24 px-6 bg-neutral-100 dark:bg-neutral-900/30">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <div className="absolute -inset-4 bg-blue-600/20 blur-2xl rounded-full -z-10" />
-              <div className="bg-neutral-900 border border-neutral-800 p-2 rounded-3xl overflow-hidden">
+              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-2 rounded-3xl overflow-hidden shadow-sm dark:shadow-none">
                 <img
                   src="/image/coach_profile1.jpg"
                   alt="Coach"
                   className="w-full aspect-[4/5] object-cover rounded-2xl mb-8"
                 />
                 <div className="p-6">
-                  <h2 className="text-3xl font-bold text-white mb-2">
+                  <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
                     {lang === 'th' ? 'ณัฐภัทร มาทานี' : 'Natthaphat Mahtani'}
                   </h2>
-                  <p className="text-blue-500 font-semibold mb-6">
+                  <p className="text-blue-600 dark:text-blue-500 font-semibold mb-6">
                     {lang === 'th' ? 'นักแข่งที่มีความสามารถรอบด้านมากที่สุดในไทย' : "Thailand's best All-rounder"}
                   </p>
                   <div className="space-y-4">
@@ -560,19 +560,19 @@ export default function CoachingPage() {
                       {lang === 'th' ? 'ผลงานโดดเด่น' : 'Achievement Highlights'}
                     </h4>
                     <ul className="space-y-3">
-                      <li className="flex items-start gap-3 text-neutral-300">
+                      <li className="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
                         <span className="text-blue-500">🏆</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'สถิติรูบิก 3x3 เวลาเร็วที่สุดเคยเป็นอันดับ 9 ของโลก' : '3x3 single peak ranking 9th global'}
                         </p>
                       </li>
-                      <li className="flex items-center gap-3 text-neutral-300">
+                      <li className="flex items-center gap-3 text-neutral-700 dark:text-neutral-300">
                         <span className="text-blue-500">🏅</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'เข้ารอบชิงในงานแข่งระดับทวีป' : 'Finalist in Continental Championship'}
                         </p>
                       </li>
-                      <li className="flex items-center gap-3 text-neutral-300">
+                      <li className="flex items-center gap-3 text-neutral-700 dark:text-neutral-300">
                         <span className="text-blue-500">⏱️</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'ประสบการณ์กว่า 10 ปี' : '10+ years experience'}
@@ -585,24 +585,24 @@ export default function CoachingPage() {
             </div>
 
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-neutral-900 dark:text-white">
                 {c.whyMeTitle.replace('?', '')} <span className="text-blue-500">?</span>
               </h2>
               <div className="space-y-8">
                 {c.whyMeBenefits.map((b, i) => (
                   <div key={i} className="flex gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-600/10 border border-blue-500/20 rounded-xl flex items-center justify-center text-blue-500 text-xl">
+                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-600/10 border border-blue-200 dark:border-blue-500/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 text-xl">
                       {['🧩', '🔍', '🏗️', '🎯'][i]}
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">{b.title}</h3>
-                      <p className="text-neutral-400">{b.desc}</p>
+                      <h3 className="text-xl font-bold mb-2 text-neutral-900 dark:text-white">{b.title}</h3>
+                      <p className="text-neutral-600 dark:text-neutral-400">{b.desc}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="mt-12 p-6 bg-blue-600/10 border border-blue-500/30 rounded-2xl inline-block">
-                <p className="text-blue-400 font-bold">
+              <div className="mt-12 p-6 bg-blue-100 dark:bg-blue-600/10 border border-blue-200 dark:border-blue-500/30 rounded-2xl inline-block">
+                <p className="text-blue-700 dark:text-blue-400 font-bold">
                   {lang === 'th' ? 'เปิดสอนแบบคลาสออนไลน์' : 'Online Sessions Available'}
                 </p>
               </div>
@@ -612,9 +612,9 @@ export default function CoachingPage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section id="testimonials" className="py-24 px-6">
+      <section id="testimonials" className="py-24 px-6 bg-neutral-50 dark:bg-transparent">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">
             {lang === 'th' ? 'รีวิวจากผู้เรียน' : 'What Clients Say'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -647,9 +647,9 @@ export default function CoachingPage() {
       )}
 
       {/* ── Pricing ── */}
-      <section id="pricing" className="py-24 px-6">
+      <section id="pricing" className="py-24 px-6 bg-neutral-50 dark:bg-transparent">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">{trans.pricingTitle}</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.pricingTitle}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
             {/* Visible service cards */}
@@ -661,14 +661,14 @@ export default function CoachingPage() {
               return (
                 <div
                   key={s.name}
-                  className={`relative bg-neutral-900 border ${
+                  className={`relative bg-white dark:bg-neutral-900 border ${
                     isReturn
                       ? 'border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.15)]'
                       : isPopular
                       ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]'
                       : isMastery
                       ? 'border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.15)]'
-                      : 'border-neutral-800'
+                      : 'border-neutral-200 dark:border-neutral-800'
                   } p-8 rounded-2xl hover:border-blue-500 transition duration-300 flex flex-col justify-between h-full`}
                 >
                   {/* Badges */}
@@ -690,12 +690,12 @@ export default function CoachingPage() {
 
                   <div className="flex flex-col h-full">
                     <div>
-                      <h3 className="text-xl font-bold text-white mb-4 min-h-[64px]">{s.name}</h3>
-                      <ul className="text-neutral-400 text-sm mb-6 space-y-2">
+                      <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-4 min-h-[64px]">{s.name}</h3>
+                      <ul className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 space-y-2">
                         {s.desc.map((f, j) => (
                           <li key={j} className="flex items-start gap-2">
-                            <span className={`font-bold mt-[2px] ${isReturn ? 'text-emerald-400' : 'text-blue-500'}`}>✔</span>
-                            <span className={j === s.desc.length - 1 && isReturn ? 'text-emerald-300 font-medium' : ''}>{f}</span>
+                            <span className={`font-bold mt-[2px] ${isReturn ? 'text-emerald-500 dark:text-emerald-400' : 'text-blue-600 dark:text-blue-500'}`}>✔</span>
+                            <span className={j === s.desc.length - 1 && isReturn ? 'text-emerald-700 dark:text-emerald-300 font-medium' : ''}>{f}</span>
                           </li>
                         ))}
                       </ul>
@@ -718,8 +718,8 @@ export default function CoachingPage() {
                         onClick={() => scrollToBooking(s.name)}
                         className={`w-full py-3 font-bold rounded-xl transition-colors shadow-lg active:scale-95 ${
                           isReturn
-                            ? 'bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/40 hover:border-emerald-500'
-                            : 'bg-neutral-800 hover:bg-indigo-600 text-white'
+                            ? 'bg-emerald-100 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-500/40 hover:border-emerald-500 dark:bg-emerald-600/20 dark:hover:bg-emerald-600 dark:text-emerald-300'
+                            : 'bg-neutral-100 hover:bg-indigo-600 text-neutral-900 hover:text-white dark:bg-neutral-800 dark:hover:bg-indigo-600 dark:text-white'
                         }`}
                       >
                         {trans.bookNow}
@@ -732,16 +732,16 @@ export default function CoachingPage() {
 
             {/* Locked teaser card — shown when logged out OR logged in but no previous session */}
             {(!isLoggedIn || (isLoggedIn && !hasPreviousSession)) && (
-              <div className="relative bg-neutral-900/50 border border-neutral-800 border-dashed p-8 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[320px]">
+              <div className="relative bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 border-dashed p-8 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[320px]">
                 {/* Subtle emerald glow hinting at what's inside */}
                 <div className="absolute inset-0 rounded-2xl bg-emerald-500/3 pointer-events-none" />
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-center text-2xl">
                   🔒
                 </div>
                 <div>
-                  <p className="font-bold text-neutral-200 text-lg mb-1">{trans.returnTeaser}</p>
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-1">{trans.returnTeaserSub}</p>
-                  <p className="text-2xl font-bold text-emerald-500/50 mt-3">฿390</p>
+                  <p className="font-bold text-neutral-900 dark:text-neutral-200 text-lg mb-1">{trans.returnTeaser}</p>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed mb-1">{trans.returnTeaserSub}</p>
+                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-500/50 mt-3">฿390</p>
                 </div>
                 {!isLoggedIn ? (
                   <Link
@@ -765,9 +765,9 @@ export default function CoachingPage() {
       </section>
 
       {/* ── Booking form ── */}
-      <section id="book" ref={bookSectionRef} className="py-24 px-6 bg-neutral-950 border-t border-neutral-900">
+      <section id="book" ref={bookSectionRef} className="py-24 px-6 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-900">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">{trans.bookTitle}</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.bookTitle}</h2>
 
           <form onSubmit={(e) => {
             e.preventDefault()

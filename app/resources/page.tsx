@@ -45,21 +45,21 @@ export default function ResourcesPage() {
       {/* Hero */}
       <section className="pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">{c.heroTitle}</h1>
-          <p className="text-neutral-400 max-w-2xl text-lg">{c.heroDesc}</p>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 text-neutral-900 dark:text-white">{c.heroTitle}</h1>
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl text-lg">{c.heroDesc}</p>
         </div>
       </section>
 
       {/* 2x2 */}
       <section id="2x2" className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10">{c.section2x2}</h2>
+          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section2x2}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {sets2x2.map(s => (
               <Link key={s.slug} href={`/resources/2x2/${s.slug}`}>
-                <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
-                  <h3 className="text-xl font-semibold mb-2">{s.label}</h3>
-                  <p className="text-neutral-400 text-sm">{s.desc}</p>
+                <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
+                  <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
                   <img src={s.img} alt={s.label} className="w-full max-w-[180px] h-auto object-contain mx-auto mt-4" />
                 </div>
               </Link>
@@ -69,15 +69,15 @@ export default function ResourcesPage() {
       </section>
 
       {/* 3x3 */}
-      <section id="3x3" className="py-20 bg-neutral-900">
+      <section id="3x3" className="py-20 bg-neutral-100 dark:bg-neutral-900">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10">{c.section3x3}</h2>
+          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section3x3}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {['OLL', 'PLL', 'ZBLL'].map(label => (
               <Link key={label} href={`/resources/3x3/${label.toLowerCase()}`}>
-                <div className="bg-neutral-950 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
-                  <h3 className="text-xl font-semibold mb-2">{label}</h3>
-                  <p className="text-neutral-400 text-sm">
+                <div className="bg-white dark:bg-neutral-950 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
+                  <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{label}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">
                     {label === 'OLL' ? 'Orient the last layer in one step.' : label === 'PLL' ? 'Permute the last layer.' : 'Full last layer algorithms for advanced speedcubing.'}
                   </p>
                 </div>
@@ -90,13 +90,13 @@ export default function ResourcesPage() {
       {/* Megaminx */}
       <section id="megaminx" className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10">{c.sectionMega}</h2>
+          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.sectionMega}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {mega.map(s => (
               <Link key={s.slug} href={`/resources/megaminx/4lll#${s.slug}`}>
-                <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800 hover:border-indigo-500 transition">
-                  <h3 className="text-xl font-semibold mb-2">{s.label}</h3>
-                  <p className="text-neutral-400 text-sm">{s.desc}</p>
+                <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
+                  <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
                   <img src={s.img} alt={s.label} className="w-full max-w-[180px] h-auto object-contain mx-auto mt-4" />
                 </div>
               </Link>

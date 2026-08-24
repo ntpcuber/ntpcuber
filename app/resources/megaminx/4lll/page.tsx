@@ -13,7 +13,7 @@ function AlgCard({ img, alg, alt, wide }: MegaCase) {
         <img src={img} alt="" className="w-48 h-48 object-contain" />
       </div>
       <div className={`${wide ? 'p-6' : 'p-4'} flex-grow flex flex-col justify-center text-center`}>
-        <p className="font-mono text-sm mb-1">{alg}</p>
+        <p className="font-mono text-sm mb-1 text-neutral-900 dark:text-neutral-100">{alg}</p>
         {alt && <p className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{alt}</p>}
       </div>
     </div>
@@ -26,7 +26,7 @@ function AlgGroup({ group, lang }: { group: MegaGroup; lang: string }) {
   const label = lang === 'th' && group.labelTh ? group.labelTh : group.label
   return (
     <div className={group.mb ?? ''}>
-      {label && <h3 className="text-2xl font-semibold mb-6">{label}</h3>}
+      {label && <h3 className="text-2xl font-semibold mb-6 text-neutral-900 dark:text-white">{label}</h3>}
       <div className={`grid ${group.gridClass} gap-6`}>
         {group.cases.map((c, i) => <AlgCard key={i} {...c} />)}
       </div>
@@ -44,7 +44,7 @@ function AlgSection({ section, lang }: { section: MegaSection; lang: string }) {
       className={`py-20${section.sectionClass ? ' ' + section.sectionClass : ''}`}
     >
       <div className="max-w-6xl mx-auto px-6">
-        <h2 className="text-3xl font-semibold mb-10">{title}</h2>
+        <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{title}</h2>
         <div className="space-y-0">
           {section.groups.map((g, i) => (
             <AlgGroup key={i} group={g} lang={lang} />
@@ -93,8 +93,8 @@ export default function FourLLLPage() {
       <section className="pt-32 pb-20">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Megaminx 4 Look Last Layer</h1>
-            <p className="text-neutral-500 dark:text-neutral-400 max-w-2xl text-lg">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-neutral-900 dark:text-white">Megaminx 4 Look Last Layer</h1>
+            <p className="text-neutral-600 dark:text-neutral-400 max-w-2xl text-lg">
               {lang === 'th'
                 ? 'แก้แถวสุดท้ายของรูบิก megaminx 4 ขั้นตอนอย่างมีระบบ'
                 : 'Solving last layer effectively using 4 steps.'}

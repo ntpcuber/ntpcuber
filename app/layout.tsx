@@ -27,8 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                const t = localStorage.getItem('theme') || 'dark';
-                if (t === 'dark') document.documentElement.classList.add('dark');
+                const saved = localStorage.getItem('theme');
+                const shouldDark = saved ? saved === 'dark' : true;
+                document.documentElement.classList.toggle('dark', shouldDark);
               } catch (e) {}
             `,
           }}
@@ -41,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-neutral-950 text-neutral-100 antialiased" style={{ fontFamily: "'Inter', 'Sarabun', ui-sans-serif, system-ui, sans-serif" }}>
+      <body className="bg-white text-neutral-900 antialiased transition-colors dark:bg-neutral-950 dark:text-neutral-100" style={{ fontFamily: "'Inter', 'Sarabun', ui-sans-serif, system-ui, sans-serif" }}>
         <ThemeProvider>
           <LanguageProvider>
             <Navbar />

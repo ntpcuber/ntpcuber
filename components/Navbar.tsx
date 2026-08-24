@@ -40,12 +40,38 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md border-b border-neutral-200/50 dark:border-neutral-800/50">
       <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
         {/* Brand */}
-        <Link href="/" className="flex items-center shrink-0">
-          <img
-            src="/image/logo-banner.svg"
-            alt="NTP Cuber Academy"
+        <Link href="/" className="flex items-center shrink-0 text-neutral-900 dark:text-white">
+          <svg
+            viewBox="0 0 460 130"
             className="h-9 w-[200px] md:h-11 md:w-[155px]"
-          />
+            role="img"
+            aria-label="NTP Cuber Academy"
+          >
+            <defs>
+              <linearGradient id="cubeGradientNavbar" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#06b6d4" />
+              </linearGradient>
+            </defs>
+
+            <g transform="translate(20, 15)">
+              <g transform="translate(10, 10)">
+                <path d="M 55,10 L 100,32 L 55,55 L 10,32 Z" fill="url(#cubeGradientNavbar)" opacity="0.85" />
+                <path d="M 10,32 L 55,55 L 55,110 L 10,88 Z" fill="url(#cubeGradientNavbar)" opacity="0.7" />
+                <path d="M 55,55 L 100,32 L 100,88 L 55,110 Z" fill="url(#cubeGradientNavbar)" />
+
+                <path d="M 55,25 L 78,36 M 55,40 L 32,29" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+                <path d="M 32,50 L 32,75 M 78,50 L 78,75" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" opacity="0.6" />
+
+                <path d="M 5,85 C -10,120 40,125 70,115 C 105,105 120,70 100,55" fill="none" stroke="url(#cubeGradientNavbar)" strokeWidth="5" strokeLinecap="round" />
+              </g>
+
+              <text x="145" y="68" fontFamily="system-ui, -apple-system, sans-serif" fontSize="44" fontWeight="900" fill="currentColor" className="text-neutral-900 dark:text-white" letterSpacing="2">NTP</text>
+              <text x="242" y="68" fontFamily="system-ui, -apple-system, sans-serif" fontSize="44" fontWeight="800" fill="#3b82f6" letterSpacing="1">CUBER</text>
+              <text x="147" y="105" fontFamily="system-ui, -apple-system, sans-serif" fontSize="24" fontWeight="600" fill="#9ca3af" letterSpacing="9">ACADEMY</text>
+              <rect x="147" y="117" width="280" height="3" fill="url(#cubeGradientNavbar)" rx="1.5" opacity="0.4" />
+            </g>
+          </svg>
         </Link>
 
         {/* Desktop nav */}

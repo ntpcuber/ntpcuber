@@ -150,7 +150,7 @@ export default function HomePage() {
   const pageRef = useScrollReveal()
 
   return (
-    <div ref={pageRef} className="bg-neutral-950 text-neutral-100 tracking-tight">
+    <div ref={pageRef} className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 tracking-tight transition-colors">
 
       {/* Global top gradient */}
       <div className="absolute inset-x-0 top-[-10rem] h-[30rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
@@ -172,7 +172,7 @@ export default function HomePage() {
             />
           </div>
 
-          <p className="text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0">
+          <p className="text-neutral-600 dark:text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0">
             {c.heroSubtitle}
           </p>
 
@@ -192,8 +192,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
 
             {/* Action photo */}
-            <div className="relative aspect-[4/3] md:aspect-auto md:h-[500px] bg-neutral-900 rounded-3xl border border-neutral-800 overflow-hidden group">
-              <div className="absolute inset-0 flex items-center justify-center bg-neutral-900 group-hover:scale-105 transition-transform duration-700">
+            <div className="relative aspect-[4/3] md:aspect-auto md:h-[500px] bg-neutral-100 dark:bg-neutral-900 rounded-3xl border border-neutral-200 dark:border-neutral-800 overflow-hidden group">
+              <div className="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900 group-hover:scale-105 transition-transform duration-700">
                 <img src="/image/action_profile1.JPG" className="w-full h-full object-cover" alt="Action profile" />
               </div>
               <div className="absolute inset-0 border-2 border-indigo-500/20 rounded-3xl pointer-events-none" />
@@ -202,10 +202,10 @@ export default function HomePage() {
             {/* Text */}
             <div className="space-y-8">
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">{c.introTitle}</h2>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-6">{c.introTitle}</h2>
                 <div className="h-1.5 w-20 bg-indigo-600 rounded-full" />
               </div>
-              <div className="space-y-6 text-lg leading-relaxed text-neutral-300">
+              <div className="space-y-6 text-lg leading-relaxed text-neutral-700 dark:text-neutral-300">
                 <p>{c.introText1}</p>
                 <p>{c.introText2}</p>
               </div>
@@ -216,11 +216,11 @@ export default function HomePage() {
                   href="https://www.worldcubeassociation.org/persons/2011MAHT02"
                   target="_blank"
                   rel="noreferrer"
-                  className="p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:border-indigo-500 hover:bg-neutral-800/50 transition-all group"
+                  className="p-4 bg-neutral-100 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl hover:border-indigo-500 hover:bg-neutral-200 dark:hover:bg-neutral-800/50 transition-all group"
                 >
                   <div className="flex items-center gap-3 mb-1">
                     <img src="https://thailandcube.vercel.app/img/wca.svg" className="w-5 h-5" alt="WCA Logo" />
-                    <span className="block text-indigo-400 font-bold text-xl group-hover:text-indigo-300">My WCA Profile</span>
+                    <span className="block text-indigo-600 dark:text-indigo-400 font-bold text-xl group-hover:text-indigo-500 dark:group-hover:text-indigo-300">My WCA Profile</span>
                   </div>
                   <span className="text-xs text-neutral-500 uppercase tracking-wide">{c.wcaLabel}</span>
                 </a>
@@ -229,11 +229,11 @@ export default function HomePage() {
                   href="https://www.youtube.com/@NTPCuber"
                   target="_blank"
                   rel="noreferrer"
-                  className="p-4 bg-neutral-900/50 border border-neutral-800 rounded-xl hover:border-red-500 hover:bg-neutral-800/50 transition-all group"
+                  className="p-4 bg-neutral-100 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl hover:border-red-500 hover:bg-neutral-200 dark:hover:bg-neutral-800/50 transition-all group"
                 >
                   <div className="flex items-center gap-3 mb-1">
                     <img src="https://cdn.simpleicons.org/youtube/ff0000" className="w-5 h-5" alt="YouTube Logo" />
-                    <span className="block text-indigo-400 font-bold text-xl group-hover:text-red-400">My Channel</span>
+                    <span className="block text-indigo-600 dark:text-indigo-400 font-bold text-xl group-hover:text-red-500 dark:group-hover:text-red-400">My Channel</span>
                   </div>
                   <span className="text-xs text-neutral-500 uppercase tracking-wide">{c.youtubeLabel}</span>
                 </a>
@@ -247,7 +247,7 @@ export default function HomePage() {
       <section id="journey" className="py-12 md:py-24 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">{c.journeyTitle}</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-4">{c.journeyTitle}</h2>
             <div className="h-1.5 w-20 bg-indigo-600 rounded-full mx-auto" />
           </div>
 
@@ -262,13 +262,13 @@ export default function HomePage() {
                   className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal"
                 >
                   {/* Number bubble */}
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-indigo-500 bg-neutral-950 text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border-2 border-indigo-500 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-white font-bold shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
                     {i + 1}
                   </div>
                   {/* Card */}
-                  <div className="w-[calc(100%-3.5rem)] md:w-[45%] p-6 rounded-3xl bg-neutral-900/40 border border-neutral-800 hover:border-indigo-500/40 transition-all backdrop-blur-sm">
-                    <span className="text-indigo-400 font-bold text-xs uppercase tracking-widest block mb-2">{step.year}</span>
-                    <p className="text-neutral-200">{step.ach}</p>
+                  <div className="w-[calc(100%-3.5rem)] md:w-[45%] p-6 rounded-3xl bg-neutral-100 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500/40 transition-all backdrop-blur-sm">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-bold text-xs uppercase tracking-widest block mb-2">{step.year}</span>
+                    <p className="text-neutral-700 dark:text-neutral-200">{step.ach}</p>
                   </div>
                 </div>
               ))}
@@ -282,34 +282,34 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div className="text-center md:text-left">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">{c.coursesTitle}</h2>
-              <p className="text-neutral-400 max-w-xl text-lg">{c.coursesSubtitle}</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-4">{c.coursesTitle}</h2>
+              <p className="text-neutral-600 dark:text-neutral-400 max-w-xl text-lg">{c.coursesSubtitle}</p>
             </div>
-            <Link href="/courses" className="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+            <Link href="/courses" className="group flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors">
               {c.viewCourses} <ChevronRight />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {c.courseComingSoon.map((card, i) => (
-              <div key={i} className="relative bg-neutral-900/40 border border-neutral-800 p-8 rounded-3xl overflow-hidden group">
+              <div key={i} className="relative bg-neutral-100 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 p-8 rounded-3xl overflow-hidden group">
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] z-10" />
+                <div className="absolute inset-0 bg-neutral-200/40 dark:bg-neutral-950/40 backdrop-blur-[2px] z-10" />
                 {/* Badge */}
                 <div className="absolute top-6 right-6 z-20">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 border border-neutral-700 px-3 py-1 rounded-full bg-neutral-900">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-600 dark:text-neutral-500 border border-neutral-300 dark:border-neutral-700 px-3 py-1 rounded-full bg-white dark:bg-neutral-900">
                     {c.badgeComingSoon}
                   </span>
                 </div>
                 {/* Content */}
-                <div className="relative z-20 opacity-60">
-                  <div className="w-12 h-12 bg-neutral-800 rounded-xl mb-6 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="relative z-20 opacity-80 dark:opacity-60">
+                  <div className="w-12 h-12 bg-neutral-200 dark:bg-neutral-800 rounded-xl mb-6 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-neutral-600 dark:text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
-                  <p className="text-neutral-500 text-sm leading-relaxed">{card.desc}</p>
+                  <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-3">{card.title}</h3>
+                  <p className="text-neutral-600 dark:text-neutral-500 text-sm leading-relaxed">{card.desc}</p>
                 </div>
               </div>
             ))}
@@ -318,28 +318,28 @@ export default function HomePage() {
       </section>
 
       {/* ── Coaching ── */}
-      <section id="coaching" className="py-12 md:py-24 bg-neutral-900/50 border-y border-neutral-800/50 relative overflow-hidden">
+      <section id="coaching" className="py-12 md:py-24 bg-neutral-100/80 dark:bg-neutral-900/50 border-y border-neutral-200 dark:border-neutral-800/50 relative overflow-hidden">
         <div className="absolute -right-20 top-0 w-96 h-96 bg-indigo-600/5 blur-[120px] rounded-full" />
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div className="text-center md:text-left">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">{c.coachingTitle}</h2>
-              <p className="text-neutral-400 max-w-xl text-lg">{c.coachingText}</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-4">{c.coachingTitle}</h2>
+              <p className="text-neutral-600 dark:text-neutral-400 max-w-xl text-lg">{c.coachingText}</p>
             </div>
-            <Link href="/coaching" className="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+            <Link href="/coaching" className="group flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors">
               {c.viewAllServices} <ChevronRight />
             </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Card 1 — Solve Critique */}
-            <div className="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-indigo-500/50 transition-all group relative overflow-hidden">
+            <div className="bg-white dark:bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500/50 transition-all group relative overflow-hidden">
               <div className="absolute top-0 right-0 p-4">
-                <span className="text-xs font-bold uppercase tracking-widest text-indigo-400 bg-indigo-400/10 px-3 py-1 rounded-full">Popular</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-400/10 px-3 py-1 rounded-full">Popular</span>
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-white">{c.solveCritiqueTitle}</h3>
-              <p className="text-neutral-400 mb-6 text-sm">{c.solveCritiqueDesc}</p>
-              <ul className="space-y-3 mb-8 text-sm text-neutral-300">
+              <h3 className="text-2xl font-bold mb-2 text-neutral-900 dark:text-white">{c.solveCritiqueTitle}</h3>
+              <p className="text-neutral-600 dark:text-neutral-400 mb-6 text-sm">{c.solveCritiqueDesc}</p>
+              <ul className="space-y-3 mb-8 text-sm text-neutral-700 dark:text-neutral-300">
                 <li className="flex items-center gap-2">
                   <CheckIcon color="text-indigo-500" />{c.solveCritiqueF1}
                 </li>
@@ -351,19 +351,19 @@ export default function HomePage() {
                 <span className="text-xs uppercase tracking-widest text-neutral-500 font-bold">{c.startingFrom}</span>
               </div>
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-bold text-white">฿200</span>
+                <span className="text-3xl font-bold text-neutral-900 dark:text-white">฿200</span>
                 <span className="text-neutral-500 text-sm">{c.perService}</span>
               </div>
-              <Link href="/coaching" className="block text-center bg-neutral-900 group-hover:bg-indigo-600 transition-colors py-3 rounded-xl font-bold text-sm">
+              <Link href="/coaching" className="block text-center bg-neutral-100 dark:bg-neutral-900 group-hover:bg-indigo-600 group-hover:text-white transition-colors py-3 rounded-xl font-bold text-sm text-neutral-900 dark:text-white">
                 Learn More
               </Link>
             </div>
 
             {/* Card 2 — 1-on-1 Coaching */}
-            <div className="bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-800 hover:border-purple-500/50 transition-all group relative overflow-hidden">
-              <h3 className="text-2xl font-bold mb-2 text-white">{c.coachingCard2Title}</h3>
-              <p className="text-neutral-400 mb-6 text-sm">{c.coachingCard2Desc}</p>
-              <ul className="space-y-3 mb-8 text-sm text-neutral-300">
+            <div className="bg-white dark:bg-neutral-950 p-5 md:p-8 rounded-3xl border border-neutral-200 dark:border-neutral-800 hover:border-purple-500/50 transition-all group relative overflow-hidden">
+              <h3 className="text-2xl font-bold mb-2 text-neutral-900 dark:text-white">{c.coachingCard2Title}</h3>
+              <p className="text-neutral-600 dark:text-neutral-400 mb-6 text-sm">{c.coachingCard2Desc}</p>
+              <ul className="space-y-3 mb-8 text-sm text-neutral-700 dark:text-neutral-300">
                 <li className="flex items-center gap-2">
                   <CheckIcon color="text-purple-500" />{c.coachingCard2F1}
                 </li>
@@ -375,10 +375,10 @@ export default function HomePage() {
                 <span className="text-xs uppercase tracking-widest text-neutral-500 font-bold">{c.startingFrom}</span>
               </div>
               <div className="flex items-baseline gap-2 mb-4">
-                <span className="text-3xl font-bold text-white">฿240</span>
+                <span className="text-3xl font-bold text-neutral-900 dark:text-white">฿240</span>
                 <span className="text-neutral-500 text-sm">{c.perSession}</span>
               </div>
-              <Link href="/coaching" className="block text-center bg-neutral-900 group-hover:bg-purple-600 transition-colors py-3 rounded-xl font-bold text-sm">
+              <Link href="/coaching" className="block text-center bg-neutral-100 dark:bg-neutral-900 group-hover:bg-purple-600 group-hover:text-white transition-colors py-3 rounded-xl font-bold text-sm text-neutral-900 dark:text-white">
                 Learn More
               </Link>
             </div>
@@ -391,10 +391,10 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div className="text-center md:text-left">
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">{c.resourcesTitle}</h2>
-              <p className="text-neutral-400 max-w-xl text-lg">{c.resourcesText}</p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white mb-4">{c.resourcesTitle}</h2>
+              <p className="text-neutral-600 dark:text-neutral-400 max-w-xl text-lg">{c.resourcesText}</p>
             </div>
-            <Link href="/resources" className="group flex items-center gap-2 text-indigo-400 font-semibold hover:text-indigo-300 transition-colors">
+            <Link href="/resources" className="group flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-500 dark:hover:text-indigo-300 transition-colors">
               {c.exploreResources} <ChevronRight />
             </Link>
           </div>
@@ -402,58 +402,58 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Algorithm Sheets */}
             <Link href="/resources">
-              <div className="bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl hover:bg-neutral-900/60 transition-all group">
-                <div className="w-12 h-12 bg-indigo-600/20 rounded-lg flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+              <div className="bg-neutral-100 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 p-8 rounded-2xl hover:bg-neutral-200 dark:hover:bg-neutral-900/60 transition-all group">
+                <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-600/20 rounded-lg flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{c.algSheets}</h3>
-                <p className="text-neutral-500 text-sm leading-relaxed">{c.algSheetsDesc}</p>
+                <h3 className="text-xl font-bold mb-3 text-neutral-900 dark:text-white">{c.algSheets}</h3>
+                <p className="text-neutral-600 dark:text-neutral-500 text-sm leading-relaxed">{c.algSheetsDesc}</p>
               </div>
             </Link>
 
             {/* Training Plans — Coming Soon */}
-            <div className="relative bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
+            <div className="relative bg-neutral-100 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
               <div className="absolute top-4 right-4">
-                <span className="px-2 py-1 bg-purple-600/20 text-purple-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-purple-500/30">
+                <span className="px-2 py-1 bg-purple-100 dark:bg-purple-600/20 text-purple-700 dark:text-purple-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-purple-200 dark:border-purple-500/30">
                   {c.comingSoon}
                 </span>
               </div>
-              <div className="w-12 h-12 bg-purple-600/10 rounded-lg flex items-center justify-center text-purple-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
+              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-600/10 rounded-lg flex items-center justify-center text-purple-600 dark:text-purple-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-neutral-300">Training Plans</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">Structured schedules to improve your TPS, look-ahead, and cross efficiency.</p>
+              <h3 className="text-xl font-bold mb-3 text-neutral-900 dark:text-neutral-300">Training Plans</h3>
+              <p className="text-neutral-600 dark:text-neutral-500 text-sm leading-relaxed">Structured schedules to improve your TPS, look-ahead, and cross efficiency.</p>
             </div>
 
             {/* Solving Tips — Coming Soon */}
-            <div className="relative bg-neutral-900/40 border border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
+            <div className="relative bg-neutral-100 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 p-8 rounded-2xl transition-all group overflow-hidden">
               <div className="absolute top-4 right-4">
-                <span className="px-2 py-1 bg-cyan-600/20 text-cyan-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-cyan-500/30">
+                <span className="px-2 py-1 bg-cyan-100 dark:bg-cyan-600/20 text-cyan-700 dark:text-cyan-400 text-[10px] font-bold uppercase tracking-widest rounded-md border border-cyan-200 dark:border-cyan-500/30">
                   {c.comingSoon}
                 </span>
               </div>
-              <div className="w-12 h-12 bg-cyan-600/10 rounded-lg flex items-center justify-center text-cyan-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
+              <div className="w-12 h-12 bg-cyan-100 dark:bg-cyan-600/10 rounded-lg flex items-center justify-center text-cyan-600 dark:text-cyan-400/50 mb-6 grayscale group-hover:grayscale-0 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-neutral-300">Solving Tips</h3>
-              <p className="text-neutral-500 text-sm leading-relaxed">Quick video breakdowns of finger tricks and advanced logic-based solves.</p>
+              <h3 className="text-xl font-bold mb-3 text-neutral-900 dark:text-neutral-300">Solving Tips</h3>
+              <p className="text-neutral-600 dark:text-neutral-500 text-sm leading-relaxed">Quick video breakdowns of finger tricks and advanced logic-based solves.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Contact ── */}
-      <section id="contact" className="py-12 md:py-24 bg-neutral-900/50">
+      <section id="contact" className="py-12 md:py-24 bg-neutral-100 dark:bg-neutral-900/50">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold tracking-tight mb-4">{c.contactTitle}</h2>
-          <p className="text-neutral-400 text-lg">{c.contactSub}</p>
+          <h2 className="text-3xl font-bold tracking-tight mb-4 text-neutral-900 dark:text-white">{c.contactTitle}</h2>
+          <p className="text-neutral-600 dark:text-neutral-400 text-lg">{c.contactSub}</p>
         </div>
       </section>
 

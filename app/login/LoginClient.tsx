@@ -153,9 +153,9 @@ export default function LoginClient() {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-neutral-800" />
+            <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
             <span className="text-xs text-neutral-600">or continue with</span>
-            <div className="flex-1 h-px bg-neutral-800" />
+            <div className="flex-1 h-px bg-neutral-200 dark:bg-neutral-800" />
           </div>
 
           {/* Google OAuth */}
