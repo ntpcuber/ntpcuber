@@ -8,6 +8,13 @@ export interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
+    name: 'Achira S.',
+    service: 'Live 1-on-1 Session (1 Hour)',
+    rating: 5,
+    quoteEn: 'After taking this class, I gained a much clearer understanding of my weaknesses and picked up new techniques to practice and improve. I’m confident this will help me progress, and I will definitely come  back for another session.',
+    quoteTh: 'จากการเรียนคลาสนี้ ทำให้เข้าใจจุดบกพร่องของตัวเอง และได้เทคนิคใหม่มาฝึกซ้อมผมจะมาเรียนต่ออีกแน่นอนครับ',
+  },
+  {
     name: 'Wasikrit R.',
     service: 'Mastery Pack Live 1-on-1 (4 Sessions)',
     rating: 5,
