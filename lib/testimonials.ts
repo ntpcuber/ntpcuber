@@ -8,6 +8,13 @@ export interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
+    name: 'Pornpat W.',
+    service: 'Mastery Pack Live 1-on-1 Session (4 Sessions)',
+    rating: 5,
+    quoteEn: 'I purchased the Mastery Pack, and it was worth every penny. I’ve been stuck averaging 8 to 9 seconds on 3x3 for over two years with no idea how or what to improve. Having a coach helped me identify all of my weaknesses, and I really appreciated the custom training plan provided with each session. I would definitely buy this again!',
+    quoteTh: 'ผมซื้อ แพ็กเกจเชี่ยวชาญมาแล้วและบอกได้เลยว่าคุ้มค่ามากเลยครับ ผมติดอยู่ที่เวลาเฉลี่ย 8–9 วินาทีบน 3x3 มาสองปีแล้ว แต่ไม่รู้ว่าควรปรับปรุงตรงไหนและแก้ไขอย่างไร การมีโค้ชช่วยให้ผมระบุจุดอ่อนทุกอย่างได้ชัดเจน และผมชอบมากที่ได้รับแผนฝึกซ้อมที่ปรับให้เหมาะกับตนเองในแต่ละครั้งที่เจอกัน ผมจะซื้ออีกแน่นอนครับ',
+  },
+  {
     name: 'Achira S.',
     service: 'Live 1-on-1 Session (1 Hour)',
     rating: 5,
