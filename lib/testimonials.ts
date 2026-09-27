@@ -11,7 +11,7 @@ const testimonials: Testimonial[] = [
     name: 'Krittamuk R.',
     service: 'Live 1-on-1 Session (1 Hour)',
     rating: 5,
-    quoteEn: 'After finishing class today I feel like I gained so many insights to help me keep improving The teaching style was super easy to follow and every little detail was explained so clearly Once I save up enough money I’ll buy this class again',
+    quoteEn: 'After finishing class, I feel like I gained so many insights to help me keep improving. The teaching style was super easy to follow and every little detail was explained so clearly. Once I save up enough money I’ll buy this class again',
     quoteTh: 'หลังจากเรียนจบคลาสวันนี้ ผมรู้สึกว่าได้ความเข้าใจใหม่มากมายที่ช่วยให้ผมพัฒนาตัวเองต่อไปได้อย่างต่อเนื่อง สไตล์การสอนเข้าใจง่ายมาก และอธิบายรายละเอียดเล็ก ๆ ทุกอย่างชัดเจนมาก ผมจะเก็บเงินให้พอแล้วค่อยซื้อคลาสนี้อีกแน่นอน',
   },
   {
