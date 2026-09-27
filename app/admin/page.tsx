@@ -32,6 +32,7 @@ export default function AdminPage() {
   const [grantError, setGrantError] = useState('')
   const [grantOpen, setGrantOpen] = useState(false)
   const [toast, setToast] = useState('')
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   useEffect(() => {
     getUser().then(async u => {
@@ -46,6 +47,11 @@ export default function AdminPage() {
   function showToast(msg: string) {
     setToast(msg)
     setTimeout(() => setToast(''), 3000)
+  }
+
+  function selectTab(t: Tab) {
+    setTab(t)
+    setMobileNavOpen(false)
   }
 
   async function loadBookings() {
@@ -144,17 +150,42 @@ export default function AdminPage() {
 
   return (
     <div className="flex min-h-screen bg-white text-neutral-900 dark:bg-[#080909] dark:text-[#d4d8d8] font-sans text-sm transition-colors">
-      {/* Sidebar */}
-      <aside className="w-52 min-h-screen bg-neutral-100 border-r border-neutral-200 dark:bg-[#0e1010] dark:border-[#1a1f1f] flex flex-col py-6 shrink-0 sticky top-0 h-screen overflow-y-auto">
-        <div className="px-5 pb-6 border-b border-neutral-200 dark:border-[#1a1f1f] mb-4">
-          <p className="text-[10px] font-bold tracking-widest text-green-600 dark:text-green-400 uppercase mb-1">⬡ Admin Console</p>
-          <p className="text-[15px] font-bold text-neutral-900 dark:text-white">NTP Cuber</p>
-          <Link href="/" className="flex items-center gap-1 mt-3 text-[10px] font-bold text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition uppercase tracking-widest">
-            ← Back to Website
-          </Link>
+
+      {/* Mobile backdrop — closes drawer on outside tap */}
+      {mobileNavOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setMobileNavOpen(false)} />
+      )}
+
+      {/* Sidebar — fixed drawer on mobile, sticky column on md+ */}
+      <aside
+        className={`
+          w-64 sm:w-52 min-h-screen bg-neutral-100 border-r border-neutral-200 dark:bg-[#0e1010] dark:border-[#1a1f1f]
+          flex flex-col py-6 shrink-0 h-screen overflow-y-auto z-50
+          fixed md:sticky top-0 left-0 transition-transform duration-200 ease-out
+          ${mobileNavOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0
+        `}
+      >
+        <div className="px-5 pb-6 border-b border-neutral-200 dark:border-[#1a1f1f] mb-4 flex items-start justify-between">
+          <div>
+            <p className="text-[10px] font-bold tracking-widest text-green-600 dark:text-green-400 uppercase mb-1">⬡ Admin Console</p>
+            <p className="text-[15px] font-bold text-neutral-900 dark:text-white">NTP Cuber</p>
+            <Link href="/" className="flex items-center gap-1 mt-3 text-[10px] font-bold text-neutral-500 hover:text-indigo-500 dark:hover:text-indigo-400 transition uppercase tracking-widest">
+              ← Back to Website
+            </Link>
+          </div>
+          {/* Close button — mobile only */}
+          <button
+            onClick={() => setMobileNavOpen(false)}
+            className="md:hidden p-1 -mt-1 -mr-1 text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
+            aria-label="Close menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
         {(['bookings','users','courses'] as Tab[]).map(t => (
-          <button key={t} onClick={() => setTab(t)}
+          <button key={t} onClick={() => selectTab(t)}
             className={`flex items-center gap-2 px-5 py-2.5 text-[13px] font-medium border-l-2 transition-all ${tab === t ? 'text-green-600 border-green-500 bg-green-500/10 dark:text-green-400 dark:border-green-400 dark:bg-green-400/6' : 'text-neutral-500 border-transparent hover:text-neutral-900 dark:text-[#4a5252] dark:hover:text-[#d4d8d8]'}`}>
             {t.charAt(0).toUpperCase() + t.slice(1)}
             <span className={`ml-auto font-mono text-[10px] px-1.5 py-0.5 rounded ${tab === t ? 'bg-green-500/15 text-green-600 dark:bg-green-400/15 dark:text-green-400' : 'bg-neutral-200 text-neutral-500 dark:bg-[#242b2b] dark:text-[#4a5252]'}`}>
@@ -171,19 +202,31 @@ export default function AdminPage() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="h-[52px] bg-neutral-100 border-b border-neutral-200 flex items-center justify-between px-7 shrink-0 dark:bg-[#0e1010] dark:border-[#1a1f1f]">
-          <span className="font-semibold text-[13px] capitalize text-neutral-900 dark:text-[#d4d8d8]">{tab}</span>
-          <span className="font-mono text-[10px] text-neutral-500 dark:text-[#4a5252]">{new Date().toLocaleString('en-GB', { dateStyle:'medium', timeStyle:'short' })}</span>
+      <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+        <div className="h-[52px] bg-neutral-100 border-b border-neutral-200 flex items-center justify-between px-4 sm:px-7 shrink-0 dark:bg-[#0e1010] dark:border-[#1a1f1f]">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Hamburger — mobile only */}
+            <button
+              onClick={() => setMobileNavOpen(true)}
+              className="md:hidden p-1.5 -ml-1.5 text-neutral-600 dark:text-neutral-300"
+              aria-label="Open menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <span className="font-semibold text-[13px] capitalize text-neutral-900 dark:text-[#d4d8d8] truncate">{tab}</span>
+          </div>
+          <span className="hidden sm:inline font-mono text-[10px] text-neutral-500 dark:text-[#4a5252] shrink-0">{new Date().toLocaleString('en-GB', { dateStyle:'medium', timeStyle:'short' })}</span>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-7">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-7">
           {/* Stats */}
-          <div className="grid grid-cols-4 gap-4 mb-7">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-7">
             {[['Total Bookings', statTotal, 'all time', 'neutral'],['Pending', statPending, 'needs action', '#f59e0b'],['Users', users.length, 'registered', 'neutral'],['Revenue', statRevenue ? '฿'+statRevenue.toLocaleString() : '฿0', '฿ total', '#22c55e']].map(([label, val, sub, color]) => (
-              <div key={label as string} className="bg-neutral-100 border border-neutral-200 rounded-[10px] p-5 dark:bg-[#0e1010] dark:border-[#1a1f1f]">
+              <div key={label as string} className="bg-neutral-100 border border-neutral-200 rounded-[10px] p-4 sm:p-5 dark:bg-[#0e1010] dark:border-[#1a1f1f]">
                 <p className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 mb-2 dark:text-[#4a5252]">{label}</p>
-                <p className="text-[26px] font-bold leading-none" style={{ color: color === 'neutral' ? (typeof document !== 'undefined' && document.documentElement.classList.contains('dark') ? '#d4d8d8' : '#111827') as string : color as string }}>{val}</p>
+                <p className="text-[20px] sm:text-[26px] font-bold leading-none" style={{ color: color === 'neutral' ? (typeof document !== 'undefined' && document.documentElement.classList.contains('dark') ? '#d4d8d8' : '#111827') as string : color as string }}>{val}</p>
                 <p className="text-[11px] text-neutral-500 mt-1 dark:text-[#4a5252]">{sub}</p>
               </div>
             ))}
@@ -192,52 +235,54 @@ export default function AdminPage() {
           {/* Bookings */}
           {tab === 'bookings' && (
             <>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <span className="font-mono text-[9px] uppercase tracking-widest text-[#4a5252]">All Coaching Bookings</span>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <input value={bookingSearch} onChange={e => setBookingSearch(e.target.value)} placeholder="Search…"
-                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-3 py-1.5 rounded-lg text-[12px] outline-none focus:border-green-500 w-48" />
+                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-3 py-1.5 rounded-lg text-[12px] outline-none focus:border-green-500 w-full sm:w-48" />
                   <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-2 py-1.5 rounded-lg text-[10px] font-mono">
+                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-2 py-1.5 rounded-lg text-[10px] font-mono w-full sm:w-auto">
                     <option value="">All</option>
                     {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
                 </div>
               </div>
               <div className="bg-neutral-100 border border-neutral-200 rounded-[10px] overflow-hidden dark:bg-[#0e1010] dark:border-[#1a1f1f]">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
-                      {['Name / Email','Service','Event','Days','Booked','Amount','Status',''].map(h => (
-                        <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredBookings.length === 0 ? (
-                      <tr><td colSpan={8} className="text-center py-10 text-neutral-500 font-mono text-[11px] dark:text-[#4a5252]">No bookings found</td></tr>
-                    ) : filteredBookings.map(b => (
-                      <tr key={b.id} className="border-b border-neutral-200 hover:bg-neutral-200/60 cursor-pointer dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]" onClick={() => setDetail(b)}>
-                        <td className="px-4 py-3"><p className="font-semibold text-neutral-900 text-[13px] dark:text-white">{b.name}</p><p className="font-mono text-[11px] text-neutral-500 dark:text-[#4a5252]">{b.email}</p></td>
-                        <td className="px-4 py-3 text-[13px] text-neutral-800 dark:text-[#d4d8d8]">{b.service}</td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{b.wca_event || '—'}</td>
-                        <td className="px-4 py-3 text-[11px] text-neutral-500 dark:text-[#4a5252]">{b.available_days?.join(', ') || '—'}</td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(b.booked_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
-                        <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{b.amount_thb ? '฿'+b.amount_thb : '—'}</td>
-                        <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-                          <select value={b.status} onChange={e => updateStatus(b.id, e.target.value)}
-                            className="bg-white border border-neutral-300 text-neutral-900 font-mono text-[10px] px-2 py-1 rounded-md dark:bg-[#080909] dark:border-[#242b2b] dark:text-[#d4d8d8]">
-                            {STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</option>)}
-                          </select>
-                        </td>
-                        <td className="px-4 py-3">
-                          <button onClick={e => { e.stopPropagation(); setDetail(b) }}
-                            className="px-2 py-1 border border-neutral-300 rounded-md text-[10px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Detail</button>
-                        </td>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[760px] border-collapse">
+                    <thead>
+                      <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
+                        {['Name / Email','Service','Event','Days','Booked','Amount','Status',''].map(h => (
+                          <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
+                        ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {filteredBookings.length === 0 ? (
+                        <tr><td colSpan={8} className="text-center py-10 text-neutral-500 font-mono text-[11px] dark:text-[#4a5252]">No bookings found</td></tr>
+                      ) : filteredBookings.map(b => (
+                        <tr key={b.id} className="border-b border-neutral-200 hover:bg-neutral-200/60 cursor-pointer dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]" onClick={() => setDetail(b)}>
+                          <td className="px-4 py-3"><p className="font-semibold text-neutral-900 text-[13px] dark:text-white">{b.name}</p><p className="font-mono text-[11px] text-neutral-500 dark:text-[#4a5252]">{b.email}</p></td>
+                          <td className="px-4 py-3 text-[13px] text-neutral-800 dark:text-[#d4d8d8]">{b.service}</td>
+                          <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{b.wca_event || '—'}</td>
+                          <td className="px-4 py-3 text-[11px] text-neutral-500 dark:text-[#4a5252]">{b.available_days?.join(', ') || '—'}</td>
+                          <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(b.booked_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
+                          <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{b.amount_thb ? '฿'+b.amount_thb : '—'}</td>
+                          <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                            <select value={b.status} onChange={e => updateStatus(b.id, e.target.value)}
+                              className="bg-white border border-neutral-300 text-neutral-900 font-mono text-[10px] px-2 py-1 rounded-md dark:bg-[#080909] dark:border-[#242b2b] dark:text-[#d4d8d8]">
+                              {STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</option>)}
+                            </select>
+                          </td>
+                          <td className="px-4 py-3">
+                            <button onClick={e => { e.stopPropagation(); setDetail(b) }}
+                              className="px-2 py-1 border border-neutral-300 rounded-md text-[10px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Detail</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </>
           )}
@@ -245,66 +290,70 @@ export default function AdminPage() {
           {/* Users */}
           {tab === 'users' && (
             <div className="bg-neutral-100 border border-neutral-200 rounded-[10px] overflow-hidden dark:bg-[#0e1010] dark:border-[#1a1f1f]">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
-                    {['Email','Name','Joined','Bookings','Courses',''].map(h => (
-                      <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map(u => (
-                    <tr key={u.user_id} className="border-b border-neutral-200 hover:bg-neutral-200/60 dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]">
-                      <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{u.email}</td>
-                      <td className="px-4 py-3 text-[13px] text-neutral-900 dark:text-[#d4d8d8]">{u.name}</td>
-                      <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(u.joined).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
-                      <td className="px-4 py-3 font-mono text-amber-600 dark:text-amber-400">{u.bookings}</td>
-                      <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{u.courses}</td>
-                      <td className="px-4 py-3">
-                        <button onClick={() => { setGrantEmail(u.email); setGrantOpen(true); setTab('courses') }}
-                          className="px-2 py-1 border border-neutral-300 rounded-md text-[10px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Grant Course</button>
-                      </td>
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[640px] border-collapse">
+                  <thead>
+                    <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
+                      {['Email','Name','Joined','Bookings','Courses',''].map(h => (
+                        <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {users.map(u => (
+                      <tr key={u.user_id} className="border-b border-neutral-200 hover:bg-neutral-200/60 dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]">
+                        <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{u.email}</td>
+                        <td className="px-4 py-3 text-[13px] text-neutral-900 dark:text-[#d4d8d8]">{u.name}</td>
+                        <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(u.joined).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
+                        <td className="px-4 py-3 font-mono text-amber-600 dark:text-amber-400">{u.bookings}</td>
+                        <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{u.courses}</td>
+                        <td className="px-4 py-3">
+                          <button onClick={() => { setGrantEmail(u.email); setGrantOpen(true); setTab('courses') }}
+                            className="px-2 py-1 border border-neutral-300 rounded-md text-[10px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Grant Course</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
 
           {/* Courses */}
           {tab === 'courses' && (
             <>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <span className="font-mono text-[9px] uppercase tracking-widest text-[#4a5252]">Course Purchases</span>
                 <button onClick={() => setGrantOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 bg-green-400/12 border border-green-400/30 text-green-400 rounded-lg text-[12px] font-semibold">
+                  className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-green-400/12 border border-green-400/30 text-green-400 rounded-lg text-[12px] font-semibold w-full sm:w-auto">
                   + Grant Course
                 </button>
               </div>
               <div className="bg-neutral-100 border border-neutral-200 rounded-[10px] overflow-hidden dark:bg-[#0e1010] dark:border-[#1a1f1f]">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
-                      {['User','Course','Purchased','Amount',''].map(h => (
-                        <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {purchases.map(p => (
-                      <tr key={p.id} className="border-b border-neutral-200 hover:bg-neutral-200/60 dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]">
-                        <td className="px-4 py-3"><p className="font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{p.email}</p><p className="text-[11px] text-neutral-500 dark:text-[#4a5252]">{p.userName}</p></td>
-                        <td className="px-4 py-3 font-mono text-[12px] text-green-600 dark:text-green-400">{p.course_slug}</td>
-                        <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(p.purchased_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
-                        <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{p.amount_thb ? '฿'+p.amount_thb : '—'}</td>
-                        <td className="px-4 py-3">
-                          <button onClick={() => revokePurchase(p.id)} className="px-2 py-1 bg-red-100 border border-red-300 text-red-600 rounded-md text-[10px] dark:bg-red-400/10 dark:border-red-400/30 dark:text-red-400">Revoke</button>
-                        </td>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[560px] border-collapse">
+                    <thead>
+                      <tr className="border-b border-neutral-200 dark:border-[#1a1f1f]">
+                        {['User','Course','Purchased','Amount',''].map(h => (
+                          <th key={h} className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 px-4 py-3 text-left dark:text-[#4a5252]">{h}</th>
+                        ))}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {purchases.map(p => (
+                        <tr key={p.id} className="border-b border-neutral-200 hover:bg-neutral-200/60 dark:border-[#1a1f1f] dark:hover:bg-white/[0.018]">
+                          <td className="px-4 py-3"><p className="font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{p.email}</p><p className="text-[11px] text-neutral-500 dark:text-[#4a5252]">{p.userName}</p></td>
+                          <td className="px-4 py-3 font-mono text-[12px] text-green-600 dark:text-green-400">{p.course_slug}</td>
+                          <td className="px-4 py-3 font-mono text-[11px] text-neutral-700 dark:text-[#d4d8d8]">{new Date(p.purchased_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'2-digit'})}</td>
+                          <td className="px-4 py-3 font-mono text-green-600 dark:text-green-400">{p.amount_thb ? '฿'+p.amount_thb : '—'}</td>
+                          <td className="px-4 py-3">
+                            <button onClick={() => revokePurchase(p.id)} className="px-2 py-1 bg-red-100 border border-red-300 text-red-600 rounded-md text-[10px] dark:bg-red-400/10 dark:border-red-400/30 dark:text-red-400">Revoke</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </>
           )}
@@ -314,23 +363,23 @@ export default function AdminPage() {
       {/* Detail modal */}
       {detail && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setDetail(null)}>
-          <div className="bg-white border border-neutral-200 rounded-2xl p-7 w-full max-w-lg dark:bg-[#0e1010] dark:border-[#242b2b]" onClick={e => e.stopPropagation()}>
+          <div className="bg-white border border-neutral-200 rounded-2xl p-5 sm:p-7 w-full max-w-lg max-h-[90vh] overflow-y-auto dark:bg-[#0e1010] dark:border-[#242b2b]" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-start mb-5">
-              <div>
-                <p className="text-[15px] font-bold text-neutral-900 dark:text-white">{detail.name}</p>
-                <p className="font-mono text-[11px] text-neutral-500 dark:text-[#4a5252]">{detail.email}</p>
+              <div className="min-w-0">
+                <p className="text-[15px] font-bold text-neutral-900 dark:text-white truncate">{detail.name}</p>
+                <p className="font-mono text-[11px] text-neutral-500 dark:text-[#4a5252] truncate">{detail.email}</p>
               </div>
-              <button onClick={() => setDetail(null)} className="text-neutral-500 hover:text-neutral-900 dark:text-[#4a5252] dark:hover:text-[#d4d8d8] text-lg">✕</button>
+              <button onClick={() => setDetail(null)} className="shrink-0 ml-3 text-neutral-500 hover:text-neutral-900 dark:text-[#4a5252] dark:hover:text-[#d4d8d8] text-lg">✕</button>
             </div>
-            <div className="grid grid-cols-3 gap-3 text-[12px] mb-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[12px] mb-5">
               {[['Service', detail.service],['WCA Event', detail.wca_event||'—'],['Days', detail.available_days?.join(', ')||'—'],['Pref. Time', detail.preferred_time||'—'],['Alt. Time', detail.secondary_time||'—'],['Amount', detail.amount_thb ? '฿'+detail.amount_thb : '—'],['Goal', detail.goal||'—'],['Booked', new Date(detail.booked_at).toLocaleString('en-GB')]].map(([k,v]) => (
-                <div key={k}><p className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 mb-0.5 dark:text-[#4a5252]">{k}</p><p className="text-neutral-800 dark:text-[#d4d8d8]">{v}</p></div>
+                <div key={k} className="min-w-0"><p className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 mb-0.5 dark:text-[#4a5252]">{k}</p><p className="text-neutral-800 dark:text-[#d4d8d8] break-words">{v}</p></div>
               ))}
               {detail.video_link && (
                 <div><p className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 mb-0.5 dark:text-[#4a5252]">Video</p><a href={detail.video_link} target="_blank" className="text-green-600 dark:text-green-400">Open ↗</a></div>
               )}
             </div>
-            <div className="flex items-center justify-between pt-4 border-t border-neutral-200 dark:border-[#1a1f1f]">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-neutral-200 dark:border-[#1a1f1f]">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[9px] uppercase text-neutral-500 dark:text-[#4a5252]">Status</span>
                 <select value={detail.status} onChange={e => updateStatus(detail.id, e.target.value)}
@@ -338,7 +387,7 @@ export default function AdminPage() {
                   {STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase()+s.slice(1)}</option>)}
                 </select>
               </div>
-              <button onClick={() => setDetail(null)} className="px-3 py-1.5 border border-neutral-300 rounded-lg text-[12px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Close</button>
+              <button onClick={() => setDetail(null)} className="px-3 py-1.5 border border-neutral-300 rounded-lg text-[12px] text-neutral-500 hover:text-neutral-900 dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8] w-full sm:w-auto">Close</button>
             </div>
           </div>
         </div>
@@ -347,7 +396,7 @@ export default function AdminPage() {
       {/* Grant modal */}
       {grantOpen && (
         <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setGrantOpen(false)}>
-          <div className="bg-white border border-neutral-200 rounded-2xl p-7 w-full max-w-md dark:bg-[#0e1010] dark:border-[#242b2b]" onClick={e => e.stopPropagation()}>
+          <div className="bg-white border border-neutral-200 rounded-2xl p-5 sm:p-7 w-full max-w-md max-h-[90vh] overflow-y-auto dark:bg-[#0e1010] dark:border-[#242b2b]" onClick={e => e.stopPropagation()}>
             <p className="text-[15px] font-bold text-neutral-900 dark:text-white mb-1">Grant Course Access</p>
             <p className="text-[12px] text-neutral-500 dark:text-[#4a5252] mb-5">Find user by email, then assign a course slug.</p>
             {([
@@ -362,7 +411,7 @@ export default function AdminPage() {
               </div>
             ))}
             {grantError && <p className="text-red-600 font-mono text-[11px] mb-3 dark:text-red-400">{grantError}</p>}
-            <div className="flex gap-2 justify-end">
+            <div className="flex flex-col sm:flex-row gap-2 justify-end">
               <button onClick={() => setGrantOpen(false)} className="px-3 py-1.5 border border-neutral-300 text-neutral-500 hover:text-neutral-900 rounded-lg text-[12px] dark:border-[#242b2b] dark:text-[#4a5252] dark:hover:text-[#d4d8d8]">Cancel</button>
               <button onClick={grantCourse} className="px-4 py-1.5 bg-green-100 border border-green-300 text-green-700 rounded-lg text-[12px] font-semibold dark:bg-green-400/12 dark:border-green-400/30 dark:text-green-400">Grant Access</button>
             </div>
@@ -372,7 +421,7 @@ export default function AdminPage() {
 
       {/* Toast */}
       {toast && (
-        <div className="fixed bottom-6 right-6 bg-white border border-neutral-200 text-green-700 font-mono text-[11px] px-4 py-2.5 rounded-lg z-50 shadow-xl dark:bg-[#111] dark:border-[#242b2b] dark:text-green-400">
+        <div className="fixed bottom-6 right-4 sm:right-6 left-4 sm:left-auto bg-white border border-neutral-200 text-green-700 font-mono text-[11px] px-4 py-2.5 rounded-lg z-50 shadow-xl dark:bg-[#111] dark:border-[#242b2b] dark:text-green-400 text-center sm:text-left">
           {toast}
         </div>
       )}
