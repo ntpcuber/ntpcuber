@@ -427,6 +427,9 @@ export default function HomePage() {
                 <span className="text-3xl font-bold text-neutral-900 dark:text-white">฿200</span>
                 <span className="text-neutral-500 text-sm">{c.perService}</span>
               </div>
+              <Link href="/coaching#sample" className="block text-center text-sm font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 mb-3">
+                ▶ {lang === 'th' ? 'ดูตัวอย่างงานวิเคราะห์' : 'Watch a sample critique'}
+              </Link>
               <Link href="/coaching" className="block text-center bg-neutral-100 dark:bg-neutral-900 group-hover:bg-indigo-600 group-hover:text-white transition-colors py-3 rounded-xl font-bold text-sm text-neutral-900 dark:text-white">
                 Learn More
               </Link>

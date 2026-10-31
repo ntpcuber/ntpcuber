@@ -6,6 +6,7 @@ import { supabase, getUser } from '@/lib/supabase'
 import Link from 'next/link'
 import testimonials from '@/lib/testimonials'
 import TestimonialsStack from '@/components/TestimonialsStack'
+import YouTubeLite from '@/components/YouTubeLite'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -16,6 +17,12 @@ const DAYS = [
   { value: 'Sat', en: 'Sat', th: 'เสาร์' },
   { value: 'Sun', en: 'Sun', th: 'อาทิตย์' },
 ]
+
+const TABS = [
+  { id: 'critique', label: 'tabCritique' },
+  { id: 'live',     label: 'tabLive' },
+  { id: 'pack',     label: 'tabPack' },
+] as const
 
 const cnt = {
   en: {
@@ -39,6 +46,10 @@ const cnt = {
 }
 
 interface Service {
+  id?: string                 // NEW – only needed on the 1-hour card
+  group: 'critique' | 'live' | 'pack'   // NEW
+  popular?: boolean           // NEW – replaces the fragile name checks
+  variantOf?: string          // NEW – return-client rate points at the card it belongs to
   name: string
   price: string
   amount: number
@@ -56,6 +67,8 @@ const translations: Record<string, {
   services: Service[]
   perksTitle: string; perksDesc: string; perksSignIn: string
   returnLabel: string; returnTeaser: string; returnTeaserSub: string; returnSignIn: string
+  tabCritique: string; tabLive: string; tabPack: string
+  sampleTitle: string; sampleDesc: string; sampleBullets: string[]; sampleVideoTitle: string
 }> = {
   en: {
     title: 'Elite Speedcubing Coaching',
@@ -80,8 +93,19 @@ const translations: Record<string, {
     returnTeaser: 'Return Client Rate — Unlocked',
     returnTeaserSub: 'Available after completing a 1-hr session.',
     returnSignIn: 'Sign in to check eligibility',
+    tabCritique: 'Critique', tabLive: 'Live Sessions', tabPack: 'Mastery Pack',
+    sampleTitle: 'See what you get',
+    sampleDesc: 'A real **video critique** delivered to a past client. Every critique follows this same format, tailored to your own solves.',
+    sampleBullets: [
+      'Solve-by-solve breakdown of your recorded solves',
+      'Strengths and inefficiencies pointed out on screen',
+      'Lookahead, turning and ergonomics feedback',
+      'A clear list of what to practise next',
+    ],
+    sampleVideoTitle: 'Sample video critique',
     services: [
       {
+        group: 'critique',
         name: 'Written Critique (Video Analysis)',
         price: '฿200', amount: 200,
         desc: [
@@ -92,6 +116,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'critique', popular: true,
         name: 'Video Critique (Video Analysis)',
         price: '฿360', amount: 360,
         desc: [
@@ -103,6 +128,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live',
         name: 'Live 1-on-1 Session (30-Min)',
         price: '฿240', amount: 240,
         desc: [
@@ -112,6 +138,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live', popular: true, id: 'live60',
         name: 'Live 1-on-1 Session (1 Hour)',
         price: '฿420', amount: 420,
         desc: [
@@ -122,6 +149,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live', variantOf: 'live60',
         name: 'Live 1-on-1 Session (1 Hour) — Return Client',
         price: '฿390', amount: 390,
         returningOnly: true,
@@ -134,6 +162,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'pack',
         name: 'Mastery Pack Live 1-on-1 (4 Sessions)',
         price: '฿1,550', amount: 1550,
         saving: 'Save ฿130', saving_desc: 'vs individual sessions',
@@ -168,8 +197,19 @@ const translations: Record<string, {
     returnTeaser: 'ราคาพิเศษสำหรับลูกค้าเก่า',
     returnTeaserSub: 'ใช้ได้หลังจากเรียนคลาส 1 ชั่วโมงครบแล้ว',
     returnSignIn: 'เข้าสู่ระบบเพื่อตรวจสอบสิทธิ์',
+    tabCritique: 'วิเคราะห์การแก้', tabLive: 'สอนสด', tabPack: 'แพ็กเกจเชี่ยวชาญ',
+    sampleTitle: 'ตัวอย่างสิ่งที่คุณจะได้รับ',
+    sampleDesc: '**วิดีโอวิเคราะห์**จริงที่ส่งให้ผู้เรียนท่านหนึ่ง ทุกงานจะอยู่ในรูปแบบเดียวกันนี้ และปรับตามการแก้ของคุณเอง',
+    sampleBullets: [
+      'วิเคราะห์การแก้ทีละรอบอย่างละเอียด',
+      'ชี้จุดแข็งและจุดที่เสียเวลาให้เห็นบนหน้าจอ',
+      'ฟีดแบ็กเรื่องการมองล่วงหน้า การหมุน และท่าทางการจับลูก',
+      'สรุปสิ่งที่ควรฝึกต่อไปอย่างชัดเจน',
+    ],
+    sampleVideoTitle: 'ตัวอย่างวิดีโอวิเคราะห์การแก้',
     services: [
       {
+        group: 'critique',
         name: 'ตรวจการแก้แบบเขียน (Video Analysis)',
         price: '฿200', amount: 200,
         desc: [
@@ -180,6 +220,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'critique', popular: true,
         name: 'ตรวจการแก้แบบวิดีโอ (Video Analysis)',
         price: '฿360', amount: 360,
         desc: [
@@ -191,6 +232,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live',
         name: 'สอนสดตัวต่อตัว (30 นาที)',
         price: '฿240', amount: 240,
         desc: [
@@ -200,6 +242,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live', popular: true, id: 'live60',
         name: 'สอนสดตัวต่อตัว (1 ชั่วโมง)',
         price: '฿420', amount: 420,
         desc: [
@@ -210,6 +253,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'live', variantOf: 'live60',
         name: 'สอนสดตัวต่อตัว (1 ชั่วโมง) — ลูกค้าเก่า',
         price: '฿390', amount: 390,
         returningOnly: true,
@@ -222,6 +266,7 @@ const translations: Record<string, {
         ],
       },
       {
+        group: 'pack',
         name: 'แพ็กเกจเชี่ยวชาญ สอนสดตัวต่อตัว (4 ครั้ง)',
         price: '฿1,550', amount: 1550,
         saving: 'ประหยัด ฿130', saving_desc: 'เมื่อเทียบกับคลาสรายครั้ง',
@@ -245,6 +290,14 @@ function generateTimes(startHour: number): string[] {
     }
   }
   return opts
+}
+
+function renderBold(text: string) {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 === 1
+      ? <strong key={i} className="font-bold text-neutral-900 dark:text-white">{part}</strong>
+      : part
+  )
 }
 
 async function compressImage(file: File, maxWidth = 1000, quality = 0.7): Promise<string> {
@@ -381,6 +434,7 @@ export default function CoachingPage() {
   const [cachedReceipt, setCachedReceipt] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [qrSrc, setQrSrc] = useState('/image/qr_payment.jpeg')
+  const [activeTab, setActiveTab] = useState<'critique' | 'live' | 'pack'>('critique')
 
   const bookSectionRef = useRef<HTMLDivElement>(null)
 
@@ -398,6 +452,9 @@ export default function CoachingPage() {
   const visibleServices = trans.services.filter(
     s => !s.returningOnly || (isLoggedIn && hasPreviousSession)
   )
+  const cardServices = visibleServices.filter(
+  s => !s.returningOnly && s.group === activeTab
+)
 
   // Auth + previous session check
   useEffect(() => {
@@ -646,36 +703,67 @@ export default function CoachingPage() {
       {/* ── Pricing ── */}
       <section id="pricing" className="py-24 px-6 bg-neutral-50 dark:bg-transparent">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.pricingTitle}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2 className="text-3xl font-bold mb-10 text-center text-neutral-900 dark:text-white">{trans.pricingTitle}</h2>
 
-            {/* Visible service cards */}
-            {visibleServices.map((s, index) => {
-              const isPopular  = s.name.includes('Video Critique') || s.name.includes('1 Hour)') && !s.returningOnly
-              const isMastery  = s.name.includes('4 Sessions') || s.name.includes('4 ครั้ง')
-              const isReturn   = s.returningOnly === true
+          {/* Tabs */}
+          <div className="flex justify-center mb-14">
+            <div role="tablist" className="inline-flex p-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 max-w-full overflow-x-auto">
+              {TABS.map(tab => (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={activeTab === tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-4 sm:px-6 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition ${
+                    activeTab === tab.id
+                      ? 'bg-indigo-600 text-white shadow'
+                      : 'text-neutral-600 dark:text-neutral-400 hover:text-indigo-500'
+                  }`}
+                >
+                  {trans[tab.label]}
+                </button>
+              ))}
+            </div>
+          </div>
+          
+          {/* Sample critique (Critique tab only) */}
+          {activeTab === 'critique' && (
+            <div id="sample" className="mb-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto scroll-mt-28">
+              <YouTubeLite id="x9NCbZh0yaI" title={trans.sampleVideoTitle} />
+              <div>
+                <h3 className="text-2xl font-bold mb-3 text-neutral-900 dark:text-white">{trans.sampleTitle}</h3>
+                <p className="text-neutral-600 dark:text-neutral-400 mb-5 leading-relaxed">{renderBold(trans.sampleDesc)}</p>
+                <ul className="space-y-2 text-sm text-neutral-700 dark:text-neutral-300">
+                  {trans.sampleBullets.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="font-bold mt-[2px] text-indigo-600 dark:text-indigo-400">✔</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {/* Cards */}
+          <div className="flex flex-wrap justify-center gap-8">
+            {cardServices.map(s => {
+              const isMastery = s.group === 'pack'
+              const variant = s.id ? visibleServices.find(v => v.variantOf === s.id) : undefined
 
               return (
                 <div
                   key={s.name}
-                  className={`relative bg-white dark:bg-neutral-900 border ${
-                    isReturn
-                      ? 'border-emerald-500/60 shadow-[0_0_24px_rgba(16,185,129,0.15)]'
-                      : isPopular
-                      ? 'border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)]'
+                  className={`relative w-full md:w-[calc(50%-1rem)] lg:max-w-md bg-white dark:bg-neutral-900 border ${
+                    s.popular
+                      ? 'border-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.2)]'
                       : isMastery
                       ? 'border-green-500/50 shadow-[0_0_20px_rgba(34,197,94,0.15)]'
                       : 'border-neutral-200 dark:border-neutral-800'
-                  } p-8 rounded-2xl hover:border-blue-500 transition duration-300 flex flex-col justify-between h-full`}
+                  } p-8 rounded-2xl hover:border-indigo-500 transition duration-300 flex flex-col justify-between`}
                 >
-                  {/* Badges */}
-                  {isReturn && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 flex items-center gap-1.5 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg whitespace-nowrap">
-                      <span>⭐</span> {trans.returnLabel}
-                    </div>
-                  )}
-                  {!isReturn && isPopular && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg">
+                  {s.popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-widest py-1 px-3 rounded-full shadow-lg">
                       Most Popular
                     </div>
                   )}
@@ -685,79 +773,73 @@ export default function CoachingPage() {
                     </div>
                   )}
 
-                  <div className="flex flex-col h-full">
-                    <div>
-                      <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-4 min-h-[64px]">{s.name}</h3>
-                      <ul className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 space-y-2">
-                        {s.desc.map((f, j) => (
-                          <li key={j} className="flex items-start gap-2">
-                            <span className={`font-bold mt-[2px] ${isReturn ? 'text-emerald-500 dark:text-emerald-400' : 'text-blue-600 dark:text-blue-500'}`}>✔</span>
-                            <span className={j === s.desc.length - 1 && isReturn ? 'text-emerald-700 dark:text-emerald-300 font-medium' : ''}>{f}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <div>
+                    <h3 className="text-xl font-bold text-neutral-900 dark:text-white mb-4 min-h-[64px]">{s.name}</h3>
+                    <ul className="text-neutral-600 dark:text-neutral-400 text-sm mb-6 space-y-2">
+                      {s.desc.map((f, j) => (
+                        <li key={j} className="flex items-start gap-2">
+                          <span className="font-bold mt-[2px] text-indigo-600 dark:text-indigo-400">✔</span>
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-auto">
+                    <div className="mb-6">
+                      <div className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">{s.price}</div>
+                      {s.saving && (
+                        <div className="text-sm text-green-600 dark:text-green-400 font-semibold mt-1">
+                          {s.saving} {s.saving_desc}
+                        </div>
+                      )}
                     </div>
-                    <div className="mt-auto">
-                      <div className="mb-6">
-                        <div className={`text-3xl font-bold ${isReturn ? 'text-emerald-400' : 'text-blue-500'}`}>{s.price}</div>
-                        {isReturn && (
-                          <div className="text-sm text-emerald-500/80 font-semibold mt-1">
-                            {lang === 'en' ? 'Saved ฿30 vs standard rate' : 'ประหยัด ฿30 จากราคาปกติ'}
-                          </div>
-                        )}
-                        {s.saving && !isReturn && (
-                          <div className="text-sm text-green-400 font-semibold mt-1">
-                            {s.saving} {s.saving_desc}
-                          </div>
-                        )}
+
+                    {/* Return-client variant strip (only when eligible) */}
+                    {variant && (
+                      <div className="mb-4 rounded-xl border border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 p-3 flex items-center justify-between gap-3">
+                        <div className="text-xs">
+                          <p className="font-bold text-emerald-700 dark:text-emerald-300">⭐ {trans.returnLabel}</p>
+                          <p className="text-emerald-600 dark:text-emerald-400">
+                            {variant.price} · {lang === 'en' ? 'Saved ฿30' : 'ประหยัด ฿30'}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => scrollToBooking(variant.name)}
+                          className="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition active:scale-95"
+                        >
+                          {trans.bookNow}
+                        </button>
                       </div>
-                      <button
-                        onClick={() => scrollToBooking(s.name)}
-                        className={`w-full py-3 font-bold rounded-xl transition-colors shadow-lg active:scale-95 ${
-                          isReturn
-                            ? 'bg-emerald-100 hover:bg-emerald-600 text-emerald-700 hover:text-white border border-emerald-500/40 hover:border-emerald-500 dark:bg-emerald-600/20 dark:hover:bg-emerald-600 dark:text-emerald-300'
-                            : 'bg-neutral-100 hover:bg-indigo-600 text-neutral-900 hover:text-white dark:bg-neutral-800 dark:hover:bg-indigo-600 dark:text-white'
-                        }`}
-                      >
-                        {trans.bookNow}
-                      </button>
-                    </div>
+                    )}
+
+                    <button
+                      onClick={() => scrollToBooking(s.name)}
+                      className="w-full py-3 font-bold rounded-xl transition-colors shadow-lg active:scale-95 bg-neutral-100 hover:bg-indigo-600 text-neutral-900 hover:text-white dark:bg-neutral-800 dark:hover:bg-indigo-600 dark:text-white"
+                    >
+                      {trans.bookNow}
+                    </button>
                   </div>
                 </div>
               )
             })}
-
-            {/* Locked teaser card — shown when logged out OR logged in but no previous session */}
-            {(!isLoggedIn || (isLoggedIn && !hasPreviousSession)) && (
-              <div className="relative bg-white dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 border-dashed p-8 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[320px]">
-                {/* Subtle emerald glow hinting at what's inside */}
-                <div className="absolute inset-0 rounded-2xl bg-emerald-500/3 pointer-events-none" />
-                <div className="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 flex items-center justify-center text-2xl">
-                  🔒
-                </div>
-                <div>
-                  <p className="font-bold text-neutral-900 dark:text-neutral-200 text-lg mb-1">{trans.returnTeaser}</p>
-                  <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed mb-1">{trans.returnTeaserSub}</p>
-                  <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-500/50 mt-3">฿390</p>
-                </div>
-                {!isLoggedIn ? (
-                  <Link
-                    href="/login?next=/coaching"
-                    className="px-5 py-2.5 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 rounded-xl text-sm font-semibold transition"
-                  >
-                    {trans.returnSignIn}
-                  </Link>
-                ) : (
-                  <p className="text-xs text-neutral-600 italic">
-                    {lang === 'en'
-                      ? 'Complete a 1-hr session to unlock this rate'
-                      : 'เรียนคลาส 1 ชั่วโมงให้ครบก่อนเพื่อปลดล็อกราคานี้'}
-                  </p>
-                )}
-              </div>
-            )}
-
           </div>
+
+          {/* Locked return-rate hint (Live tab, not yet eligible) */}
+          {activeTab === 'live' && !(isLoggedIn && hasPreviousSession) && (
+            <p className="mt-10 text-center text-sm text-neutral-500">
+              🔒 {trans.returnLabel} · ฿390 —{' '}
+              {isLoggedIn ? (
+                lang === 'en'
+                  ? 'complete a 1-hr session to unlock'
+                  : 'เรียนคลาส 1 ชั่วโมงให้ครบก่อนเพื่อปลดล็อกราคานี้'
+              ) : (
+                <Link href="/login?next=/coaching" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">
+                  {trans.returnSignIn}
+                </Link>
+              )}
+            </p>
+          )}
         </div>
       </section>
 
