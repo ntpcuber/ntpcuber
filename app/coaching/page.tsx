@@ -46,10 +46,10 @@ const cnt = {
 }
 
 interface Service {
-  id?: string                 // NEW – only needed on the 1-hour card
-  group: 'critique' | 'live' | 'pack'   // NEW
-  popular?: boolean           // NEW – replaces the fragile name checks
-  variantOf?: string          // NEW – return-client rate points at the card it belongs to
+  id?: string                           // only needed on the 1-hour card
+  group: 'critique' | 'live' | 'pack'   // which tab the card belongs to
+  popular?: boolean                     // shows the "Most Popular" badge
+  variantOf?: string                    // return-client rate points at the card it belongs to
   name: string
   price: string
   amount: number
@@ -63,12 +63,14 @@ const translations: Record<string, {
   title: string; subtitle: string; pricingTitle: string; bookTitle: string
   formGoal: string; formName: string; formEmail: string; formService: string
   formButton: string; paymentInstruction: string; receiptLabel: string
-  confirmCheckbox: string; sending: string; success: string; bookNow: string
+  confirmCheckbox: string; sending: string; bookNow: string
   services: Service[]
   perksTitle: string; perksDesc: string; perksSignIn: string
   returnLabel: string; returnTeaser: string; returnTeaserSub: string; returnSignIn: string
   tabCritique: string; tabLive: string; tabPack: string
   sampleTitle: string; sampleDesc: string; sampleBullets: string[]; sampleVideoTitle: string
+  successTitle: string; successBody: string; successAgain: string; successDashboard: string
+  errSave: string; errFileTooLarge: string; errPickDay: string; errSameTime: string
 }> = {
   en: {
     title: 'Elite Speedcubing Coaching',
@@ -84,7 +86,6 @@ const translations: Record<string, {
     receiptLabel: 'Upload Payment Receipt (Required)',
     confirmCheckbox: 'I have completed the payment and uploaded the receipt.',
     sending: 'Sending...',
-    success: 'Success! Check your email soon.',
     bookNow: 'Book Now',
     perksTitle: 'Sign in for exclusive perks',
     perksDesc: 'Your name & email auto-fill at checkout. Returning clients unlock a discounted ฿390 rate on 1-hr sessions.',
@@ -103,6 +104,14 @@ const translations: Record<string, {
       'A clear list of what to practise next',
     ],
     sampleVideoTitle: 'Sample video critique',
+    successTitle: 'Booking received!',
+    successBody: "We'll review your payment and confirm by email shortly. You can also track the status on your dashboard.",
+    successAgain: 'Book another session',
+    successDashboard: 'View my bookings',
+    errSave: "Something went wrong and your booking wasn't saved. Please try again, or message me on Facebook.",
+    errFileTooLarge: 'File is too large! Please upload an image smaller than 2MB.',
+    errPickDay: 'Please select at least one available day.',
+    errSameTime: 'Primary and secondary time cannot be the same.',
     services: [
       {
         group: 'critique',
@@ -188,7 +197,6 @@ const translations: Record<string, {
     receiptLabel: 'แนบหลักฐานการโอนเงิน (จำเป็น)',
     confirmCheckbox: 'ฉันได้ชำระเงินและแนบหลักฐานเรียบร้อยแล้ว',
     sending: 'กำลังส่ง...',
-    success: 'สำเร็จ! โปรดรอการติดต่อกลับทางอีเมล',
     bookNow: 'จองเลย',
     perksTitle: 'เข้าสู่ระบบเพื่อรับสิทธิพิเศษ',
     perksDesc: 'ระบบจะกรอกชื่อและอีเมลของคุณอัตโนมัติ และลูกค้าที่เคยเรียนแล้วจะได้รับส่วนลดพิเศษ ฿390 สำหรับคลาส 1 ชั่วโมง',
@@ -207,6 +215,14 @@ const translations: Record<string, {
       'สรุปสิ่งที่ควรฝึกต่อไปอย่างชัดเจน',
     ],
     sampleVideoTitle: 'ตัวอย่างวิดีโอวิเคราะห์การแก้',
+    successTitle: 'ได้รับการจองแล้ว!',
+    successBody: 'เราจะตรวจสอบการชำระเงินและยืนยันทางอีเมลโดยเร็วที่สุด คุณสามารถติดตามสถานะได้ที่หน้าแดชบอร์ด',
+    successAgain: 'จองคลาสอื่นเพิ่ม',
+    successDashboard: 'ดูการจองของฉัน',
+    errSave: 'เกิดข้อผิดพลาด การจองของคุณยังไม่ถูกบันทึก กรุณาลองใหม่อีกครั้ง หรือทักมาทางเพจ Facebook',
+    errFileTooLarge: 'ไฟล์มีขนาดใหญ่เกินไป! กรุณาแนบรูปภาพที่มีขนาดไม่เกิน 2MB',
+    errPickDay: 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน',
+    errSameTime: 'เวลาหลักและเวลาสำรองต้องไม่ซ้ำกัน',
     services: [
       {
         group: 'critique',
@@ -292,6 +308,7 @@ function generateTimes(startHour: number): string[] {
   return opts
 }
 
+// Turns **text** into bold text
 function renderBold(text: string) {
   return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
     i % 2 === 1
@@ -330,45 +347,6 @@ async function toBase64(file: File): Promise<string> {
     reader.onerror = reject
   })
 }
-
-// ─── Star Rating & Testimonial Card ─────────────────────────────────────────────────────────────
-// function StarRating({ rating }: { rating: number }) {
-//   return (
-//     <div className="flex gap-0.5 mb-4">
-//       {Array.from({ length: 5 }).map((_, i) => (
-//         <svg
-//           key={i}
-//           className={`w-4 h-4 ${i < rating ? 'text-amber-400' : 'text-neutral-700'}`}
-//           fill="currentColor"
-//           viewBox="0 0 20 20"
-//         >
-//           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.367 2.446a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.539 1.118l-3.367-2.445a1 1 0 00-1.175 0l-3.366 2.445c-.784.57-1.838-.196-1.539-1.118l1.286-3.957a1 1 0 00-.363-1.118L2.813 9.385c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.958z" />
-//         </svg>
-//       ))}
-//     </div>
-//   )
-// }
-
-// function TestimonialCard({ t, lang }: { t: typeof testimonials[number]; lang: string }) {
-//   const initials = t.name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
-//   const quote = lang === 'th' && t.quoteTh ? t.quoteTh : t.quoteEn
-
-//   return (
-//     <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 hover:border-blue-500/40 transition flex flex-col shadow-sm dark:shadow-none">
-//       <StarRating rating={t.rating} />
-//       <p className="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed mb-6 flex-1">&ldquo;{quote}&rdquo;</p>
-//       <div className="flex items-center gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-//         <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0">
-//           {initials}
-//         </div>
-//         <div className="min-w-0">
-//           <p className="font-bold text-neutral-900 dark:text-white text-sm truncate">{t.name}</p>
-//           <p className="text-xs text-neutral-500 truncate">{t.service}</p>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
 
 // ─── Progress bar ─────────────────────────────────────────────────────────────
 
@@ -434,9 +412,21 @@ export default function CoachingPage() {
   const [cachedReceipt, setCachedReceipt] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [qrSrc, setQrSrc] = useState('/image/qr_payment.jpeg')
-  const [activeTab, setActiveTab] = useState<'critique' | 'live' | 'pack'>('critique')
 
-  const bookSectionRef = useRef<HTMLDivElement>(null)
+  // UI state
+  const [activeTab, setActiveTab] = useState<'critique' | 'live' | 'pack'>('critique')
+  const [submitted, setSubmitted] = useState(false)
+  const [daysError, setDaysError] = useState(false)
+  const [toast, setToast] = useState<{ msg: string; type: 'error' | 'success' } | null>(null)
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  function showToast(msg: string, type: 'error' | 'success' = 'error') {
+    if (toastTimer.current) clearTimeout(toastTimer.current)
+    setToast({ msg, type })
+    toastTimer.current = setTimeout(() => setToast(null), 5000)
+  }
+
+  const bookSectionRef = useRef<HTMLElement>(null)
 
   // Derived
   const isCritique = selectedService.toLowerCase().includes('analysis')
@@ -448,13 +438,14 @@ export default function CoachingPage() {
   const timeStartHour = hasWeekend && !hasWeekday ? 14 : 19
   const timeOptions = generateTimes(timeStartHour)
 
-  // Services visible in pricing grid and booking dropdown
+  // Services visible in the booking dropdown (return-client rate only when eligible)
   const visibleServices = trans.services.filter(
     s => !s.returningOnly || (isLoggedIn && hasPreviousSession)
   )
+  // Cards shown in the pricing grid for the active tab
   const cardServices = visibleServices.filter(
-  s => !s.returningOnly && s.group === activeTab
-)
+    s => !s.returningOnly && s.group === activeTab
+  )
 
   // Auth + previous session check
   useEffect(() => {
@@ -510,6 +501,7 @@ export default function CoachingPage() {
   }
 
   function scrollToBooking(serviceName: string) {
+    setSubmitted(false)
     setSelectedService(serviceName)
     setCurrentStep(1)
     bookSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -517,44 +509,20 @@ export default function CoachingPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (submitting) return
 
     const MAX_SIZE = 2 * 1024 * 1024
-    if (receiptFile && receiptFile.size > MAX_SIZE) {
-      alert(lang === 'en'
-        ? 'File is too large! Please upload an image smaller than 2MB.'
-        : 'ไฟล์มีขนาดใหญ่เกินไป! กรุณาแนบรูปภาพที่มีขนาดไม่เกิน 2MB')
-      return
-    }
-    if (!isCritique && selectedDays.length === 0) {
-      alert(lang === 'en' ? 'Please select at least one available day.' : 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน')
-      return
-    }
+    if (receiptFile && receiptFile.size > MAX_SIZE) { showToast(trans.errFileTooLarge); return }
+    if (!isCritique && selectedDays.length === 0)   { showToast(trans.errPickDay); return }
 
     setSubmitting(true)
-
-    const payload = {
-      name, email,
-      service: selectedService,
-      goal:          isCritique ? '' : goal,
-      availableDate: isCritique ? '' : selectedDays,
-      preferredTime: isCritique ? '' : preferredTime,
-      secondaryTime: isCritique ? '' : secondaryTime,
-      videoLink:     isCritique ? videoLink : '',
-      wcaEvent:      isCritique ? '' : wcaEvent,
-      receiptData:   cachedReceipt,
-      receiptName:   receiptFile ? receiptFile.name.replace(/\.[^/.]+$/, '.jpg') : 'receipt.jpg',
-    }
-
-    fetch('/api/booking', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).catch(err => console.error('Background send failed:', err))
 
     try {
       const user = await getUser()
       const svc = trans.services.find(s => s.name === selectedService)
-      await supabase.from('coaching_bookings').insert({
+
+      // 1) Save to Supabase FIRST. This is the source of truth.
+      const { error } = await supabase.from('coaching_bookings').insert({
         user_id:        user?.id ?? null,
         name, email,
         service:        selectedService,
@@ -566,16 +534,45 @@ export default function CoachingPage() {
         goal:           isCritique ? null : goal || null,
         amount_thb:     svc?.amount ?? null,
       })
+
+      if (error) {
+        console.error('Booking save failed:', error)
+        showToast(trans.errSave)
+        return                       // keep the form filled in, no success UI
+      }
+
+      // 2) Notification / sheet logging is best-effort. A failure here must not block the booking.
+      fetch('/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email,
+          service:       selectedService,
+          goal:          isCritique ? '' : goal,
+          availableDate: isCritique ? '' : selectedDays,
+          preferredTime: isCritique ? '' : preferredTime,
+          secondaryTime: isCritique ? '' : secondaryTime,
+          videoLink:     isCritique ? videoLink : '',
+          wcaEvent:      isCritique ? '' : wcaEvent,
+          receiptData:   cachedReceipt,
+          receiptName:   receiptFile ? receiptFile.name.replace(/\.[^/.]+$/, '.jpg') : 'receipt.jpg',
+        }),
+      }).catch(err => console.error('Background send failed:', err))
+
+      // 3) Only now show success and reset
+      setSubmitted(true)
+      setDaysError(false)
+      setSelectedService(''); setVideoLink(''); setWcaEvent(''); setSelectedDays([])
+      setPreferredTime(''); setSecondaryTime(''); setGoal('')
+      setPaymentConfirmed(false); setReceiptFile(null); setCachedReceipt('')
+      setCurrentStep(1)
+      bookSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
     } catch (err) {
-      console.warn('Supabase save failed:', err)
+      console.error('Booking error:', err)
+      showToast(trans.errSave)
+    } finally {
+      setSubmitting(false)
     }
-
-    alert(trans.success)
-
-    setSelectedService(''); setVideoLink(''); setWcaEvent(''); setSelectedDays([])
-    setPreferredTime(''); setSecondaryTime(''); setGoal('')
-    setPaymentConfirmed(false); setReceiptFile(null); setCachedReceipt('')
-    setCurrentStep(1); setSubmitting(false)
   }
 
   const inputCls = 'w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-4 rounded-xl focus:border-blue-500 outline-none text-neutral-900 dark:text-white placeholder-neutral-500 transition'
@@ -725,7 +722,7 @@ export default function CoachingPage() {
               ))}
             </div>
           </div>
-          
+
           {/* Sample critique (Critique tab only) */}
           {activeTab === 'critique' && (
             <div id="sample" className="mb-14 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center max-w-5xl mx-auto scroll-mt-28">
@@ -848,206 +845,264 @@ export default function CoachingPage() {
         <div className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.bookTitle}</h2>
 
-          <form onSubmit={(e) => {
-            e.preventDefault()
-            if (currentStep === 1) { goToStep(2); return }
-            if (currentStep === 2) { goToStep(3); return }
-            handleSubmit(e)
-          }}>
-            <ProgressBar mode={progressMode} currentStep={currentStep} />
-
-            {/* ── Step 1: Service selection ── */}
-            {currentStep === 1 && (
-              <div className="space-y-6">
-                <select
-                  required
-                  value={selectedService}
-                  onChange={e => {
-                    setSelectedService(e.target.value)
-                    setVideoLink(''); setWcaEvent(''); setSelectedDays([])
-                    setPreferredTime(''); setSecondaryTime(''); setGoal('')
-                    setPaymentConfirmed(false)
-                  }}
-                  className={inputCls}
-                >
-                  <option value="" disabled>{trans.formService}</option>
-                  {/* Only show returning-client option if eligible */}
-                  {visibleServices.map(s => (
-                    <option key={s.name} value={s.name}>{s.name} - {s.price}</option>
-                  ))}
-                </select>
-
-                {isCritique && selectedService && (
-                  <div>
-                    <label className="block mb-2 text-neutral-400">🔗 Video Link of your Solves</label>
-                    <input
-                      type="url"
-                      value={videoLink}
-                      onChange={e => setVideoLink(e.target.value)}
-                      placeholder="YouTube/Drive link"
-                      required
-                      className={inputCls}
-                    />
-                  </div>
+          {submitted ? (
+            /* ── Success screen ── */
+            <div className="text-center bg-white dark:bg-neutral-900 border border-emerald-500/40 rounded-2xl p-10 shadow-sm dark:shadow-none">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-emerald-100 dark:bg-emerald-500/15 border border-emerald-300 dark:border-emerald-500/30 flex items-center justify-center">
+                <svg className="w-8 h-8 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-3 text-neutral-900 dark:text-white">{trans.successTitle}</h3>
+              <p className="text-neutral-600 dark:text-neutral-400 max-w-md mx-auto mb-8 leading-relaxed">{trans.successBody}</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                {isLoggedIn && (
+                  <Link href="/dashboard" className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition">
+                    {trans.successDashboard}
+                  </Link>
                 )}
-
                 <button
-                  type="submit"
-                  disabled={!selectedService}
-                  className="w-full bg-blue-600 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="px-6 py-3 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white font-bold text-sm transition"
                 >
-                  Next
+                  {trans.successAgain}
                 </button>
               </div>
-            )}
+            </div>
+          ) : (
+            <form onSubmit={(e) => {
+              e.preventDefault()
+              if (currentStep === 1) { goToStep(2); return }
+              if (currentStep === 2) {
+                if (selectedDays.length === 0) {
+                  setDaysError(true)
+                  showToast(trans.errPickDay)
+                  document.getElementById('days-group')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                  return
+                }
+                goToStep(3)
+                return
+              }
+              handleSubmit(e)
+            }}>
+              <ProgressBar mode={progressMode} currentStep={currentStep} />
 
-            {/* ── Step 2: Logistics (live sessions only) ── */}
-            {currentStep === 2 && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block mb-2 text-neutral-400">🏆 WCA Event</label>
-                  <select required value={wcaEvent} onChange={e => setWcaEvent(e.target.value)} className={inputCls}>
-                    <option value="">{lang === 'th' ? 'เลือกประเภท' : 'Select event'}</option>
-                    {WCA_EVENTS.map(ev => <option key={ev}>{ev}</option>)}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block mb-3 text-neutral-400">
-                    {lang === 'th' ? '📅 วันที่สะดวก (กรุณาเลือกอย่างน้อย 1 วัน)' : '📅 Available Day (select all that applies)'}
-                  </label>
-                  <div className="flex flex-wrap gap-3">
-                    {DAYS.map(day => (
-                      <label key={day.value} className="cursor-pointer">
-                        <input
-                          type="checkbox"
-                          value={day.value}
-                          checked={selectedDays.includes(day.value)}
-                          onChange={e => setSelectedDays(prev =>
-                            e.target.checked ? [...prev, day.value] : prev.filter(d => d !== day.value)
-                          )}
-                          className="hidden peer"
-                        />
-                        <span className="px-5 py-3 rounded-full bg-neutral-800 peer-checked:bg-blue-600 text-sm select-none inline-block transition-colors">
-                          {lang === 'th' ? day.th : day.en}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
+              {/* ── Step 1: Service selection ── */}
+              {currentStep === 1 && (
                 <div className="space-y-6">
-                  <div>
-                    <label className="block mb-2 text-neutral-400">
-                      {lang === 'th' ? '⏰ เวลาที่สะดวกที่สุด' : '⏰ Most Preferred Starting Time'}
-                    </label>
-                    <select
-                      required value={preferredTime}
-                      onChange={e => {
-                        const val = e.target.value
-                        if (val && val === secondaryTime) { alert('Primary and secondary time cannot be the same'); return }
-                        setPreferredTime(val)
-                      }}
-                      className={inputCls}
-                    >
-                      <option value="">{lang === 'th' ? 'เลือกเวลา' : 'Select time'}</option>
-                      {timeOptions.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-neutral-400">
-                      {lang === 'th' ? '🕰️ เวลาสำรองที่สะดวก' : '🕰️ Secondary Preferred Starting Time'}
-                    </label>
-                    <select
-                      required value={secondaryTime}
-                      onChange={e => {
-                        const val = e.target.value
-                        if (val && val === preferredTime) { alert('Primary and secondary time cannot be the same'); return }
-                        setSecondaryTime(val)
-                      }}
-                      className={inputCls}
-                    >
-                      <option value="">{lang === 'th' ? 'เลือกเวลา' : 'Select time'}</option>
-                      {timeOptions.map(t => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <button type="button" onClick={() => setCurrentStep(1)} className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition">Back</button>
-                  <button type="submit" className="w-2/3 bg-blue-600 font-bold py-4 rounded-xl hover:bg-blue-700 transition">Next</button>
-                </div>
-              </div>
-            )}
-
-            {/* ── Step 3: Contact + Payment ── */}
-            {currentStep === 3 && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input type="text" required placeholder={trans.formName} value={name} onChange={e => setName(e.target.value)} className={inputCls} />
-                  <input type="email" required placeholder={trans.formEmail} value={email} onChange={e => setEmail(e.target.value)} className={inputCls} />
-                </div>
-
-                {!isCritique && (
-                  <div>
-                    <label className="block mb-2 text-neutral-400">{trans.formGoal}</label>
-                    <textarea
-                      rows={3} value={goal} onChange={e => setGoal(e.target.value)}
-                      placeholder="e.g., I want to sub-10 or learn full ZBLL"
-                      className={`${inputCls} resize-none`}
-                    />
-                  </div>
-                )}
-
-                <div className="space-y-6">
-                  <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center">
-                    <h3 className="text-xl font-bold mb-6">{trans.paymentInstruction}</h3>
-                    <img src={qrSrc} alt="Payment QR" className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-white p-2 rounded-xl object-contain" />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm text-neutral-400 mb-2">{trans.receiptLabel}</label>
-                    <input
-                      type="file" accept="image/*" required
-                      onChange={handleReceiptChange}
-                      className="w-full bg-neutral-900 border border-neutral-800 p-3 rounded-xl file:bg-blue-600 file:border-0 file:rounded-full file:text-white file:px-4 text-white"
-                    />
-                  </div>
-
-                  <div className="flex items-start gap-3 p-4 bg-blue-600/5 border border-blue-500/20 rounded-xl">
-                    <input
-                      type="checkbox" id="confirm-payment"
-                      checked={paymentConfirmed} onChange={e => setPaymentConfirmed(e.target.checked)}
-                      className="mt-1 w-5 h-5 rounded border-neutral-800 bg-neutral-900 accent-blue-600"
-                    />
-                    <label htmlFor="confirm-payment" className="text-sm text-neutral-300 cursor-pointer">
-                      {trans.confirmCheckbox}
-                    </label>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    onClick={() => goToStep(isCritique ? 1 : 2)}
-                    className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition"
+                  <select
+                    required
+                    value={selectedService}
+                    onChange={e => {
+                      setSelectedService(e.target.value)
+                      setVideoLink(''); setWcaEvent(''); setSelectedDays([])
+                      setPreferredTime(''); setSecondaryTime(''); setGoal('')
+                      setPaymentConfirmed(false)
+                    }}
+                    className={inputCls}
                   >
-                    Back
-                  </button>
+                    <option value="" disabled>{trans.formService}</option>
+                    {/* Only show returning-client option if eligible */}
+                    {visibleServices.map(s => (
+                      <option key={s.name} value={s.name}>{s.name} - {s.price}</option>
+                    ))}
+                  </select>
+
+                  {isCritique && selectedService && (
+                    <div>
+                      <label className="block mb-2 text-neutral-400">🔗 Video Link of your Solves</label>
+                      <input
+                        type="url"
+                        value={videoLink}
+                        onChange={e => setVideoLink(e.target.value)}
+                        placeholder="YouTube/Drive link"
+                        required
+                        className={inputCls}
+                      />
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    disabled={!paymentConfirmed || submitting}
-                    className="w-2/3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={!selectedService}
+                    className="w-full bg-blue-600 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
                   >
-                    {submitting ? trans.sending : trans.formButton}
+                    Next
                   </button>
                 </div>
-              </div>
-            )}
+              )}
 
-          </form>
+              {/* ── Step 2: Logistics (live sessions only) ── */}
+              {currentStep === 2 && (
+                <div className="space-y-6">
+                  <div>
+                    <label className="block mb-2 text-neutral-400">🏆 WCA Event</label>
+                    <select required value={wcaEvent} onChange={e => setWcaEvent(e.target.value)} className={inputCls}>
+                      <option value="">{lang === 'th' ? 'เลือกประเภท' : 'Select event'}</option>
+                      {WCA_EVENTS.map(ev => <option key={ev}>{ev}</option>)}
+                    </select>
+                  </div>
+
+                  <div id="days-group">
+                    <label className="block mb-3 text-neutral-400">
+                      {lang === 'th' ? '📅 วันที่สะดวก (กรุณาเลือกอย่างน้อย 1 วัน)' : '📅 Available Day (select all that applies)'}
+                    </label>
+                    <div className={`flex flex-wrap gap-3 rounded-2xl ${daysError ? 'ring-2 ring-red-500/60 p-2 -m-2' : ''}`}>
+                      {DAYS.map(day => (
+                        <label key={day.value} className="cursor-pointer">
+                          <input
+                            type="checkbox"
+                            value={day.value}
+                            checked={selectedDays.includes(day.value)}
+                            onChange={e => {
+                              setDaysError(false)
+                              setSelectedDays(prev =>
+                                e.target.checked ? [...prev, day.value] : prev.filter(d => d !== day.value)
+                              )
+                            }}
+                            className="hidden peer"
+                          />
+                          <span className="px-5 py-3 rounded-full bg-neutral-800 peer-checked:bg-blue-600 text-sm select-none inline-block transition-colors">
+                            {lang === 'th' ? day.th : day.en}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                    {daysError && (
+                      <p className="mt-3 text-sm text-red-500 dark:text-red-400">{trans.errPickDay}</p>
+                    )}
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block mb-2 text-neutral-400">
+                        {lang === 'th' ? '⏰ เวลาที่สะดวกที่สุด' : '⏰ Most Preferred Starting Time'}
+                      </label>
+                      <select
+                        required value={preferredTime}
+                        onChange={e => {
+                          const val = e.target.value
+                          if (val && val === secondaryTime) { showToast(trans.errSameTime); return }
+                          setPreferredTime(val)
+                        }}
+                        className={inputCls}
+                      >
+                        <option value="">{lang === 'th' ? 'เลือกเวลา' : 'Select time'}</option>
+                        {timeOptions.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block mb-2 text-neutral-400">
+                        {lang === 'th' ? '🕰️ เวลาสำรองที่สะดวก' : '🕰️ Secondary Preferred Starting Time'}
+                      </label>
+                      <select
+                        required value={secondaryTime}
+                        onChange={e => {
+                          const val = e.target.value
+                          if (val && val === preferredTime) { showToast(trans.errSameTime); return }
+                          setSecondaryTime(val)
+                        }}
+                        className={inputCls}
+                      >
+                        <option value="">{lang === 'th' ? 'เลือกเวลา' : 'Select time'}</option>
+                        {timeOptions.map(t => <option key={t} value={t}>{t}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <button type="button" onClick={() => setCurrentStep(1)} className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition">Back</button>
+                    <button type="submit" className="w-2/3 bg-blue-600 font-bold py-4 rounded-xl hover:bg-blue-700 transition">Next</button>
+                  </div>
+                </div>
+              )}
+
+              {/* ── Step 3: Contact + Payment ── */}
+              {currentStep === 3 && (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <input type="text" required placeholder={trans.formName} value={name} onChange={e => setName(e.target.value)} className={inputCls} />
+                    <input type="email" required placeholder={trans.formEmail} value={email} onChange={e => setEmail(e.target.value)} className={inputCls} />
+                  </div>
+
+                  {!isCritique && (
+                    <div>
+                      <label className="block mb-2 text-neutral-400">{trans.formGoal}</label>
+                      <textarea
+                        rows={3} value={goal} onChange={e => setGoal(e.target.value)}
+                        placeholder="e.g., I want to sub-10 or learn full ZBLL"
+                        className={`${inputCls} resize-none`}
+                      />
+                    </div>
+                  )}
+
+                  <div className="space-y-6">
+                    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center">
+                      <h3 className="text-xl font-bold mb-6">{trans.paymentInstruction}</h3>
+                      <img src={qrSrc} alt="Payment QR" className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-white p-2 rounded-xl object-contain" />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm text-neutral-400 mb-2">{trans.receiptLabel}</label>
+                      <input
+                        type="file" accept="image/*" required
+                        onChange={handleReceiptChange}
+                        className="w-full bg-neutral-900 border border-neutral-800 p-3 rounded-xl file:bg-blue-600 file:border-0 file:rounded-full file:text-white file:px-4 text-white"
+                      />
+                    </div>
+
+                    <div className="flex items-start gap-3 p-4 bg-blue-600/5 border border-blue-500/20 rounded-xl">
+                      <input
+                        type="checkbox" id="confirm-payment"
+                        checked={paymentConfirmed} onChange={e => setPaymentConfirmed(e.target.checked)}
+                        className="mt-1 w-5 h-5 rounded border-neutral-800 bg-neutral-900 accent-blue-600"
+                      />
+                      <label htmlFor="confirm-payment" className="text-sm text-neutral-300 cursor-pointer">
+                        {trans.confirmCheckbox}
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={() => goToStep(isCritique ? 1 : 2)}
+                      className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition"
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={!paymentConfirmed || submitting}
+                      className="w-2/3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {submitting ? trans.sending : trans.formButton}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+            </form>
+          )}
         </div>
       </section>
+
+      {/* ── Toast ── */}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-md px-5 py-3.5 rounded-xl shadow-2xl text-sm font-medium flex items-start gap-3 border ${
+            toast.type === 'error'
+              ? 'bg-red-50 border-red-300 text-red-800 dark:bg-red-950 dark:border-red-500/40 dark:text-red-200'
+              : 'bg-emerald-50 border-emerald-300 text-emerald-800 dark:bg-emerald-950 dark:border-emerald-500/40 dark:text-emerald-200'
+          }`}
+        >
+          <span className="flex-1">{toast.msg}</span>
+          <button type="button" onClick={() => setToast(null)} aria-label="Dismiss" className="opacity-60 hover:opacity-100">✕</button>
+        </div>
+      )}
 
     </div>
   )
