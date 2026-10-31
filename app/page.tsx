@@ -204,13 +204,13 @@ export default function HomePage() {
             />
           </div>
 
-          <Link
+          {/* <Link
             href="/bootcamp"
             className="mb-8 inline-flex items-center gap-2 bg-indigo-600/10 dark:bg-indigo-600/15 border border-indigo-500/30 hover:border-indigo-500 rounded-full px-5 py-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 transition group"
           >
             🎯 {c.bootcampBannerText}
             <ChevronRight />
-          </Link>
+          </Link> */}
 
           <p className="text-neutral-600 dark:text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0">
             {c.heroSubtitle}
