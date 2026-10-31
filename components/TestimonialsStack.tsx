@@ -89,7 +89,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
           return (
             <div
               key={idx}
-              className={`absolute inset-0 bg-neutral-900 border border-neutral-800 rounded-2xl p-8 flex flex-col ${
+              className={`absolute inset-0 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 shadow-sm dark:shadow-none flex flex-col ${
                 isFront ? 'hover:border-blue-500/40' : ''
               } transition-transform duration-300 ease-out`}
               style={{
@@ -101,15 +101,15 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
               }}
             >
               <StarRating rating={t.rating} />
-              <p className="text-neutral-300 text-sm leading-relaxed mb-6 flex-1 line-clamp-6">
+              <p className="text-neutral-700 dark:text-neutral-300 text-sm leading-relaxed mb-6 flex-1 line-clamp-6">
                 &ldquo;{quote}&rdquo;
               </p>
-              <div className="flex items-center gap-3 pt-4 border-t border-neutral-800">
+              <div className="flex items-center gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-800">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0">
                   {initials}
                 </div>
                 <div className="min-w-0">
-                  <p className="font-bold text-white text-sm truncate">{t.name}</p>
+                  <p className="font-bold text-neutral-900 dark:text-white text-sm truncate">{t.name}</p>
                   <p className="text-xs text-neutral-500 truncate">{t.service}</p>
                 </div>
               </div>
@@ -123,7 +123,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
         type="button"
         onClick={prev}
         aria-label="Previous testimonial"
-        className="hidden sm:flex absolute left-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-neutral-900 border border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
+        className="hidden sm:flex absolute left-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -133,7 +133,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
         type="button"
         onClick={next}
         aria-label="Next testimonial"
-        className="hidden sm:flex absolute right-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-neutral-900 border border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
+        className="hidden sm:flex absolute right-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -149,7 +149,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
             onClick={() => goTo(i)}
             aria-label={`Go to testimonial ${i + 1}`}
             className={`h-2 rounded-full transition-all ${
-              i === activeIndex ? 'w-6 bg-blue-500' : 'w-2 bg-neutral-700 hover:bg-neutral-600'
+              i === activeIndex ? 'w-6 bg-blue-500' : 'w-2 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600'
             }`}
           />
         ))}

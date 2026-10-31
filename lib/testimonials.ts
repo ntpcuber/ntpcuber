@@ -23,10 +23,10 @@ const testimonials: Testimonial[] = [
   },
   {
     name: 'Achira S.',
-    service: 'Live 1-on-1 Session (1 Hour)',
+    service: 'Mastery Pack (4 Sessions) & Live 1-on-1 Session (1 Hour)',
     rating: 5,
-    quoteEn: 'After taking this class, I gained a much clearer understanding of my weaknesses and picked up new techniques to practice and improve. I’m confident this will help me progress, and I will definitely come  back for another session.',
-    quoteTh: 'จากการเรียนคลาสนี้ ทำให้เข้าใจจุดบกพร่องของตัวเอง และได้เทคนิคใหม่มาฝึกซ้อมผมจะมาเรียนต่ออีกแน่นอนครับ',
+    quoteEn: 'Before training, my average solve time was around 20 seconds. After learning with Coach Jashan, I improved to 15–17 seconds! The coaching is easy to understand and helped me improve my F2L, look-ahead, and problem-solving approach in a much more structured way. Thank you for helping me level up my solving skills.',
+    quoteTh: 'ก่อนเรียนผมทำเวลาได้ประมาณ 20 วินาที แต่หลังจากเรียนกับพี่จาชั่น ตอนนี้ลดลงเหลือ 15–17 วินาทีแล้วครับ! การสอนเข้าใจง่าย และช่วยให้ผมพัฒนาทักษะ F2L, look-ahead และการคิดแก้แบบมีหลักการมากขึ้นครับ ขอบคุณพี่จาชั่นที่ช่วยอัปสกิลให้ผมครับ',
   },
   {
     name: 'Wasikrit R.',

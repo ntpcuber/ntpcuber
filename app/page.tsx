@@ -5,6 +5,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
+import testimonials from '@/lib/testimonials'
+import TestimonialsStack from '@/components/TestimonialsStack'
+
+const FB_PAGE_URL = 'https://www.facebook.com/NTPCuber'   // ← replace
+const FB_MESSENGER_URL = 'https://m.me/NTPCuber'          // ← replace
+
 // ─── Content (exact copy of index.js) ────────────────────────────────────────
 
 const content = {
@@ -26,7 +32,7 @@ const content = {
     coachingText: 'Improve your skill with advice from experienced cuber.',
     resourcesTitle: 'Free Resources',
     resourcesText: 'Algorithms and tips.',
-    contactTitle: 'Book a Session',
+    // contactTitle: 'Book a Session',
     coursesTitle: 'Online Course',
     coursesSubtitle: 'I am currently filming and structuring these modules. Stay tuned!',
     courseComingSoon: [
@@ -52,10 +58,23 @@ const content = {
     coachingCard2Desc: 'A 30-minute or 60-minute deep dive into your current solving habits, efficiency leaks, and personalized hardware setup.',
     coachingCard2F1: 'Live Solve Critiques',
     coachingCard2F2: 'Personalized Drill Plan',
-    contactSub: 'We will contact you within 24 hours.',
+    // contactSub: 'We will contact you within 24 hours.',
     algSheets: 'Algorithm Sheets',
     algSheetsDesc: 'My personal algorithm sets for multiple WCA events.',
     comingSoon: 'Coming Soon',
+    bootcampBannerText: 'Road to Sub-15 Bootcamp',
+    heroCtaPrimary: 'Book Coaching',
+    heroCtaSecondary: 'Free Resources',
+    stats: [
+      { value: 'Sub-7', label: 'First in Thailand' },
+      { value: '#9',    label: 'World rank, 3x3 single (peak)' },
+      { value: '10+',   label: 'Years of experience' },
+    ],
+    reviewsLabel: 'client reviews',
+    testimonialsTitle: 'What Clients Say',
+    contactTitle: 'Questions? Message me',
+    contactSub: 'The fastest way to reach me is through my Facebook page.',
+    contactBtn: 'Message on Facebook',
   },
   th: {
     heroSubtitle: 'เชี่ยวชาญรูบิกด้วยคอร์สเรียนที่เป็นระบบ แหล่งเรียนรู้ที่ทันสมัย และบริการโค้ชตัวต่อตัวเพื่อพัฒนาทักษะได้ตรงจุด',
@@ -75,7 +94,7 @@ const content = {
     coachingText: 'พัฒนาทักษะตามคำแนะนำของนักแข่งรูบิกมากประสบการณ์',
     resourcesTitle: 'แหล่งเรียนรู้ฟรี',
     resourcesText: 'สูตรการหมุนและแผนฝึก',
-    contactTitle: 'จองคลาสโค้ช',
+    // contactTitle: 'จองคลาสโค้ช',
     coursesTitle: 'คอร์สเรียนออนไลน์',
     coursesSubtitle: 'กำลังเตรียมเนื้อหาและถ่ายทำคอร์สเรียนคุณภาพสูง เร็วๆ นี้!',
     courseComingSoon: [
@@ -101,10 +120,23 @@ const content = {
     coachingCard2Desc: 'คลาส 30 นาทีหรือ 1 ชั่วโมง ในการวิเคราะห์สไตล์การแก้โจทย์ของคุณ ชี้หาจุดเด่นและพัฒนาประสิทธิภาพการแก้ รวมไปถึงให้คำแนะนำด้านการปรับแต่งรูบิก',
     coachingCard2F1: 'วิเคราะห์การแก้โจทย์สด ๆ ในคลาส',
     coachingCard2F2: 'จัดแผนการฝึกทักษะเฉพาะคุณ',
-    contactSub: 'เราจะติดต่อกลับภายใน 24 ชั่วโมง',
+    // contactSub: 'เราจะติดต่อกลับภายใน 24 ชั่วโมง',
     algSheets: 'ชีทสูตร',
     algSheetsDesc: 'แหล่งรวมสูตรสำหรับรูบิกหลากหลายประเภทตาม WCA',
     comingSoon: 'เร็วๆ นี้',
+    bootcampBannerText: 'โปรแกรม Road to Sub-15',
+    heroCtaPrimary: 'จองคลาสโค้ช',
+    heroCtaSecondary: 'แหล่งเรียนรู้ฟรี',
+    stats: [
+      { value: 'Sub-7', label: 'คนไทยคนแรก' },
+      { value: '#9',    label: 'อันดับโลก 3x3 Single (สูงสุด)' },
+      { value: '10+',   label: 'ปีประสบการณ์' },
+    ],
+    reviewsLabel: 'รีวิวจากผู้เรียน',
+    testimonialsTitle: 'รีวิวจากผู้เรียน',
+    contactTitle: 'มีคำถาม? ทักมาได้เลย',
+    contactSub: 'ช่องทางที่เร็วที่สุดคือเพจ Facebook ของผม',
+    contactBtn: 'ทักแชทผ่าน Facebook',
   },
 }
 
@@ -172,16 +204,47 @@ export default function HomePage() {
             />
           </div>
 
+          <Link
+            href="/bootcamp"
+            className="mb-8 inline-flex items-center gap-2 bg-indigo-600/10 dark:bg-indigo-600/15 border border-indigo-500/30 hover:border-indigo-500 rounded-full px-5 py-2 text-sm font-semibold text-indigo-600 dark:text-indigo-400 transition group"
+          >
+            🎯 {c.bootcampBannerText}
+            <ChevronRight />
+          </Link>
+
           <p className="text-neutral-600 dark:text-neutral-300 max-w-3xl text-xl md:text-3xl font-light leading-relaxed px-4 md:px-0">
             {c.heroSubtitle}
           </p>
 
-          <a
-            href="#courses"
-            className="mt-12 inline-block bg-indigo-600 hover:bg-indigo-500 transition rounded-full px-12 py-4 font-bold text-sm uppercase tracking-wider shadow-lg"
-          >
-            {c.viewCTA}
-          </a>
+          <div className="mt-12 flex flex-col sm:flex-row gap-4 items-center">
+            <Link
+              href="/coaching"
+              className="inline-block bg-indigo-600 hover:bg-indigo-500 transition rounded-full px-12 py-4 font-bold text-sm uppercase tracking-wider shadow-lg text-white"
+            >
+              {c.heroCtaPrimary}
+            </Link>
+            <Link
+              href="/resources"
+              className="inline-block border border-neutral-300 dark:border-neutral-700 hover:border-indigo-500 hover:text-indigo-500 transition rounded-full px-12 py-4 font-bold text-sm uppercase tracking-wider"
+            >
+              {c.heroCtaSecondary}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Stats strip ── */}
+      <section className="py-8 border-y border-neutral-200 dark:border-neutral-800/50 bg-neutral-50 dark:bg-neutral-900/30">
+        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          {[
+            ...c.stats,
+            { value: `${testimonials.length}★`, label: `${testimonials.length} ${c.reviewsLabel}` },
+          ].map((s, i) => (
+            <div key={i}>
+              <p className="text-3xl md:text-4xl font-extrabold text-indigo-600 dark:text-indigo-400">{s.value}</p>
+              <p className="text-xs uppercase tracking-widest text-neutral-500 mt-1">{s.label}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -314,6 +377,16 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Testimonials ── */}
+      <section id="testimonials" className="py-12 md:py-24 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-center text-neutral-900 dark:text-white mb-12">
+            {c.testimonialsTitle}
+          </h2>
+          <TestimonialsStack testimonials={testimonials} lang={lang} />
         </div>
       </section>
 
@@ -452,8 +525,22 @@ export default function HomePage() {
       {/* ── Contact ── */}
       <section id="contact" className="py-12 md:py-24 bg-neutral-100 dark:bg-neutral-900/50">
         <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold tracking-tight mb-4 text-neutral-900 dark:text-white">{c.contactTitle}</h2>
-          <p className="text-neutral-600 dark:text-neutral-400 text-lg">{c.contactSub}</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-neutral-900 dark:text-white">{c.contactTitle}</h2>
+          <p className="text-neutral-600 dark:text-neutral-400 text-lg mb-8">{c.contactSub}</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href={FB_MESSENGER_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-3 bg-[#1877f2] hover:bg-[#1468d6] transition rounded-full px-8 py-4 font-bold text-sm text-white shadow-lg"
+            >
+              <img src="https://cdn.simpleicons.org/facebook/ffffff" className="w-5 h-5" alt="" />
+              {c.contactBtn}
+            </a>
+            <Link href="/coaching#book" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-500 transition">
+              {lang === 'th' ? 'หรือจองคลาสออนไลน์ →' : 'Or book a session online →'}
+            </Link>
+          </div>
         </div>
       </section>
 
