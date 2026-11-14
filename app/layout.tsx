@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Script from 'next/script'
 import { Inter, Sarabun } from 'next/font/google'
-import AnnouncementPill from '@/components/AnnouncementPill'
+// import AnnouncementPill from '@/components/AnnouncementPill'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Navbar />
             <main>{children}</main>
             <Footer />
-            <AnnouncementPill />
+            {/* <AnnouncementPill /> */}
           </LanguageProvider>
         </ThemeProvider>
       </body>
