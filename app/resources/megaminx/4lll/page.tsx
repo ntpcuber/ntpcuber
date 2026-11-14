@@ -3,6 +3,7 @@
 import { useLang } from '@/context/LanguageContext'
 import fourLLLData, { type MegaCase, type MegaGroup, type MegaSection } from '@/lib/fourLLLData'
 import type { Metadata } from 'next'
+import AlgText from '@/components/AlgText'
 
 // ─── Card ─────────────────────────────────────────────────────────────────────
 
@@ -13,8 +14,7 @@ function AlgCard({ img, alg, alt, wide }: MegaCase) {
         <img src={img} alt="" className="w-48 h-48 object-contain" />
       </div>
       <div className={`${wide ? 'p-6' : 'p-4'} flex-grow flex flex-col justify-center text-center`}>
-        <p className="font-mono text-sm mb-1 text-neutral-900 dark:text-neutral-100">{alg}</p>
-        {alt && <p className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{alt}</p>}
+        <AlgText alg={alg} alt={alt} center />
       </div>
     </div>
   )

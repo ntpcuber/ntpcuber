@@ -3,6 +3,7 @@
 import { useState, useEffect, type ChangeEvent } from 'react';
 import zbllData from '@/lib/zbllData';
 import { PNG, Type, PNGVisualizerOptions } from "sr-puzzlegen";
+import AlgText from '@/components/AlgText';
 
 // Sanitize IDs: replace spaces/special chars so querySelector won't break
 const sanitizeId = (str: string) => str.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-_]/g, '');
@@ -10,7 +11,6 @@ const sanitizeId = (str: string) => str.replace(/\s+/g, '-').replace(/[^a-zA-Z0-
 export default function ZBLLClient1() {
   const [mainFilter, setMainFilter] = useState('All');
   const [subFilter, setSubFilter] = useState('All');
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const mainOptions = ['All', 'T set', 'U set', 'L set', 'H set', 'Pi set'];
 
@@ -82,18 +82,6 @@ export default function ZBLLClient1() {
 
   const getCubeUrl = (alg: string) =>
     `https://visualcube.api.cubing.net/visualcube.php?fmt=svg&pzl=3&view=plan&stage=ll&bg=transparent&case=${encodeURIComponent(alg)}`;
-
-  const copyToClipboard = async (text: string, key: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedKey(key);
-      window.setTimeout(() => {
-        setCopiedKey((current) => (current === key ? null : current));
-      }, 1500);
-    } catch {
-      setCopiedKey(null);
-    }
-  };
 
   return (
     <div className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 font-sans min-h-screen relative transition-colors">
@@ -183,8 +171,6 @@ export default function ZBLLClient1() {
                             <table className="w-max border-collapse overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-lg dark:border-neutral-800 dark:bg-neutral-900">
                               <tbody>
                                 {subset.cases.map((c, i) => {
-                                  const mainCopyKey = `${subsetLabel}-${i}-main`;
-                                  const altCopyKey = `${subsetLabel}-${i}-alt`;
                                   return (
                                     <tr key={`${subset.name}-${i}`} className="border-b border-neutral-200 last:border-b-0 dark:border-neutral-800">
                                       <td className="w-[152px] min-w-[152px] border-r border-neutral-200 bg-neutral-50 p-4 align-middle dark:border-neutral-800 dark:bg-neutral-950/40">
@@ -196,35 +182,12 @@ export default function ZBLLClient1() {
                                         </div>
                                       </td>
                                       <td className="p-4 align-middle whitespace-nowrap">
-                                        <div className="flex flex-col gap-4">
-                                          <div className="flex items-center gap-3">
-                                            <p className="font-mono text-indigo-600 font-medium text-[14px] md:text-[15px] leading-relaxed dark:text-indigo-400">
-                                              {c.alg}
-                                            </p>
-                                            <button
-                                              type="button"
-                                              onClick={() => copyToClipboard(c.alg, mainCopyKey)}
-                                              className="shrink-0 rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-700 hover:bg-neutral-200 transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
-                                            >
-                                              {copiedKey === mainCopyKey ? 'Copied' : 'Copy'}
-                                            </button>
-                                          </div>
-                                          {c.alt && (
-                                            <div>
-                                              <p className="text-[11px] uppercase tracking-wider text-neutral-500 mb-1 dark:text-neutral-500">Alternate</p>
-                                              <div className="flex items-center gap-3">
-                                                <p className="font-mono text-neutral-600 text-sm leading-relaxed dark:text-neutral-400">{c.alt}</p>
-                                                <button
-                                                  type="button"
-                                                  onClick={() => copyToClipboard(c.alt!, altCopyKey)}
-                                                  className="shrink-0 rounded-md border border-neutral-300 bg-neutral-100 px-2.5 py-1 text-xs font-semibold text-neutral-700 hover:bg-neutral-200 transition-colors dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
-                                                >
-                                                  {copiedKey === altCopyKey ? 'Copied' : 'Copy'}
-                                                </button>
-                                              </div>
-                                            </div>
-                                          )}
-                                        </div>
+                                        <AlgText
+                                          alg={c.alg}
+                                          alt={c.alt}
+                                          nowrap
+                                          mainClass="text-indigo-600 font-medium dark:text-indigo-400"
+                                        />
                                       </td>
                                     </tr>
                                   );

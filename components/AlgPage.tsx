@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import type { AlgSet } from '@/lib/algTypes'
+import AlgText from '@/components/AlgText'
 
 // ─── Algorithm card ───────────────────────────────────────────────────────────
 
@@ -12,8 +13,7 @@ function AlgCard({ img, alg, alt }: { img: string; alg: string; alt?: string }) 
         <img src={img} alt="" className="w-48 h-48 object-contain" />
       </div>
       <div className="p-4">
-        <p className="font-mono text-sm mb-1">{alg}</p>
-        {alt && <p className="font-mono text-xs text-neutral-500 dark:text-neutral-400">{alt}</p>}
+        <AlgText alg={alg} alt={alt} />
       </div>
     </div>
   )

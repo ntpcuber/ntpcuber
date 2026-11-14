@@ -9,15 +9,17 @@ const content = {
     heroTitle: 'My Cubing Resources',
     heroDesc: 'Algorithm sets I use, organized by event and difficulty, designed for efficient practice.',
     section2x2: '2×2 Cube: EG Method',
-    section3x3: '3×3 Cube (Coming Soon)',
+    section3x3: '3×3 Cube',
     sectionMega: 'Megaminx: 4 Look Last Layer',
+    comingSoon: 'Coming Soon',
   },
   th: {
     heroTitle: 'คลังสูตรรูบิก',
     heroDesc: 'รวมเซตสูตรที่ผมใช้ แบ่งตามประเภทและความยาก เพื่อการฝึกซ้อมที่มีประสิทธิภาพ',
     section2x2: 'รูบิก 2×2: วิธี EG',
-    section3x3: 'รูบิก 3×3 (เร็วๆ นี้)',
+    section3x3: 'รูบิก 3×3',
     sectionMega: 'Megaminx: แก้แถวสุดท้ายด้วย 4 ขั้นตอน',
+    comingSoon: 'เร็ว ๆ นี้',
   },
 }
 
@@ -25,6 +27,12 @@ const sets2x2 = [
   { slug: 'cll', label: 'CLL', desc: 'Last layer algorithm with solved first layer.', img: '/image/face-cll.png' },
   { slug: 'eg1', label: 'EG-1', desc: 'Last layer algorithm with adjacently swapped solved face.', img: '/image/face-eg1.png' },
   { slug: 'eg2', label: 'EG-2/Anti-CLL', desc: 'Last layer algorithm with diagonally swapped solved face.', img: '/image/face-eg2.png' },
+]
+
+const sets3x3 = [
+  { slug: 'zbll', label: 'ZBLL', desc: 'Full last layer algorithms for advanced speedcubing.', live: true, img: '/image/zb_card.png' },
+  { slug: 'oll',  label: 'OLL',  desc: 'Orient the last layer in one step.', live: false },
+  { slug: 'pll',  label: 'PLL',  desc: 'Permute the last layer.', live: false },
 ]
 
 const mega = [
@@ -73,16 +81,28 @@ export default function ResourcesPage() {
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section3x3}</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {['OLL', 'PLL', 'ZBLL'].map(label => (
-              <Link key={label} href={`/resources/3x3/${label.toLowerCase()}`}>
-                <div className="bg-white dark:bg-neutral-950 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
-                  <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{label}</h3>
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                    {label === 'OLL' ? 'Orient the last layer in one step.' : label === 'PLL' ? 'Permute the last layer.' : 'Full last layer algorithms for advanced speedcubing.'}
-                  </p>
+            {sets3x3.map(s =>
+              s.live ? (
+                <Link key={s.slug} href={`/resources/3x3/${s.slug}`} className="block h-full">
+                  <div className="h-full bg-white dark:bg-neutral-950 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
+                    <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
+                    {s.img && (<img src={s.img} alt={s.label} className="w-full max-w-[180px] h-auto object-contain mx-auto mt-4" />)}
+                  </div>
+                </Link>
+              ) : (
+                <div
+                  key={s.slug}
+                  className="relative h-full rounded-xl p-6 border border-dashed border-neutral-300 dark:border-neutral-800 bg-white/50 dark:bg-neutral-950/50"
+                >
+                  <span className="absolute top-4 right-4 px-2 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md border border-purple-200 bg-purple-100 text-purple-700 dark:border-purple-500/30 dark:bg-purple-600/20 dark:text-purple-400">
+                    {c.comingSoon}
+                  </span>
+                  <h3 className="text-xl font-semibold mb-2 text-neutral-500 dark:text-neutral-400">{s.label}</h3>
+                  <p className="text-neutral-500 dark:text-neutral-500 text-sm">{s.desc}</p>
                 </div>
-              </Link>
-            ))}
+              )
+            )}
           </div>
         </div>
       </section>
