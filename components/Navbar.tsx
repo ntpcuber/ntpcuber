@@ -1,11 +1,34 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { useLang } from '@/context/LanguageContext'
 import { supabase, signOut } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import { useTheme } from '@/context/ThemeContext'
+
+const RESOURCE_GROUPS = [
+  {
+    label: '2x2',
+    links: [
+      { href: '/resources/2x2/cll', label: 'CLL' },
+      { href: '/resources/2x2/eg1', label: 'EG-1' },
+      { href: '/resources/2x2/eg2', label: 'EG-2' },
+    ],
+  },
+  {
+    label: '3x3',
+    links: [{ href: '/resources/3x3/zbll', label: 'ZBLL' }],
+  },
+  {
+    label: 'Megaminx',
+    links: ['eo', 'co', 'ep', 'cp'].map(s => ({
+      href: `/resources/megaminx/4lll#${s}`,
+      label: `4LLL – ${s.toUpperCase()}`,
+    })),
+  },
+]
 
 export default function Navbar() {
   const { lang, toggleLang } = useLang()
@@ -14,6 +37,38 @@ export default function Navbar() {
   const [resOpen, setResOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
   const [avatarMenuOpen, setAvatarMenuOpen] = useState(false)
+  const [mobileResOpen, setMobileResOpen] = useState(false)
+  const resRef = useRef<HTMLDivElement>(null)
+  const resBtnRef = useRef<HTMLButtonElement>(null)
+  const pathname = usePathname()
+
+  function closeAll() {
+    setResOpen(false)
+    setMobileOpen(false)
+    setMobileResOpen(false)
+  }
+
+  // Close menus when the page changes
+  useEffect(() => { closeAll() }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Close the desktop menu on outside click / Escape
+  useEffect(() => {
+    if (!resOpen) return
+    function onDown(e: MouseEvent | TouchEvent) {
+      if (resRef.current && !resRef.current.contains(e.target as Node)) setResOpen(false)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') { setResOpen(false); resBtnRef.current?.focus() }
+    }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('touchstart', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('touchstart', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [resOpen])
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user))
@@ -43,7 +98,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center shrink-0 text-neutral-900 dark:text-white">
           <svg
             viewBox="0 0 460 130"
-            className="h-9 w-[200px] md:h-11 md:w-[155px]"
+            className="h-9 w-auto md:h-11"
             role="img"
             aria-label="NTP Cuber Academy"
           >
@@ -87,46 +142,71 @@ export default function Navbar() {
           </Link>
 
           {/* Resources dropdown */}
-          <div className="relative group flex items-center">
-            <Link href="/resources" className="text-neutral-600 dark:text-neutral-400 group-hover:text-indigo-400 transition-colors flex items-center gap-1">
+          <div
+            ref={resRef}
+            className="relative flex items-center gap-1"
+            onPointerEnter={e => { if (e.pointerType === 'mouse') setResOpen(true) }}
+            onPointerLeave={e => { if (e.pointerType === 'mouse') setResOpen(false) }}
+            onBlur={e => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setResOpen(false)
+            }}
+          >
+            <Link
+              href="/resources"
+              onClick={closeAll}
+              className={`hover:text-indigo-400 transition-colors ${resOpen ? 'text-indigo-400' : 'text-neutral-600 dark:text-neutral-400'}`}
+            >
               {t('Resources', 'แหล่งเรียนรู้')}
-              <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            </Link>
+
+            <button
+              ref={resBtnRef}
+              type="button"
+              aria-expanded={resOpen}
+              aria-controls="resources-menu"
+              aria-label={t('Toggle resources menu', 'เปิดเมนูแหล่งเรียนรู้')}
+              onClick={e => {
+                // A mouse click arrives while hover has already opened the menu, so keep it open.
+                const pt = (e.nativeEvent as PointerEvent).pointerType
+                if (pt === 'mouse') setResOpen(true)
+                else setResOpen(o => !o)
+              }}
+              className="p-1 text-neutral-600 dark:text-neutral-400 hover:text-indigo-400 transition-colors"
+            >
+              <svg
+                className={`w-4 h-4 transition-transform ${resOpen ? 'rotate-180' : ''}`}
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
-            </Link>
-            <div className="absolute top-full left-0 hidden group-hover:block pt-2 min-w-[200px] z-50">
-              <div className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-2xl py-2">
-                <div className="relative group/sub">
-                  <button className="w-full flex items-center justify-between px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">
-                    <span>2x2</span>
-                    <svg className="w-4 h-4 -rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </button>
-                  <div className="absolute left-full top-0 hidden group-hover/sub:block pl-1 min-w-[180px] z-50">
-                    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-2xl py-2">
-                      <Link href="/resources/2x2/cll" className="block px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">CLL</Link>
-                      <Link href="/resources/2x2/eg1" className="block px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">EG-1</Link>
-                      <Link href="/resources/2x2/eg2" className="block px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">EG-2</Link>
-                    </div>
-                  </div>
-                </div>
-                <Link href="/resources#3x3" className="block px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">3x3</Link>
-                <div className="relative group/sub">
-                  <button className="w-full flex items-center justify-between px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm">
-                    <span>Megaminx</span>
-                    <svg className="w-4 h-4 -rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </button>
-                  <div className="absolute left-full top-0 hidden group-hover/sub:block pl-1 min-w-[180px] z-50">
-                    <div className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-2xl py-2">
-                      {['eo','co','ep','cp'].map(s => (
-                        <Link key={s} href={`/resources/megaminx/4lll#${s}`} className="block px-5 py-3 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm uppercase">
-                          4LLL – {s.toUpperCase()}
+            </button>
+
+            {resOpen && (
+              <div id="resources-menu" className="absolute top-full left-0 pt-2 min-w-[240px] z-50">
+                <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-2xl py-2">
+                  {RESOURCE_GROUPS.map((g, gi) => (
+                    <div
+                      key={g.label}
+                      className={gi > 0 ? 'mt-2 pt-2 border-t border-neutral-200 dark:border-neutral-800' : ''}
+                    >
+                      <p className="px-5 pt-1 pb-1 text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                        {g.label}
+                      </p>
+                      {g.links.map(l => (
+                        <Link
+                          key={l.href}
+                          href={l.href}
+                          onClick={closeAll}
+                          className="block px-5 py-2.5 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-indigo-400 transition-colors text-sm"
+                        >
+                          {l.label}
                         </Link>
                       ))}
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </nav>
 
@@ -216,7 +296,7 @@ export default function Navbar() {
           </button>
 
           {/* Hamburger */}
-          <button onClick={() => setMobileOpen(o => !o)} className="md:hidden p-2 text-neutral-600 dark:text-neutral-400 hover:text-white">
+          <button onClick={() => setMobileOpen(o => !o)} className="md:hidden p-2 text-neutral-600 dark:text-neutral-400 hover:text-indigo-400">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
             </svg>
@@ -232,12 +312,52 @@ export default function Navbar() {
               { href: '/', label: t('Home', 'หน้าแรก') },
               { href: '/courses', label: t('Courses', 'คอร์สเรียน') },
               { href: '/coaching', label: t('Coaching', 'เรียนตัวต่อตัว') },
-              { href: '/resources', label: t('Resources', 'แหล่งเรียนรู้') },
             ].map(item => (
               <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className="text-neutral-600 dark:text-neutral-400 py-2 border-b border-neutral-200/50 dark:border-neutral-800/50 hover:text-indigo-400 transition-colors">
                 {item.label}
               </Link>
             ))}
+            <div className="border-b border-neutral-200/50 dark:border-neutral-800/50">
+              <button
+                type="button"
+                onClick={() => setMobileResOpen(o => !o)}
+                aria-expanded={mobileResOpen}
+                className="w-full flex items-center justify-between py-2 text-neutral-600 dark:text-neutral-400 hover:text-indigo-400 transition-colors"
+              >
+                <span>{t('Resources', 'แหล่งเรียนรู้')}</span>
+                <svg
+                  className={`w-4 h-4 transition-transform ${mobileResOpen ? 'rotate-180' : ''}`}
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {mobileResOpen && (
+                <div className="pb-3 pl-3 space-y-3">
+                  <Link href="/resources" onClick={closeAll} className="block text-sm font-semibold text-indigo-500">
+                    {t('All resources', 'ดูทั้งหมด')}
+                  </Link>
+                  {RESOURCE_GROUPS.map(g => (
+                    <div key={g.label}>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-1">{g.label}</p>
+                      <div className="flex flex-col">
+                        {g.links.map(l => (
+                          <Link
+                            key={l.href}
+                            href={l.href}
+                            onClick={closeAll}
+                            className="py-1.5 text-sm text-neutral-600 dark:text-neutral-400 hover:text-indigo-400 transition-colors"
+                          >
+                            {l.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             {!user ? (
               <Link href="/login" onClick={() => setMobileOpen(false)} className="text-neutral-600 dark:text-neutral-400 py-2">Login / Sign Up</Link>
             ) : (

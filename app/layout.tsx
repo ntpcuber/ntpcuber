@@ -5,6 +5,21 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Script from 'next/script'
+import { Inter, Sarabun } from 'next/font/google'
+import AnnouncementPill from '@/components/AnnouncementPill'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const sarabun = Sarabun({
+  subsets: ['thai', 'latin'],
+  weight: ['300', '400', '600', '700'],
+  variable: '--font-sarabun',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "NTP Cuber | Rubik's Cube Courses & Coaching",
@@ -18,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sarabun.variable}`}>
       <head>
         {/* Inline script — runs before paint, avoids flash */}
         <Script
@@ -34,20 +49,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             `,
           }}
         />
-        {/* Google Fonts — loaded via <link> for compatibility */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Sarabun:wght@300;400;600;700&display=swap"
-          rel="stylesheet"
-        />
       </head>
-      <body className="bg-white text-neutral-900 antialiased transition-colors dark:bg-neutral-950 dark:text-neutral-100" style={{ fontFamily: "'Inter', 'Sarabun', ui-sans-serif, system-ui, sans-serif" }}>
+      <body className="font-sans bg-white text-neutral-900 antialiased transition-colors dark:bg-neutral-950 dark:text-neutral-100">
         <ThemeProvider>
           <LanguageProvider>
             <Navbar />
             <main>{children}</main>
             <Footer />
+            <AnnouncementPill />
           </LanguageProvider>
         </ThemeProvider>
       </body>

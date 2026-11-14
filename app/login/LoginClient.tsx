@@ -132,7 +132,7 @@ export default function LoginClient() {
                 </button>
               </div>
               <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm text-neutral-900 dark:text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
+                className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
                 {loading ? 'Please wait…' : 'Sign In'}
               </button>
             </form>
@@ -145,7 +145,7 @@ export default function LoginClient() {
               <input name="email" type="email" required placeholder="Email address" className={inputCls} />
               <input name="password" type="password" required minLength={6} placeholder="Password (min 6 chars)" className={inputCls} />
               <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm text-neutral-900 dark:text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
+                className="w-full py-3.5 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition active:scale-95 disabled:opacity-60">
                 {loading ? 'Please wait…' : 'Create Account'}
               </button>
             </form>
