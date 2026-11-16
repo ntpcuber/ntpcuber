@@ -3,13 +3,13 @@
 import { useLang } from '@/context/LanguageContext'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import PageGlow from '@/components/PageGlow'
+import { FB_MESSENGER_URL } from '@/lib/contact'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
 
 import testimonials from '@/lib/testimonials'
 import TestimonialsStack from '@/components/TestimonialsStack'
 
-const FB_PAGE_URL = 'https://www.facebook.com/NTPCuber'   // ← replace
-const FB_MESSENGER_URL = 'https://m.me/NTPCuber'          // ← replace
 
 // ─── Content (exact copy of index.js) ────────────────────────────────────────
 
@@ -140,22 +140,6 @@ const content = {
   },
 }
 
-// ─── Scroll reveal hook ───────────────────────────────────────────────────────
-
-function useScrollReveal() {
-  const ref = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active') }),
-      { threshold: 0.1 }
-    )
-    const elements = ref.current?.querySelectorAll('.reveal') ?? []
-    elements.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
-  })
-  return ref
-}
-
 // ─── Chevron right icon ───────────────────────────────────────────────────────
 
 function ChevronRight() {
@@ -185,7 +169,7 @@ export default function HomePage() {
     <div ref={pageRef} className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 tracking-tight transition-colors">
 
       {/* Global top gradient */}
-      <div className="absolute inset-x-0 top-[-10rem] h-[30rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
+      <PageGlow />
 
       {/* ── Hero ── */}
       <section className="min-h-[90vh] flex items-center justify-center pt-24 md:pt-16">

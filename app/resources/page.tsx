@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { useLang } from '@/context/LanguageContext'
 import type { Metadata } from 'next'
 
@@ -45,10 +46,10 @@ const mega = [
 export default function ResourcesPage() {
   const { lang } = useLang()
   const c = content[lang]
+  const revealRef = useScrollReveal()
 
   return (
-    <>
-      <div className="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
+    <div ref={revealRef}>
 
       {/* Hero */}
       <section className="pt-32 pb-20">
@@ -61,10 +62,10 @@ export default function ResourcesPage() {
       {/* 2x2 */}
       <section id="2x2" className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section2x2}</h2>
+          <h2 className="reveal text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section2x2}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {sets2x2.map(s => (
-              <Link key={s.slug} href={`/resources/2x2/${s.slug}`}>
+            {sets2x2.map((s, i) => (
+              <Link key={s.slug} href={`/resources/2x2/${s.slug}`} className="block reveal" style={{ transitionDelay: `${i * 80}ms` }}>
                 <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
                   <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
                   <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
@@ -79,11 +80,11 @@ export default function ResourcesPage() {
       {/* 3x3 */}
       <section id="3x3" className="py-20 bg-neutral-100 dark:bg-neutral-900">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section3x3}</h2>
+          <h2 className="reveal text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.section3x3}</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {sets3x3.map(s =>
+            {sets3x3.map((s, i) =>
               s.live ? (
-                <Link key={s.slug} href={`/resources/3x3/${s.slug}`} className="block h-full">
+                <Link key={s.slug} href={`/resources/3x3/${s.slug}`} className="block h-full reveal" style={{ transitionDelay: `${i * 80}ms` }}>
                   <div className="h-full bg-white dark:bg-neutral-950 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
                     <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
                     <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
@@ -93,7 +94,8 @@ export default function ResourcesPage() {
               ) : (
                 <div
                   key={s.slug}
-                  className="relative h-full rounded-xl p-6 border border-dashed border-neutral-300 dark:border-neutral-800 bg-white/50 dark:bg-neutral-950/50"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal relative h-full rounded-xl p-6 border border-dashed border-neutral-300 dark:border-neutral-800 bg-white/50 dark:bg-neutral-950/50"
                 >
                   <span className="absolute top-4 right-4 px-2 py-1 text-[10px] font-bold uppercase tracking-widest rounded-md border border-purple-200 bg-purple-100 text-purple-700 dark:border-purple-500/30 dark:bg-purple-600/20 dark:text-purple-400">
                     {c.comingSoon}
@@ -110,10 +112,10 @@ export default function ResourcesPage() {
       {/* Megaminx */}
       <section id="megaminx" className="py-20">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.sectionMega}</h2>
+          <h2 className="reveal text-3xl font-semibold mb-10 text-neutral-900 dark:text-white">{c.sectionMega}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {mega.map(s => (
-              <Link key={s.slug} href={`/resources/megaminx/4lll#${s.slug}`}>
+            {mega.map((s, i) => (
+              <Link key={s.slug} href={`/resources/megaminx/4lll#${s.slug}`} className="block reveal" style={{ transitionDelay: `${i * 80}ms` }}>
                 <div className="bg-white dark:bg-neutral-900 rounded-xl p-6 border border-neutral-200 dark:border-neutral-800 hover:border-indigo-500 transition">
                   <h3 className="text-xl font-semibold mb-2 text-neutral-900 dark:text-white">{s.label}</h3>
                   <p className="text-neutral-600 dark:text-neutral-400 text-sm">{s.desc}</p>
@@ -124,6 +126,6 @@ export default function ResourcesPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

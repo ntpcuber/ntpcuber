@@ -7,6 +7,8 @@ import Link from 'next/link'
 import testimonials from '@/lib/testimonials'
 import TestimonialsStack from '@/components/TestimonialsStack'
 import YouTubeLite from '@/components/YouTubeLite'
+import { useScrollReveal } from '@/hooks/useScrollReveal'
+import { FB_MESSENGER_URL } from '@/lib/contact'
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -49,6 +51,7 @@ interface Service {
   id?: string                           // only needed on the 1-hour card
   group: 'critique' | 'live' | 'pack'   // which tab the card belongs to
   popular?: boolean                     // shows the "Most Popular" badge
+  publishesVideo?: boolean              // critique video is posted publicly on YouTube
   variantOf?: string                    // return-client rate points at the card it belongs to
   name: string
   price: string
@@ -71,6 +74,10 @@ const translations: Record<string, {
   sampleTitle: string; sampleDesc: string; sampleBullets: string[]; sampleVideoTitle: string
   successTitle: string; successBody: string; successAgain: string; successDashboard: string
   errSave: string; errFileTooLarge: string; errPickDay: string; errSameTime: string
+  stepService: string; stepDetails: string; stepPayment: string; btnBack: string; btnNext: string
+  howTitle: string; howSteps: { title: string; desc: string }[]
+  faqTitle: string; faqItems: { q: string; a: string }[]; faqMore: string; faqMoreLink: string
+  youtubeNote: string
 }> = {
   en: {
     title: 'Elite Speedcubing Coaching',
@@ -112,6 +119,27 @@ const translations: Record<string, {
     errFileTooLarge: 'File is too large! Please upload an image smaller than 2MB.',
     errPickDay: 'Please select at least one available day.',
     errSameTime: 'Primary and secondary time cannot be the same.',
+    stepService: 'Service', stepDetails: 'Details', stepPayment: 'Payment',
+    btnBack: 'Back', btnNext: 'Next',
+    howTitle: 'How it works',
+    howSteps: [
+      { title: 'Choose a service', desc: 'Pick a critique, a live session or the Mastery Pack, then fill in the booking form.' },
+      { title: 'Pay', desc: 'Scan the PromptPay QR and upload your receipt.' },
+      { title: 'Get confirmed', desc: "We'll confirm your booking by email within 24 hours." },
+      { title: 'Learn', desc: 'Join your live session on Google Meet with your camera on, or receive your critique by email: written in 5 days, video in about 7.' },
+    ],
+    faqTitle: 'FAQ',
+    faqItems: [
+      { q: 'What happens after I book?', a: "Once you've paid and uploaded your receipt, we'll confirm your booking by email within 24 hours. If you're signed in, you can also follow its status on your dashboard." },
+      { q: 'How do live sessions work?', a: 'Live sessions are held on Google Meet. You need to be able to turn your camera on during the session.' },
+      { q: 'Can I reschedule?', a: 'Yes. Please ask to reschedule at least 24 hours before your session. If something comes up on either side, we can move it to another time.' },
+      { q: 'How long does a critique take?', a: 'A written critique is delivered within 5 days, and a video critique in about 7 days. Both are sent back by email.' },
+      { q: 'Does the Mastery Pack expire?', a: "No. The pack is built around a 4-week plan, but there's no deadline. If something comes up on either side, we can reschedule." },
+      { q: 'Who are the sessions for?', a: 'Anyone who wants to improve their cubing and get advice that helps boost their progress. Sessions are usually in Thai, and we can coach in English too.' },
+    ],
+    faqMore: 'Still have a question?',
+    faqMoreLink: 'Message us on Facebook →',
+    youtubeNote: 'Please note: the critique video will be published publicly on our YouTube channel.',
     services: [
       {
         group: 'critique',
@@ -125,7 +153,7 @@ const translations: Record<string, {
         ],
       },
       {
-        group: 'critique', popular: true,
+        group: 'critique', popular: true, publishesVideo: true,
         name: 'Video Critique (Video Analysis)',
         price: '฿360', amount: 360,
         desc: [
@@ -223,6 +251,27 @@ const translations: Record<string, {
     errFileTooLarge: 'ไฟล์มีขนาดใหญ่เกินไป! กรุณาแนบรูปภาพที่มีขนาดไม่เกิน 2MB',
     errPickDay: 'กรุณาเลือกวันที่สะดวกอย่างน้อย 1 วัน',
     errSameTime: 'เวลาหลักและเวลาสำรองต้องไม่ซ้ำกัน',
+    stepService: 'บริการ', stepDetails: 'รายละเอียด', stepPayment: 'ชำระเงิน',
+    btnBack: 'ย้อนกลับ', btnNext: 'ถัดไป',
+    howTitle: 'ขั้นตอนการใช้บริการ',
+    howSteps: [
+      { title: 'เลือกบริการ', desc: 'เลือกวิเคราะห์การแก้ สอนสด หรือแพ็กเกจเชี่ยวชาญ แล้วกรอกแบบฟอร์มจอง' },
+      { title: 'ชำระเงิน', desc: 'สแกน QR พร้อมเพย์ และแนบหลักฐานการโอน' },
+      { title: 'รับการยืนยัน', desc: 'เราจะยืนยันการจองทางอีเมลภายใน 24 ชั่วโมง' },
+      { title: 'เริ่มเรียน', desc: 'เรียนสดผ่าน Google Meet โดยเปิดกล้อง หรือรับผลวิเคราะห์ทางอีเมล แบบเขียนภายใน 5 วัน แบบวิดีโอประมาณ 7 วัน' },
+    ],
+    faqTitle: 'คำถามที่พบบ่อย',
+    faqItems: [
+      { q: 'หลังจองแล้วเกิดอะไรขึ้นต่อ?', a: 'เมื่อชำระเงินและแนบหลักฐานแล้ว เราจะยืนยันการจองทางอีเมลภายใน 24 ชั่วโมง หากเข้าสู่ระบบไว้ คุณสามารถดูสถานะการจองได้ที่หน้าแดชบอร์ดด้วย' },
+      { q: 'คลาสสอนสดทำอย่างไร?', a: 'คลาสสอนสดจัดผ่าน Google Meet ผู้เรียนต้องสามารถเปิดกล้องได้ระหว่างคลาส' },
+      { q: 'เลื่อนเวลาเรียนได้ไหม?', a: 'ได้ครับ กรุณาแจ้งขอเลื่อนล่วงหน้าอย่างน้อย 24 ชั่วโมงก่อนเวลาเรียน และหากมีเหตุจำเป็นไม่ว่าฝ่ายใด เราสามารถนัดเวลาใหม่ได้' },
+      { q: 'วิเคราะห์การแก้ใช้เวลานานแค่ไหน?', a: 'แบบเขียนใช้เวลาไม่เกิน 5 วัน แบบวิดีโอประมาณ 7 วัน ส่งกลับทางอีเมลทั้งสองแบบ' },
+      { q: 'แพ็กเกจเชี่ยวชาญมีวันหมดอายุไหม?', a: 'ไม่มีครับ แพ็กเกจออกแบบเป็นแผน 4 สัปดาห์ แต่ไม่มีกำหนดหมดอายุ หากมีเหตุจำเป็นไม่ว่าฝ่ายใด สามารถเลื่อนนัดได้' },
+      { q: 'เหมาะกับใคร?', a: 'เหมาะกับทุกคนที่อยากพัฒนาการแก้รูบิกและต้องการคำแนะนำที่ช่วยให้ก้าวหน้าเร็วขึ้น โดยปกติสอนเป็นภาษาไทย และเราสามารถสอนเป็นภาษาอังกฤษได้เช่นกัน' },
+    ],
+    faqMore: 'ยังมีคำถามอีกไหม?',
+    faqMoreLink: 'ทักแชทหาเราทาง Facebook →',
+    youtubeNote: 'โปรดทราบ: วิดีโอวิเคราะห์จะถูกเผยแพร่เป็นสาธารณะบนช่อง YouTube ของเรา',
     services: [
       {
         group: 'critique',
@@ -236,7 +285,7 @@ const translations: Record<string, {
         ],
       },
       {
-        group: 'critique', popular: true,
+        group: 'critique', popular: true, publishesVideo: true,
         name: 'ตรวจการแก้แบบวิดีโอ (Video Analysis)',
         price: '฿360', amount: 360,
         desc: [
@@ -348,6 +397,26 @@ async function toBase64(file: File): Promise<string> {
   })
 }
 
+// ─── Collapsible row: title + / − , tap to open and tap again to close ──────
+
+function Disclosure({ id, title, children }: { id?: string; title: string; children: React.ReactNode }) {
+  return (
+    <details
+      id={id}
+      className="group rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm dark:shadow-none scroll-mt-28"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-2xl px-6 py-5 text-lg font-bold text-neutral-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors [&::-webkit-details-marker]:hidden">
+        <span>{title}</span>
+        <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-indigo-600 dark:text-indigo-400">
+          <span className="group-open:hidden">+</span>
+          <span className="hidden group-open:inline">−</span>
+        </span>
+      </summary>
+      <div className="px-6 pb-6">{children}</div>
+    </details>
+  )
+}
+
 // ─── Progress bar ─────────────────────────────────────────────────────────────
 
 type ProgressMode = 1 | 2 | 3
@@ -355,20 +424,21 @@ type ProgressMode = 1 | 2 | 3
 interface ProgressBarProps {
   mode: ProgressMode
   currentStep: number
+  labels: { service: string; details: string; payment: string }
 }
 
-function ProgressBar({ mode, currentStep }: ProgressBarProps) {
+function ProgressBar({ mode, currentStep, labels: l }: ProgressBarProps) {
   const stepsMap = mode === 1 ? [1] : mode === 2 ? [1, 3] : [1, 2, 3]
-  const labels   = mode === 1 ? ['Service'] : mode === 2 ? ['Service', 'Payment'] : ['Service', 'Details', 'Payment']
+  const labels   = mode === 1 ? [l.service] : mode === 2 ? [l.service, l.payment] : [l.service, l.details, l.payment]
   const cols     = mode === 1 ? 'grid-cols-1' : mode === 2 ? 'grid-cols-2' : 'grid-cols-3'
 
   return (
     <div className="mb-12">
       <div className={`grid ${cols} gap-3`}>
         {stepsMap.map((stepNum) => {
-          let color = 'bg-neutral-800'
-          if (stepNum < currentStep) color = 'bg-blue-500/60'
-          if (stepNum === currentStep) color = 'bg-blue-600'
+          let color = 'bg-neutral-200 dark:bg-neutral-800'
+          if (stepNum < currentStep) color = 'bg-indigo-500/60'
+          if (stepNum === currentStep) color = 'bg-indigo-600'
           return (
             <div key={stepNum} className={`h-2 rounded-full transition-colors duration-300 ${color}`} />
           )
@@ -391,6 +461,7 @@ export default function CoachingPage() {
   const { lang } = useLang()
   const trans = translations[lang]
   const c = cnt[lang]
+  const revealRef = useScrollReveal()
 
   // Auth state
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -430,6 +501,7 @@ export default function CoachingPage() {
 
   // Derived
   const isCritique = selectedService.toLowerCase().includes('analysis')
+  const publishesVideo = trans.services.find(s => s.name === selectedService)?.publishesVideo === true
   const progressMode: ProgressMode = !selectedService ? 1 : isCritique ? 2 : 3
 
   // Time options
@@ -575,16 +647,16 @@ export default function CoachingPage() {
     }
   }
 
-  const inputCls = 'w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-4 rounded-xl focus:border-blue-500 outline-none text-neutral-900 dark:text-white placeholder-neutral-500 transition'
+  const inputCls = 'w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-4 rounded-xl focus:border-indigo-500 outline-none text-neutral-900 dark:text-white placeholder-neutral-500 transition'
 
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <div className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 selection:bg-blue-500/30 transition-colors">
+    <div ref={revealRef} className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 selection:bg-indigo-500/30 transition-colors">
 
       {/* ── Hero ── */}
       <section className="relative pt-32 pb-24 px-6 text-center">
-        <div className="absolute inset-x-0 top-0 h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10" />
+        <div className="absolute inset-x-0 top-0 h-96 bg-indigo-600/10 blur-[120px] rounded-full -z-10" />
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-neutral-900 dark:text-white">{trans.title}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">{trans.subtitle}</p>
@@ -595,8 +667,8 @@ export default function CoachingPage() {
       <section id="why-me" className="py-24 px-6 bg-neutral-100 dark:bg-neutral-900/30">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-blue-600/20 blur-2xl rounded-full -z-10" />
+            <div className="relative reveal">
+              <div className="absolute -inset-4 bg-indigo-600/20 blur-2xl rounded-full -z-10" />
               <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-2 rounded-3xl overflow-hidden shadow-sm dark:shadow-none">
                 <img
                   src="/image/coach_profile1.jpg"
@@ -607,7 +679,7 @@ export default function CoachingPage() {
                   <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
                     {lang === 'th' ? 'ณัฐภัทร มาทานี' : 'Natthaphat Mahtani'}
                   </h2>
-                  <p className="text-blue-600 dark:text-blue-500 font-semibold mb-6">
+                  <p className="text-indigo-600 dark:text-indigo-500 font-semibold mb-6">
                     {lang === 'th' ? 'นักแข่งที่มีความสามารถรอบด้านมากที่สุดในไทย' : "Thailand's best All-rounder"}
                   </p>
                   <div className="space-y-4">
@@ -616,19 +688,19 @@ export default function CoachingPage() {
                     </h4>
                     <ul className="space-y-3">
                       <li className="flex items-start gap-3 text-neutral-700 dark:text-neutral-300">
-                        <span className="text-blue-500">🏆</span>
+                        <span className="text-indigo-500">🏆</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'สถิติรูบิก 3x3 เวลาเร็วที่สุดเคยเป็นอันดับ 9 ของโลก' : '3x3 single peak ranking 9th global'}
                         </p>
                       </li>
                       <li className="flex items-center gap-3 text-neutral-700 dark:text-neutral-300">
-                        <span className="text-blue-500">🏅</span>
+                        <span className="text-indigo-500">🏅</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'เข้ารอบชิงในงานแข่งระดับทวีป' : 'Finalist in Continental Championship'}
                         </p>
                       </li>
                       <li className="flex items-center gap-3 text-neutral-700 dark:text-neutral-300">
-                        <span className="text-blue-500">⏱️</span>
+                        <span className="text-indigo-500">⏱️</span>
                         <p className="leading-relaxed">
                           {lang === 'th' ? 'ประสบการณ์กว่า 10 ปี' : '10+ years experience'}
                         </p>
@@ -639,14 +711,14 @@ export default function CoachingPage() {
               </div>
             </div>
 
-            <div>
+            <div className="reveal">
               <h2 className="text-4xl md:text-5xl font-bold mb-8 text-neutral-900 dark:text-white">
-                {c.whyMeTitle.replace('?', '')} <span className="text-blue-500">?</span>
+                {c.whyMeTitle.replace('?', '')} <span className="text-indigo-500">?</span>
               </h2>
               <div className="space-y-8">
                 {c.whyMeBenefits.map((b, i) => (
                   <div key={i} className="flex gap-6">
-                    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 dark:bg-blue-600/10 border border-blue-200 dark:border-blue-500/20 rounded-xl flex items-center justify-center text-blue-600 dark:text-blue-500 text-xl">
+                    <div className="flex-shrink-0 w-12 h-12 bg-indigo-100 dark:bg-indigo-600/10 border border-indigo-200 dark:border-indigo-500/20 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-500 text-xl">
                       {['🧩', '🔍', '🏗️', '🎯'][i]}
                     </div>
                     <div>
@@ -656,8 +728,8 @@ export default function CoachingPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-12 p-6 bg-blue-100 dark:bg-blue-600/10 border border-blue-200 dark:border-blue-500/30 rounded-2xl inline-block">
-                <p className="text-blue-700 dark:text-blue-400 font-bold">
+              <div className="mt-12 p-6 bg-indigo-100 dark:bg-indigo-600/10 border border-indigo-200 dark:border-indigo-500/30 rounded-2xl inline-block">
+                <p className="text-indigo-700 dark:text-indigo-400 font-bold">
                   {lang === 'th' ? 'เปิดสอนแบบคลาสออนไลน์' : 'Online Sessions Available'}
                 </p>
               </div>
@@ -669,10 +741,12 @@ export default function CoachingPage() {
       {/* ── Testimonials ── */}
       <section id="testimonials" className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center">
+          <h2 className="reveal text-3xl font-bold mb-12 text-center">
             {lang === 'th' ? 'รีวิวจากผู้เรียน' : 'What Clients Say'}
           </h2>
-          <TestimonialsStack testimonials={testimonials} lang={lang} />
+          <div className="reveal">
+            <TestimonialsStack testimonials={testimonials} lang={lang} />
+          </div>
         </div>
       </section>
 
@@ -697,10 +771,31 @@ export default function CoachingPage() {
         </div>
       )}
 
+      {/* ── How it works ── */}
+      <section id="how-it-works" className="pt-16 px-6">
+        <div className="reveal max-w-4xl mx-auto">
+          <Disclosure title={trans.howTitle}>
+            <ol className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              {trans.howSteps.map((st, i) => (
+                <li key={i} className="flex md:flex-col gap-4">
+                  <span className="w-9 h-9 shrink-0 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300 flex items-center justify-center font-bold text-sm">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3 className="font-bold text-neutral-900 dark:text-white mb-1">{st.title}</h3>
+                    <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">{st.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Disclosure>
+        </div>
+      </section>
+
       {/* ── Pricing ── */}
       <section id="pricing" className="py-24 px-6 bg-neutral-50 dark:bg-transparent">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-10 text-center text-neutral-900 dark:text-white">{trans.pricingTitle}</h2>
+          <h2 className="reveal text-3xl font-bold mb-10 text-center text-neutral-900 dark:text-white">{trans.pricingTitle}</h2>
 
           {/* Tabs */}
           <div className="flex justify-center mb-14">
@@ -843,7 +938,7 @@ export default function CoachingPage() {
       {/* ── Booking form ── */}
       <section id="book" ref={bookSectionRef} className="py-24 px-6 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-200 dark:border-neutral-900">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.bookTitle}</h2>
+          <h2 className="reveal text-3xl font-bold mb-12 text-center text-neutral-900 dark:text-white">{trans.bookTitle}</h2>
 
           {submitted ? (
             /* ── Success screen ── */
@@ -886,7 +981,11 @@ export default function CoachingPage() {
               }
               handleSubmit(e)
             }}>
-              <ProgressBar mode={progressMode} currentStep={currentStep} />
+              <ProgressBar
+                mode={progressMode}
+                currentStep={currentStep}
+                labels={{ service: trans.stepService, details: trans.stepDetails, payment: trans.stepPayment }}
+              />
 
               {/* ── Step 1: Service selection ── */}
               {currentStep === 1 && (
@@ -911,7 +1010,7 @@ export default function CoachingPage() {
 
                   {isCritique && selectedService && (
                     <div>
-                      <label className="block mb-2 text-neutral-400">🔗 Video Link of your Solves</label>
+                      <label className="block mb-2 text-neutral-600 dark:text-neutral-400">🔗 Video Link of your Solves</label>
                       <input
                         type="url"
                         value={videoLink}
@@ -920,15 +1019,21 @@ export default function CoachingPage() {
                         required
                         className={inputCls}
                       />
+                      {publishesVideo && (
+                        <p className="mt-3 flex items-start gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+                          <span aria-hidden="true">📺</span>
+                          <span>{trans.youtubeNote}</span>
+                        </p>
+                      )}
                     </div>
                   )}
 
                   <button
                     type="submit"
                     disabled={!selectedService}
-                    className="w-full bg-blue-600 font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-700 transition"
+                    className="w-full bg-indigo-600 text-white font-bold py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed hover:bg-indigo-700 transition"
                   >
-                    Next
+                    {trans.btnNext}
                   </button>
                 </div>
               )}
@@ -937,7 +1042,7 @@ export default function CoachingPage() {
               {currentStep === 2 && (
                 <div className="space-y-6">
                   <div>
-                    <label className="block mb-2 text-neutral-400">🏆 WCA Event</label>
+                    <label className="block mb-2 text-neutral-600 dark:text-neutral-400">🏆 WCA Event</label>
                     <select required value={wcaEvent} onChange={e => setWcaEvent(e.target.value)} className={inputCls}>
                       <option value="">{lang === 'th' ? 'เลือกประเภท' : 'Select event'}</option>
                       {WCA_EVENTS.map(ev => <option key={ev}>{ev}</option>)}
@@ -945,7 +1050,7 @@ export default function CoachingPage() {
                   </div>
 
                   <div id="days-group">
-                    <label className="block mb-3 text-neutral-400">
+                    <label className="block mb-3 text-neutral-600 dark:text-neutral-400">
                       {lang === 'th' ? '📅 วันที่สะดวก (กรุณาเลือกอย่างน้อย 1 วัน)' : '📅 Available Day (select all that applies)'}
                     </label>
                     <div className={`flex flex-wrap gap-3 rounded-2xl ${daysError ? 'ring-2 ring-red-500/60 p-2 -m-2' : ''}`}>
@@ -963,7 +1068,7 @@ export default function CoachingPage() {
                             }}
                             className="hidden peer"
                           />
-                          <span className="px-5 py-3 rounded-full bg-neutral-800 peer-checked:bg-blue-600 text-sm select-none inline-block transition-colors">
+                          <span className="px-5 py-3 rounded-full bg-neutral-200 text-neutral-700 peer-checked:bg-indigo-600 peer-checked:text-white dark:bg-neutral-800 dark:text-neutral-200 dark:peer-checked:bg-indigo-600 dark:peer-checked:text-white text-sm select-none inline-block transition-colors">
                             {lang === 'th' ? day.th : day.en}
                           </span>
                         </label>
@@ -976,7 +1081,7 @@ export default function CoachingPage() {
 
                   <div className="space-y-6">
                     <div>
-                      <label className="block mb-2 text-neutral-400">
+                      <label className="block mb-2 text-neutral-600 dark:text-neutral-400">
                         {lang === 'th' ? '⏰ เวลาที่สะดวกที่สุด' : '⏰ Most Preferred Starting Time'}
                       </label>
                       <select
@@ -993,7 +1098,7 @@ export default function CoachingPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block mb-2 text-neutral-400">
+                      <label className="block mb-2 text-neutral-600 dark:text-neutral-400">
                         {lang === 'th' ? '🕰️ เวลาสำรองที่สะดวก' : '🕰️ Secondary Preferred Starting Time'}
                       </label>
                       <select
@@ -1012,8 +1117,8 @@ export default function CoachingPage() {
                   </div>
 
                   <div className="flex gap-4">
-                    <button type="button" onClick={() => setCurrentStep(1)} className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition">Back</button>
-                    <button type="submit" className="w-2/3 bg-blue-600 font-bold py-4 rounded-xl hover:bg-blue-700 transition">Next</button>
+                    <button type="button" onClick={() => setCurrentStep(1)} className="w-1/3 bg-neutral-200 hover:bg-neutral-300 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-white font-bold py-4 rounded-xl transition">{trans.btnBack}</button>
+                    <button type="submit" className="w-2/3 bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition">{trans.btnNext}</button>
                   </div>
                 </div>
               )}
@@ -1028,7 +1133,7 @@ export default function CoachingPage() {
 
                   {!isCritique && (
                     <div>
-                      <label className="block mb-2 text-neutral-400">{trans.formGoal}</label>
+                      <label className="block mb-2 text-neutral-600 dark:text-neutral-400">{trans.formGoal}</label>
                       <textarea
                         rows={3} value={goal} onChange={e => setGoal(e.target.value)}
                         placeholder="e.g., I want to sub-10 or learn full ZBLL"
@@ -1038,27 +1143,27 @@ export default function CoachingPage() {
                   )}
 
                   <div className="space-y-6">
-                    <div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-8 text-center">
+                    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 text-center shadow-sm dark:shadow-none">
                       <h3 className="text-xl font-bold mb-6">{trans.paymentInstruction}</h3>
                       <img src={qrSrc} alt="Payment QR" className="w-48 h-48 md:w-64 md:h-64 mx-auto bg-white p-2 rounded-xl object-contain" />
                     </div>
 
                     <div>
-                      <label className="block text-sm text-neutral-400 mb-2">{trans.receiptLabel}</label>
+                      <label className="block text-sm text-neutral-600 dark:text-neutral-400 mb-2">{trans.receiptLabel}</label>
                       <input
                         type="file" accept="image/*" required
                         onChange={handleReceiptChange}
-                        className="w-full bg-neutral-900 border border-neutral-800 p-3 rounded-xl file:bg-blue-600 file:border-0 file:rounded-full file:text-white file:px-4 text-white"
+                        className="w-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 p-3 rounded-xl file:bg-indigo-600 file:border-0 file:rounded-full file:text-white file:px-4 text-neutral-900 dark:text-white"
                       />
                     </div>
 
-                    <div className="flex items-start gap-3 p-4 bg-blue-600/5 border border-blue-500/20 rounded-xl">
+                    <div className="flex items-start gap-3 p-4 bg-indigo-600/5 border border-indigo-500/20 rounded-xl">
                       <input
                         type="checkbox" id="confirm-payment"
                         checked={paymentConfirmed} onChange={e => setPaymentConfirmed(e.target.checked)}
-                        className="mt-1 w-5 h-5 rounded border-neutral-800 bg-neutral-900 accent-blue-600"
+                        className="mt-1 w-5 h-5 rounded border-neutral-300 bg-white dark:border-neutral-800 dark:bg-neutral-900 accent-indigo-600"
                       />
-                      <label htmlFor="confirm-payment" className="text-sm text-neutral-300 cursor-pointer">
+                      <label htmlFor="confirm-payment" className="text-sm text-neutral-700 dark:text-neutral-300 cursor-pointer">
                         {trans.confirmCheckbox}
                       </label>
                     </div>
@@ -1068,14 +1173,14 @@ export default function CoachingPage() {
                     <button
                       type="button"
                       onClick={() => goToStep(isCritique ? 1 : 2)}
-                      className="w-1/3 bg-neutral-800 font-bold py-4 rounded-xl hover:bg-neutral-700 transition"
+                      className="w-1/3 bg-neutral-200 hover:bg-neutral-300 text-neutral-900 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-white font-bold py-4 rounded-xl transition"
                     >
-                      Back
+                      {trans.btnBack}
                     </button>
                     <button
                       type="submit"
                       disabled={!paymentConfirmed || submitting}
-                      className="w-2/3 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-2/3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {submitting ? trans.sending : trans.formButton}
                     </button>
@@ -1085,6 +1190,33 @@ export default function CoachingPage() {
 
             </form>
           )}
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" className="py-16 px-6">
+        <div className="reveal max-w-3xl mx-auto">
+          <Disclosure title={trans.faqTitle}>
+            <div className="space-y-6">
+              {trans.faqItems.map((item, i) => (
+                <div key={i}>
+                  <h3 className="font-bold text-neutral-900 dark:text-white mb-1">{item.q}</h3>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">{item.a}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-8 pt-6 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-600 dark:text-neutral-400">
+              {trans.faqMore}{' '}
+              <a
+                href={FB_MESSENGER_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+              >
+                {trans.faqMoreLink}
+              </a>
+            </p>
+          </Disclosure>
         </div>
       </section>
 

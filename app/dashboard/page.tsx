@@ -20,6 +20,11 @@ const statusStyles: Record<string, { dot: string; badge: string; label: string }
   cancelled: { dot: 'bg-neutral-500',badge: 'bg-neutral-500/10 text-neutral-400 border-neutral-700', label: 'Cancelled' },
 }
 
+// Grey placeholder block shown while the dashboard loads
+function Sk({ className = '' }: { className?: string }) {
+  return <div className={`motion-safe:animate-pulse bg-neutral-200 dark:bg-neutral-800 ${className}`} />
+}
+
 export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
@@ -72,9 +77,64 @@ export default function DashboardPage() {
   }
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center py-40 gap-4 bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
-      <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
-      <p className="text-sm text-neutral-500">Loading your dashboard…</p>
+    <div role="status" aria-busy="true" className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
+      <span className="sr-only">Loading your dashboard…</span>
+
+      {/* Header */}
+      <div className="border-b border-neutral-200 dark:border-neutral-800/60 px-6 py-4">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <Sk className="w-8 h-8 rounded-lg" />
+            <Sk className="w-20 h-4 rounded" />
+          </div>
+          <Sk className="w-14 h-4 rounded" />
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-6 py-12 space-y-12">
+        {/* Profile */}
+        <div className="flex items-center gap-5">
+          <Sk className="w-16 h-16 rounded-2xl shrink-0" />
+          <div className="space-y-2.5 flex-1">
+            <Sk className="h-6 w-48 max-w-full rounded" />
+            <Sk className="h-4 w-60 max-w-full rounded" />
+            <div className="flex gap-2 pt-1">
+              <Sk className="h-6 w-32 rounded-full" />
+              <Sk className="h-6 w-28 rounded-full" />
+            </div>
+          </div>
+        </div>
+
+        <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+
+        {/* Courses */}
+        <div>
+          <Sk className="h-5 w-32 mb-6 rounded" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[0, 1, 2].map(i => <Sk key={i} className="h-40 rounded-2xl" />)}
+          </div>
+        </div>
+
+        <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+
+        {/* Quick links */}
+        <div>
+          <Sk className="h-5 w-28 mb-5 rounded" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[0, 1, 2, 3].map(i => <Sk key={i} className="h-24 rounded-2xl" />)}
+          </div>
+        </div>
+
+        <div className="h-px bg-neutral-200 dark:bg-neutral-800" />
+
+        {/* Bookings */}
+        <div>
+          <Sk className="h-5 w-48 mb-6 rounded" />
+          <div className="space-y-3">
+            {[0, 1, 2].map(i => <Sk key={i} className="h-20 rounded-2xl" />)}
+          </div>
+        </div>
+      </div>
     </div>
   )
 

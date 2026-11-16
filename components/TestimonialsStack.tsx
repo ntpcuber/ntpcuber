@@ -9,7 +9,7 @@ function StarRating({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, i) => (
         <svg
           key={i}
-          className={`w-4 h-4 ${i < rating ? 'text-amber-400' : 'text-neutral-700'}`}
+          className={`w-4 h-4 ${i < rating ? 'text-amber-400' : 'text-neutral-300 dark:text-neutral-700'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -90,7 +90,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
             <div
               key={idx}
               className={`absolute inset-0 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-8 shadow-sm dark:shadow-none flex flex-col ${
-                isFront ? 'hover:border-blue-500/40' : ''
+                isFront ? 'hover:border-indigo-500/40' : ''
               } transition-transform duration-300 ease-out`}
               style={{
                 transform: `translateY(${translateY}px) scale(${scale}) ${dragTransform}`,
@@ -105,7 +105,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
                 &ldquo;{quote}&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-800">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-xs font-black text-white shrink-0">
                   {initials}
                 </div>
                 <div className="min-w-0">
@@ -123,7 +123,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
         type="button"
         onClick={prev}
         aria-label="Previous testimonial"
-        className="hidden sm:flex absolute left-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
+        className="hidden sm:flex absolute left-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-indigo-500 text-neutral-400 hover:text-indigo-400 transition"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -133,7 +133,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
         type="button"
         onClick={next}
         aria-label="Next testimonial"
-        className="hidden sm:flex absolute right-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-blue-500 text-neutral-400 hover:text-blue-400 transition"
+        className="hidden sm:flex absolute right-[-3.5rem] top-1/2 -translate-y-1/2 w-10 h-10 items-center justify-center rounded-full bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-800 hover:border-indigo-500 text-neutral-400 hover:text-indigo-400 transition"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -149,7 +149,7 @@ export default function TestimonialsStack({ testimonials, lang }: TestimonialsSt
             onClick={() => goTo(i)}
             aria-label={`Go to testimonial ${i + 1}`}
             className={`h-2 rounded-full transition-all ${
-              i === activeIndex ? 'w-6 bg-blue-500' : 'w-2 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600'
+              i === activeIndex ? 'w-6 bg-indigo-500' : 'w-2 bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600'
             }`}
           />
         ))}

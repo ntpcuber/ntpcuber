@@ -85,7 +85,6 @@ export default function ZBLLClient1() {
 
   return (
     <div className="bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 font-sans min-h-screen relative transition-colors">
-      <div className="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
 
       {/* Hero */}
       <section className="pt-32 pb-20">

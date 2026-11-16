@@ -70,8 +70,6 @@ export default function FourLLLPage() {
   return (
     <div className="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans" style={{ scrollPaddingTop: '120px' }}>
 
-      {/* Gradient accent */}
-      <div className="absolute inset-x-0 top-[-12rem] h-[32rem] bg-gradient-to-br from-indigo-600/30 via-purple-600/20 to-cyan-500/20 blur-3xl -z-10" />
 
       {/* ── Sticky section nav ── */}
       <nav className="sticky top-[60px] z-40 bg-white/90 dark:bg-neutral-950/90 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 shadow-sm">

@@ -239,9 +239,9 @@ export default function AdminPage() {
                 <span className="font-mono text-[9px] uppercase tracking-widest text-[#4a5252]">All Coaching Bookings</span>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <input value={bookingSearch} onChange={e => setBookingSearch(e.target.value)} placeholder="Search…"
-                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-3 py-1.5 rounded-lg text-[12px] outline-none focus:border-green-500 w-full sm:w-48" />
+                    className="bg-white border border-neutral-300 text-neutral-900 dark:bg-[#080909] dark:border-[#242b2b] dark:text-[#d4d8d8] px-3 py-1.5 rounded-lg text-[12px] outline-none focus:border-green-500 w-full sm:w-48" />
                   <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-                    className="bg-[#080909] border border-[#242b2b] text-[#d4d8d8] px-2 py-1.5 rounded-lg text-[10px] font-mono w-full sm:w-auto">
+                    className="bg-white border border-neutral-300 text-neutral-900 dark:bg-[#080909] dark:border-[#242b2b] dark:text-[#d4d8d8] px-2 py-1.5 rounded-lg text-[10px] font-mono w-full sm:w-auto">
                     <option value="">All</option>
                     {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
                   </select>
