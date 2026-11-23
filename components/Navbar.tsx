@@ -247,19 +247,19 @@ export default function Navbar() {
                 </button>
                 {avatarMenuOpen && (
                   <div className="absolute right-0 top-[calc(100%+0.4rem)] min-w-[11rem] bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl py-1.5 z-50">
-                    <div className="px-3 py-2 border-b border-neutral-800 mb-1">
+                    <div className="px-3 py-2 border-b border-neutral-200 dark:border-neutral-800 mb-1">
                       <p className="text-[10px] text-neutral-500">Signed in as</p>
                       <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200 truncate">{user.email}</p>
                     </div>
                     {isAdmin && (
-                      <Link href="/admin" onClick={() => setAvatarMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-green-400 hover:bg-green-400/10 rounded-lg mx-1 transition">
+                      <Link href="/admin" onClick={() => setAvatarMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-green-700 dark:text-green-400 hover:bg-green-400/10 rounded-lg mx-1 transition">
                         Admin Console
                       </Link>
                     )}
                     <Link href="/dashboard" onClick={() => setAvatarMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold border-neutral-300 dark:border-neutral-700 hover:bg-indigo-500/10 rounded-lg mx-1 transition">
                       My Dashboard
                     </Link>
-                    <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-400 hover:bg-red-400/10 rounded-lg mx-1 transition text-left">
+                    <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 hover:bg-red-400/10 rounded-lg mx-1 transition text-left">
                       Sign Out
                     </button>
                   </div>
@@ -362,9 +362,9 @@ export default function Navbar() {
               <Link href="/login" onClick={() => setMobileOpen(false)} className="text-neutral-600 dark:text-neutral-400 py-2">Login / Sign Up</Link>
             ) : (
               <>
-                {isAdmin && <Link href="/admin" onClick={() => setMobileOpen(false)} className="text-green-400 py-2 font-semibold">Admin Console</Link>}
+                {isAdmin && <Link href="/admin" onClick={() => setMobileOpen(false)} className="text-green-700 dark:text-green-400 py-2 font-semibold">Admin Console</Link>}
                 <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="text-neutral-600 dark:text-neutral-400 py-2">My Dashboard</Link>
-                <button onClick={handleSignOut} className="text-red-400 py-2 text-left">Sign Out</button>
+                <button onClick={handleSignOut} className="text-red-600 dark:text-red-400 py-2 text-left">Sign Out</button>
               </>
             )}
           </nav>

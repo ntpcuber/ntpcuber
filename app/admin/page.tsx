@@ -142,10 +142,10 @@ export default function AdminPage() {
   )
 
   const statusBadgeClass: Record<string,string> = {
-    pending:   'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    confirmed: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-    completed: 'bg-green-500/10 text-green-400 border-green-500/30',
-    cancelled: 'bg-neutral-500/10 text-neutral-400 border-neutral-700',
+    pending:   'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/30',
+    confirmed: 'bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-500/30',
+    completed: 'bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/30',
+    cancelled: 'bg-neutral-500/10 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-700',
   }
 
   return (
@@ -226,7 +226,7 @@ export default function AdminPage() {
             {[['Total Bookings', statTotal, 'all time', 'neutral'],['Pending', statPending, 'needs action', '#f59e0b'],['Users', users.length, 'registered', 'neutral'],['Revenue', statRevenue ? '฿'+statRevenue.toLocaleString() : '฿0', '฿ total', '#22c55e']].map(([label, val, sub, color]) => (
               <div key={label as string} className="bg-neutral-100 border border-neutral-200 rounded-[10px] p-4 sm:p-5 dark:bg-[#0e1010] dark:border-[#1a1f1f]">
                 <p className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 mb-2 dark:text-[#4a5252]">{label}</p>
-                <p className="text-[20px] sm:text-[26px] font-bold leading-none" style={{ color: color === 'neutral' ? (typeof document !== 'undefined' && document.documentElement.classList.contains('dark') ? '#d4d8d8' : '#111827') as string : color as string }}>{val}</p>
+                <p className={`text-[20px] sm:text-[26px] font-bold leading-none ${color === 'neutral' ? 'text-neutral-900 dark:text-[#d4d8d8]' : ''}`} style={color === 'neutral' ? undefined : { color: color as string }}>{val}</p>
                 <p className="text-[11px] text-neutral-500 mt-1 dark:text-[#4a5252]">{sub}</p>
               </div>
             ))}
@@ -323,9 +323,9 @@ export default function AdminPage() {
           {tab === 'courses' && (
             <>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-                <span className="font-mono text-[9px] uppercase tracking-widest text-[#4a5252]">Course Purchases</span>
+                <span className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 dark:text-[#4a5252]">Course Purchases</span>
                 <button onClick={() => setGrantOpen(true)}
-                  className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-green-400/12 border border-green-400/30 text-green-400 rounded-lg text-[12px] font-semibold w-full sm:w-auto">
+                  className="flex items-center justify-center gap-1.5 px-3 py-1.5 bg-green-400/12 border border-green-400/30 text-green-700 dark:text-green-400 rounded-lg text-[12px] font-semibold w-full sm:w-auto">
                   + Grant Course
                 </button>
               </div>

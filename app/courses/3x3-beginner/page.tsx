@@ -146,7 +146,7 @@ export default function BeginnerCoursePage() {
           <Link href="/courses" className="text-sm font-medium text-blue-600 hover:underline">← Back</Link>
           <div className="flex items-center gap-3">
             <span className="text-sm font-bold">{progressPercentage}% Done</span>
-            <div className="w-24 h-2 bg-neutral-200 rounded-full overflow-hidden">
+            <div className="w-24 h-2 bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden">
               <div className="h-full bg-blue-600 transition-all" style={{ width: `${progressPercentage}%` }} />
             </div>
           </div>

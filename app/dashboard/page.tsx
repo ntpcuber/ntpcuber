@@ -14,10 +14,10 @@ interface Booking {
 }
 
 const statusStyles: Record<string, { dot: string; badge: string; label: string }> = {
-  pending:   { dot: 'bg-amber-400',  badge: 'bg-amber-400/10 text-amber-300 border-amber-500/30',    label: 'Pending'   },
-  confirmed: { dot: 'bg-blue-400',   badge: 'bg-blue-400/10  text-blue-300  border-blue-500/30',     label: 'Confirmed' },
-  completed: { dot: 'bg-green-400',  badge: 'bg-green-400/10 text-green-300 border-green-500/30',    label: 'Completed' },
-  cancelled: { dot: 'bg-neutral-500',badge: 'bg-neutral-500/10 text-neutral-400 border-neutral-700', label: 'Cancelled' },
+  pending:   { dot: 'bg-amber-400',  badge: 'bg-amber-400/10 text-amber-700 dark:text-amber-300 border-amber-500/30',    label: 'Pending'   },
+  confirmed: { dot: 'bg-blue-400',   badge: 'bg-blue-400/10  text-blue-700 dark:text-blue-300 border-blue-500/30',     label: 'Confirmed' },
+  completed: { dot: 'bg-green-400',  badge: 'bg-green-400/10 text-green-700 dark:text-green-300 border-green-500/30',    label: 'Completed' },
+  cancelled: { dot: 'bg-neutral-500',badge: 'bg-neutral-500/10 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-700', label: 'Cancelled' },
 }
 
 // Grey placeholder block shown while the dashboard loads
@@ -149,7 +149,7 @@ export default function DashboardPage() {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 bg-indigo-600/15 border border-indigo-500/30 rounded-lg flex items-center justify-center">
-              <svg className="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
               </svg>
             </div>

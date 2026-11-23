@@ -33,7 +33,7 @@ function Pill({
   const base =
     'px-3 py-1 rounded-full border text-sm transition select-none cursor-pointer ' +
     'border-neutral-300 dark:border-neutral-800 bg-neutral-100/40 dark:bg-neutral-900/40 hover:border-indigo-500 hover:bg-indigo-500/10'
-  const activeClass = ' border-indigo-500 bg-indigo-500/10 text-indigo-200'
+  const activeClass = ' border-indigo-500 bg-indigo-500/10 text-indigo-700 dark:text-indigo-200'
   const inactiveClass = ' text-neutral-700 dark:text-neutral-200'
   return (
     <button type="button" onClick={onClick} className={base + (active ? activeClass : inactiveClass)}>
@@ -119,7 +119,7 @@ export default function AlgPage({ sets, labelPrefix = '' }: AlgPageProps) {
                   <button
                     type="button"
                     onClick={() => handleFilter(set.id)}
-                    className="text-indigo-400 hover:text-indigo-300 transition"
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 transition"
                   >
                     Show only
                   </button>

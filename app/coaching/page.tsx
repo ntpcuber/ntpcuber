@@ -757,8 +757,8 @@ export default function CoachingPage() {
             <div className="flex items-center gap-3 flex-1">
               <span className="text-2xl shrink-0">🔐</span>
               <div>
-                <p className="font-bold text-indigo-300 mb-0.5">{trans.perksTitle}</p>
-                <p className="text-sm text-neutral-400 leading-relaxed">{trans.perksDesc}</p>
+                <p className="font-bold text-indigo-700 dark:text-indigo-300 mb-0.5">{trans.perksTitle}</p>
+                <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">{trans.perksDesc}</p>
               </div>
             </div>
             <Link

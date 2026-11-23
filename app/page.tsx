@@ -300,7 +300,7 @@ export default function HomePage() {
 
           <div className="relative space-y-12">
             {/* Vertical line */}
-            <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-800 -translate-x-1/2" />
+            <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-0.5 bg-neutral-200 dark:bg-neutral-800 -translate-x-1/2" />
 
             <div className="space-y-12">
               {c.journeySteps.map((step, i) => (
